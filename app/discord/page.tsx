@@ -3,33 +3,25 @@
 import FXBackdrop from "@/components/fx/FXBackdrop";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import { openDiscordInvite } from "@/lib/deepLink";
 import { useEffect, useState } from "react";
 
 const INVITE = process.env.NEXT_PUBLIC_DISCORD_INVITE || "dedos";
+const WEB_URL = `https://discord.gg/${INVITE}`;
+const FALLBACK_MS = 2400;
 
 export default function DiscordRedirect() {
-  const [second, setSecond] = useState(3);
+  const [second, setSecond] = useState(() => Math.ceil(FALLBACK_MS / 1000));
 
   useEffect(() => {
-    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-    const proto = isMobile ? "discord://" : "discord://";
-    const urlWeb = `https://discord.gg/${INVITE}`;
+    openDiscordInvite(INVITE, FALLBACK_MS);
 
-    const timer = setTimeout(() => {
-      window.location.href = urlWeb;
-    }, 1200);
-
-    try {
-      window.location.href = `${proto}/invite/${INVITE}`;
-    } catch (_) {
-      // ignore deep link errors; fallback handles redirect
-    }
-
-    const t = setInterval(() => setSecond((s) => (s > 0 ? s - 1 : 0)), 1000);
+    const t = window.setInterval(() => {
+      setSecond((s) => (s > 0 ? s - 1 : 0));
+    }, 1000);
 
     return () => {
-      clearTimeout(timer);
-      clearInterval(t);
+      window.clearInterval(t);
     };
   }, []);
 
@@ -46,12 +38,7 @@ export default function DiscordRedirect() {
             Si no se abre automáticamente, te redirigiremos al navegador en {second}s.
           </p>
           <div style={{ marginTop: 22 }}>
-            <a
-              href={`https://discord.gg/${INVITE}`}
-              target="_blank"
-              rel="noopener"
-              className="btn btn-gradient"
-            >
+            <a href={WEB_URL} className="btn btn-gradient">
               Abrir en el navegador
             </a>
           </div>

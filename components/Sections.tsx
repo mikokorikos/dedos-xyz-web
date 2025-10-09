@@ -1,6 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type MouseEvent } from "react";
+
+import { openDiscordInvite } from "@/lib/deepLink";
+
+const DISCORD_INVITE = process.env.NEXT_PUBLIC_DISCORD_INVITE || "dedos";
+const DISCORD_URL = `https://discord.gg/${DISCORD_INVITE}`;
+
+function handleDiscordClick(event: MouseEvent<HTMLAnchorElement>) {
+  event.preventDefault();
+  openDiscordInvite(DISCORD_INVITE);
+}
 
 type ChipTone = "pink" | "blue" | "green" | "gold";
 
@@ -190,9 +200,8 @@ export function Catalog() {
                     <strong>Consultar</strong>
                   </div>
                   <a
-                    href="https://discord.gg/dedos"
-                    target="_blank"
-                    rel="noopener"
+                    href={DISCORD_URL}
+                    onClick={handleDiscordClick}
                     style={{
                       display: "inline-flex",
                       alignItems: "center",
@@ -307,9 +316,8 @@ export function CTA() {
             </p>
           </div>
           <a
-            href="https://discord.gg/dedos"
-            target="_blank"
-            rel="noopener"
+            href={DISCORD_URL}
+            onClick={handleDiscordClick}
             className="btn btn-gradient"
           >
             Entrar a Discord

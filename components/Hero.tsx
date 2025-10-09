@@ -1,5 +1,11 @@
+'use client'
+
+import { openDiscordInvite } from "@/lib/deepLink"
+
+const DISCORD_INVITE = process.env.NEXT_PUBLIC_DISCORD_INVITE || "dedos"
+
 const HERO_STATS = [
-  { value: "+10K", label: "Pedidos" },
+  { value: "+55K", label: "Pedidos" },
   { value: "Minutos", label: "Entrega media" },
   { value: "4.9/5", label: "Satisfacción" },
 ];
@@ -101,9 +107,11 @@ export default function Hero() {
               >
                 <a
                   className="btn btn-primary"
-                  href="https://discord.gg/dedos"
-                  target="_blank"
-                  rel="noopener"
+                  href={`https://discord.gg/${DISCORD_INVITE}`}
+                  onClick={(event) => {
+                    event.preventDefault()
+                    openDiscordInvite(DISCORD_INVITE)
+                  }}
                 >
                   Ir al servidor
                 </a>

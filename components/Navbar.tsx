@@ -4,6 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
+import { openDiscordInvite } from "@/lib/deepLink";
+
 const NAV_ITEMS = [
   { label: "Catálogo", href: "#catalogo" },
   { label: "¿Por qué?", href: "#por-que" },
@@ -12,6 +14,9 @@ const NAV_ITEMS = [
   { label: "TOS", href: "/tos" },
   { label: "Grupo de Roblox", href: "/roblox" },
 ];
+
+const DISCORD_INVITE = process.env.NEXT_PUBLIC_DISCORD_INVITE || "dedos";
+const DISCORD_URL = `https://discord.gg/${DISCORD_INVITE}`;
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -61,9 +66,12 @@ export default function Navbar() {
               );
             })}
             <a
-              href="https://discord.gg/dedos"
-              target="_blank"
-              rel="noopener"
+              href={DISCORD_URL}
+              onClick={(event) => {
+                event.preventDefault();
+                openDiscordInvite(DISCORD_INVITE);
+                setOpen(false);
+              }}
               className="btn btn-gradient nav-cta"
             >
               Entrar a Discord →
@@ -82,9 +90,11 @@ export default function Navbar() {
               ☰
             </button>
             <a
-              href="https://discord.gg/dedos"
-              target="_blank"
-              rel="noopener"
+              href={DISCORD_URL}
+              onClick={(event) => {
+                event.preventDefault();
+                openDiscordInvite(DISCORD_INVITE);
+              }}
               className="btn btn-gradient"
             >
               Entrar a Discord →

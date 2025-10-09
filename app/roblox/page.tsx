@@ -3,36 +3,26 @@
 import FXBackdrop from "@/components/fx/FXBackdrop";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import { openRobloxDestination } from "@/lib/deepLink";
 import { useEffect, useState } from "react";
 
 const ROBLOX_URL =
   process.env.NEXT_PUBLIC_ROBLOX_GROUP ||
   "https://www.roblox.com/es/communities/12082479/unnamed#!/about";
+const FALLBACK_MS = 2600;
 
 export default function RobloxRedirect() {
-  const [second, setSecond] = useState(3);
+  const [second, setSecond] = useState(() => Math.ceil(FALLBACK_MS / 1000));
 
   useEffect(() => {
-    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    openRobloxDestination(ROBLOX_URL, FALLBACK_MS);
 
-    if (isMobile) {
-      const appLink = "roblox-mobile://navigation/app";
-      try {
-        window.location.href = appLink;
-      } catch (_) {
-        // ignore deep link errors; fallback handles redirect
-      }
-    }
-
-    const timer = setTimeout(() => {
-      window.location.href = ROBLOX_URL;
-    }, 1200);
-
-    const t = setInterval(() => setSecond((s) => (s > 0 ? s - 1 : 0)), 1000);
+    const t = window.setInterval(() => {
+      setSecond((s) => (s > 0 ? s - 1 : 0));
+    }, 1000);
 
     return () => {
-      clearTimeout(timer);
-      clearInterval(t);
+      window.clearInterval(t);
     };
   }, []);
 
