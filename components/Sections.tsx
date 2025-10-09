@@ -1,7 +1,152 @@
+"use client";
+
+import { useState, type MouseEvent } from "react";
+
+import { openDiscordInvite } from "@/lib/deepLink";
+
+const DISCORD_INVITE = process.env.NEXT_PUBLIC_DISCORD_INVITE || "dedos";
+const DISCORD_URL = `https://discord.gg/${DISCORD_INVITE}`;
+
+function handleDiscordClick(event: MouseEvent<HTMLAnchorElement>) {
+  event.preventDefault();
+  openDiscordInvite(DISCORD_INVITE);
+}
+
+type ChipTone = "pink" | "blue" | "green" | "gold";
+
+type CatalogItem = {
+  title: string;
+  subtitle: string;
+  image: string;
+  chips: { label: string; tone: ChipTone }[];
+};
+
+const CATALOG_ITEMS: CatalogItem[] = [
+  {
+    title: "Robux",
+    subtitle: "Carga segura",
+    image:
+      "https://images.unsplash.com/photo-1605901309584-818e25960a8b?q=80&w=600&auto=format&fit=crop",
+    chips: [
+      { label: "Gaming", tone: "green" },
+      { label: "Best seller", tone: "gold" },
+    ],
+  },
+  {
+    title: "Discord Nitro",
+    subtitle: "Mensual y anual",
+    image:
+      "https://images.unsplash.com/photo-1611162618071-b39a2ec4d1ef?q=80&w=600&auto=format&fit=crop",
+    chips: [
+      { label: "Discord", tone: "blue" },
+      { label: "Popular", tone: "pink" },
+    ],
+  },
+  {
+    title: "Decoraciones Discord",
+    subtitle: "Banners, íconos, packs",
+    image:
+      "https://images.unsplash.com/photo-1563986768817-257bf91c5753?q=80&w=600&auto=format&fit=crop",
+    chips: [{ label: "Estilo", tone: "pink" }],
+  },
+  {
+    title: "Spotify",
+    subtitle: "Planes individuales",
+    image:
+      "https://images.unsplash.com/photo-1541701494587-cb58502866ab?q=80&w=600&auto=format&fit=crop",
+    chips: [{ label: "Música", tone: "green" }],
+  },
+  {
+    title: "Streaming",
+    subtitle: "Crunchyroll, Netflix, Disney+",
+    image:
+      "https://images.unsplash.com/photo-1598899134739-24b24967b74e?q=80&w=600&auto=format&fit=crop",
+    chips: [
+      { label: "HD", tone: "blue" },
+      { label: "Oferta", tone: "gold" },
+    ],
+  },
+  {
+    title: "VPNs",
+    subtitle: "Top providers",
+    image:
+      "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=600&auto=format&fit=crop",
+    chips: [{ label: "Privacidad", tone: "green" }],
+  },
+  {
+    title: "Boosts de Servidor",
+    subtitle: "Niveles garantizados",
+    image:
+      "https://images.unsplash.com/photo-1550439062-609e1531270e?q=80&w=600&auto=format&fit=crop",
+    chips: [
+      { label: "Discord", tone: "blue" },
+      { label: "Rápido", tone: "gold" },
+    ],
+  },
+  {
+    title: "ChatGPT Premium",
+    subtitle: "Planes disponibles",
+    image:
+      "https://images.unsplash.com/photo-1555099962-4199c345e5dd?q=80&w=600&auto=format&fit=crop",
+    chips: [{ label: "IA", tone: "pink" }],
+  },
+];
+
+const SERVICES = [
+  {
+    title: "🤝 Sistema de Middleman moderno",
+    copy:
+      "Escrow seguro, verificación de ambas partes y liberación de fondos tras confirmación. Logs y auditoría interna.",
+  },
+  {
+    title: "⏱️ Trades 24/7",
+    copy:
+      "Cobertura continua con rotación de staff y automatizaciones. Soporte express en Discord.",
+  },
+];
+
+const WHY_POINTS = [
+  {
+    title: "Pagos 100% seguros",
+    copy: "Protección y verificación en cada pedido.",
+  },
+  {
+    title: "Entregas rápidas",
+    copy: "Automatizadas o asistidas por nuestro staff.",
+  },
+  {
+    title: "Diseño + experiencia",
+    copy: "UI de alto impacto con animaciones y glassmorphism.",
+  },
+  {
+    title: "Soporte dedicado",
+    copy: "Estamos en Discord para ayudarte 24/7.",
+  },
+];
+
+const FAQS = [
+  {
+    q: "¿Cómo compro?",
+    a: "Haz clic en “Entrar a Discord” y abre un ticket. Nuestro bot te guiará paso a paso.",
+  },
+  {
+    q: "¿Es legal?",
+    a: "Solo vendemos suscripciones y servicios legítimos conforme a sus términos. Nada robado ni ilícito.",
+  },
+  {
+    q: "¿En cuánto tiempo entregan?",
+    a: "La mayoría de pedidos se entregan entre minutos y pocas horas, según el producto y stock.",
+  },
+  {
+    q: "¿Qué métodos de pago aceptan?",
+    a: "Consulta en el servidor: aceptamos múltiples opciones según tu país.",
+  },
+];
+
 export function Catalog() {
   return (
-    <section id="catalogo" style={{ padding: "64px 0" }}>
-      <div style={{ maxWidth: 1280, margin: "0 auto", width: "94%" }}>
+    <section id="catalogo" className="section">
+      <div className="container">
         <h2
           style={{
             fontSize: "clamp(26px, 4.5vw, 44px)",
@@ -9,29 +154,68 @@ export function Catalog() {
             fontWeight: 800,
           }}
         >
-          Cat\u00E1logo
+          Catálogo
         </h2>
-        <p style={{ color: "rgba(226,232,240,.75)", margin: "0 0 18px" }}>
-          Todo en un mismo lugar. Hover para ver la magia \u2728
+        <p className="muted" style={{ margin: "0 0 18px" }}>
+          Todo en un mismo lugar. Hover para ver la magia ✨
         </p>
-        <div
-          style={{
-            display: "grid",
-            gap: 18,
-            gridTemplateColumns: "repeat(4, minmax(0,1fr))",
-          }}
-        >
-          {[
-            "Robux",
-            "Discord Nitro",
-            "Decoraciones",
-            "Spotify",
-            "Streaming",
-            "VPNs",
-            "Boosts de Servidor",
-            "ChatGPT Premium",
-          ].map((n) => (
-            <Card key={n} title={n} />
+        <div className="grid cols-4">
+          {CATALOG_ITEMS.map((item) => (
+            <article className="card" key={item.title}>
+              <div className="glow" aria-hidden="true" />
+              <div className="product">
+                <img src={item.image} alt={item.title} loading="lazy" />
+                <div style={{ flex: 1 }}>
+                  <header
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      gap: 12,
+                    }}
+                  >
+                    <div>
+                      <h3 style={{ margin: 0 }}>{item.title}</h3>
+                      <small className="muted">{item.subtitle}</small>
+                    </div>
+                    <span aria-hidden="true">★</span>
+                  </header>
+                  <div className="chips">
+                    {item.chips.map((chip) => (
+                      <span className={`chip ${chip.tone}`} key={chip.label}>
+                        {chip.label}
+                      </span>
+                    ))}
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      marginTop: 10,
+                      fontSize: 14,
+                    }}
+                  >
+                    <span className="muted">Desde</span>
+                    <strong>Consultar</strong>
+                  </div>
+                  <a
+                    href={DISCORD_URL}
+                    onClick={handleDiscordClick}
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 6,
+                      marginTop: 10,
+                      color: "#67e8f9",
+                      textDecoration: "none",
+                    }}
+                  >
+                    Comprar en Discord →
+                  </a>
+                </div>
+              </div>
+            </article>
           ))}
         </div>
       </div>
@@ -41,37 +225,26 @@ export function Catalog() {
 
 export function Services() {
   return (
-    <section id="servicios" style={{ padding: "64px 0" }}>
-      <div style={{ maxWidth: 1280, margin: "0 auto", width: "94%" }}>
+    <section id="servicios" className="section">
+      <div className="container">
         <div
+          className="glass"
           style={{
-            background:
-              "linear-gradient(135deg, rgba(15,23,42,.75), rgba(30,41,59,.45))",
-            border: "1px solid rgba(148,163,184,.22)",
-            backdropFilter: "blur(18px) saturate(140%)",
-            borderRadius: 16,
             padding: 22,
             display: "grid",
             gap: 18,
-            gridTemplateColumns: "repeat(2,1fr)",
+            gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
           }}
         >
-          <article style={{ padding: 20 }}>
-            <h3 style={{ margin: "0 0 6px" }}>
-              {"\uD83E\uDD1D Sistema de Middleman moderno"}
-            </h3>
-            <p style={{ margin: 0, color: "rgba(226,232,240,.75)" }}>
-              Escrow seguro, verificaci\u00F3n de ambas partes y liberaci\u00F3n
-              de fondos tras confirmaci\u00F3n.
-            </p>
-          </article>
-          <article style={{ padding: 20 }}>
-            <h3 style={{ margin: "0 0 6px" }}>{"\u23F1\uFE0F Trades 24/7"}</h3>
-            <p style={{ margin: 0, color: "rgba(226,232,240,.75)" }}>
-              Cobertura continua con rotaci\u00F3n de staff y
-              automatizaciones.
-            </p>
-          </article>
+          {SERVICES.map((service) => (
+            <article className="card" key={service.title} style={{ padding: 20 }}>
+              <div className="glow" aria-hidden="true" />
+              <h3 style={{ margin: "0 0 6px" }}>{service.title}</h3>
+              <p className="muted" style={{ margin: 0 }}>
+                {service.copy}
+              </p>
+            </article>
+          ))}
         </div>
       </div>
     </section>
@@ -80,8 +253,8 @@ export function Services() {
 
 export function Why() {
   return (
-    <section id="por-que" style={{ padding: "64px 0" }}>
-      <div style={{ maxWidth: 1280, margin: "0 auto", width: "94%" }}>
+    <section id="por-que" className="section">
+      <div className="container">
         <div style={{ textAlign: "center", marginBottom: 22 }}>
           <h2
             style={{
@@ -90,11 +263,10 @@ export function Why() {
               fontWeight: 800,
             }}
           >
-            \u00BFPor qu\u00E9 comprar con{" "}
+            ¿Por qué comprar con{" "}
             <span
               style={{
-                background:
-                  "linear-gradient(135deg, #8b5cf6 0%, #3b82f6 50%, #06b6d4 100%)",
+                background: "var(--grad)",
                 WebkitBackgroundClip: "text",
                 backgroundClip: "text",
                 color: "transparent",
@@ -104,25 +276,19 @@ export function Why() {
             </span>
             ?
           </h2>
-          <p style={{ color: "rgba(226,232,240,.75)", margin: 0 }}>
-            Velocidad, seguridad y un dise\u00F1o que enamora.
+          <p className="muted" style={{ margin: 0 }}>
+            Velocidad, seguridad y un diseño que enamora.
           </p>
         </div>
-
-        <div
-          style={{
-            display: "grid",
-            gap: 18,
-            gridTemplateColumns: "repeat(4,1fr)",
-          }}
-        >
-          {[
-            "Pagos 100% seguros",
-            "Entregas r\u00E1pidas",
-            "Dise\u00F1o + experiencia",
-            "Soporte dedicado",
-          ].map((n) => (
-            <Card key={n} title={n} compact />
+        <div className="grid why">
+          {WHY_POINTS.map((point) => (
+            <article className="card" key={point.title}>
+              <div className="glow" aria-hidden="true" />
+              <h3 style={{ margin: "0 0 6px" }}>{point.title}</h3>
+              <p className="muted" style={{ margin: 0 }}>
+                {point.copy}
+              </p>
+            </article>
           ))}
         </div>
       </div>
@@ -132,21 +298,9 @@ export function Why() {
 
 export function CTA() {
   return (
-    <section style={{ padding: "64px 0" }}>
-      <div style={{ maxWidth: 1280, margin: "0 auto", width: "94%" }}>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: 18,
-            background:
-              "linear-gradient(135deg, rgba(15,23,42,.75), rgba(30,41,59,.45))",
-            border: "1px solid rgba(148,163,184,.22)",
-            borderRadius: 16,
-            padding: 22,
-          }}
-        >
+    <section className="section">
+      <div className="container">
+        <div className="glass cta">
           <div>
             <h3
               style={{
@@ -155,24 +309,16 @@ export function CTA() {
                 fontWeight: 800,
               }}
             >
-              \u00BFListo para empezar?
+              ¿Listo para empezar?
             </h3>
-            <p style={{ margin: 0, color: "rgba(226,232,240,.75)" }}>
+            <p className="muted" style={{ margin: 0 }}>
               Entra a nuestro servidor y abre tu primer ticket.
             </p>
           </div>
           <a
-            href="/discord"
-            style={{
-              textDecoration: "none",
-              background:
-                "linear-gradient(135deg, #8b5cf6 0%, #3b82f6 50%, #06b6d4 100%)",
-              color: "#fff",
-              fontWeight: 700,
-              padding: ".75rem 1.25rem",
-              borderRadius: 999,
-              boxShadow: "0 8px 30px rgba(139,92,246,.25)",
-            }}
+            href={DISCORD_URL}
+            onClick={handleDiscordClick}
+            className="btn btn-gradient"
           >
             Entrar a Discord
           </a>
@@ -183,9 +329,11 @@ export function CTA() {
 }
 
 export function FAQ() {
+  const [open, setOpen] = useState<number | null>(0);
+
   return (
-    <section id="faq" style={{ padding: "64px 0" }}>
-      <div style={{ maxWidth: 780, margin: "0 auto", width: "94%" }}>
+    <section id="faq" className="section">
+      <div className="container" style={{ maxWidth: 780 }}>
         <h2
           style={{
             textAlign: "center",
@@ -196,48 +344,37 @@ export function FAQ() {
         >
           Preguntas frecuentes
         </h2>
-        <div
-          style={{
-            background:
-              "linear-gradient(135deg, rgba(15,23,42,.75), rgba(30,41,59,.45))",
-            border: "1px solid rgba(148,163,184,.22)",
-            borderRadius: 16,
-            padding: 16,
-          }}
-        >
-          {[
-            [
-              "\u00BFC\u00F3mo compro?",
-              "Haz clic en \"Entrar a Discord\" y abre un ticket. Nuestro bot te gu\u00EDa.",
-            ],
-            [
-              "\u00BFEs legal?",
-              "Vendemos servicios y suscripciones leg\u00EDtimas conforme a sus t\u00E9rminos.",
-            ],
-            [
-              "\u00BFTiempo de entrega?",
-              "Entre minutos y pocas horas, seg\u00FAn producto y stock.",
-            ],
-            [
-              "\u00BFM\u00E9todos de pago?",
-              "Consulta en el servidor; var\u00EDa por pa\u00EDs.",
-            ],
-          ].map(([q, a]) => (
-            <details
-              key={q}
-              style={{
-                borderBottom: "1px solid rgba(255,255,255,.12)",
-                padding: "10px 0",
-              }}
-            >
-              <summary style={{ cursor: "pointer", fontWeight: 600 }}>
-                {q}
-              </summary>
-              <p style={{ color: "rgba(226,232,240,.75)", marginTop: 6 }}>
-                {a}
-              </p>
-            </details>
-          ))}
+        <div className="glass">
+          {FAQS.map((item, index) => {
+            const isOpen = open === index;
+            return (
+              <div
+                key={item.q}
+                className={`faq-item${isOpen ? " open" : ""}`}
+              >
+                <button
+                  className="faq-q"
+                  type="button"
+                  onClick={() => setOpen(isOpen ? null : index)}
+                >
+                  <span>{item.q}</span>
+                  <svg
+                    className="chev"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </button>
+                <div className="faq-a">{item.a}</div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
@@ -246,48 +383,18 @@ export function FAQ() {
 
 export function TOSPreview() {
   return (
-    <section style={{ padding: "48px 0 64px" }}>
-      <div style={{ maxWidth: 900, margin: "0 auto", width: "94%" }}>
-        <div
-          style={{
-            background:
-              "linear-gradient(135deg, rgba(15,23,42,.75), rgba(30,41,59,.45))",
-            border: "1px solid rgba(148,163,184,.22)",
-            borderRadius: 16,
-            padding: 20,
-          }}
-        >
-          <h2 style={{ margin: "0 0 8px" }}>
-            T\u00E9rminos de Servicio (resumen)
-          </h2>
-          <p style={{ color: "rgba(226,232,240,.75)", margin: 0 }}>
-            Placeholder. P\u00E1same tus TOS y los pegamos aqu\u00ED
-            (reembolsos, garant\u00EDas, tiempos, etc.).
+    <section id="tos" className="section" style={{ paddingTop: 0 }}>
+      <div className="container" style={{ maxWidth: 900 }}>
+        <div className="glass" style={{ padding: 20 }}>
+          <h2 style={{ margin: "0 0 8px" }}>Términos de Servicio (resumen)</h2>
+          <p className="muted" style={{ margin: 0 }}>
+            Este es un placeholder. Pásame tus TOS y los pego aquí. Ejemplos:
+            políticas de reembolso, tiempos de entrega, garantías, restricciones
+            de uso, contacto de soporte.
           </p>
         </div>
       </div>
     </section>
-  );
-}
-
-function Card({ title, compact }: { title: string; compact?: boolean }) {
-  return (
-    <article
-      style={{
-        background:
-          "linear-gradient(135deg, rgba(15,23,42,.75), rgba(30,41,59,.45))",
-        border: "1px solid rgba(148,163,184,.22)",
-        borderRadius: 16,
-        padding: 14,
-      }}
-    >
-      <h3 style={{ margin: 0 }}>{title}</h3>
-      {!compact && (
-        <p style={{ color: "rgba(226,232,240,.75)", margin: "6px 0 0" }}>
-          Consultar
-        </p>
-      )}
-    </article>
   );
 }
 

@@ -1,40 +1,36 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { mountOrbs } from "./fx-orbs";
+import { mountStars } from "./fx-stars";
 
 export default function FXBackdrop() {
-  const ref = useRef<HTMLDivElement>(null);
+  const orbsRef = useRef<HTMLCanvasElement>(null);
+  const starsRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    if (!ref.current) return;
-    let raf = 0;
-    let t = 0;
-    const el = ref.current;
-    const loop = () => {
-      t += 0.4;
-      const hue = t % 360;
-      el.style.background = `radial-gradient(1200px 700px at 20% -10%, hsla(${
-        (hue + 220) % 360
-      },60%,18%,.6), transparent), radial-gradient(1200px 700px at 80% 120%, hsla(${
-        (hue + 40) % 360
-      },70%,20%,.45), transparent), #020817`;
-      raf = requestAnimationFrame(loop);
+    const orbsCanvas = orbsRef.current;
+    const starsCanvas = starsRef.current;
+
+    const disposeOrbs = orbsCanvas ? mountOrbs(orbsCanvas) : undefined;
+    const disposeStars = starsCanvas ? mountStars(starsCanvas) : undefined;
+
+    return () => {
+      disposeOrbs?.();
+      disposeStars?.();
     };
-    raf = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(raf);
   }, []);
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      style={{
-        position: "fixed",
-        inset: 0,
-        zIndex: -1,
-        filter: "saturate(120%)",
-        transition: "background 300ms linear",
-      }}
-    />
+    <div className="fx-root" aria-hidden="true">
+      <canvas ref={orbsRef} className="fx-canvas orbs" aria-hidden="true" />
+      <canvas ref={starsRef} className="fx-canvas stars" aria-hidden="true" />
+      <div className="veil" />
+      <div className="bg-wrap">
+        <div className="blob one" />
+        <div className="blob two" />
+        <div className="blob three" />
+      </div>
+    </div>
   );
 }

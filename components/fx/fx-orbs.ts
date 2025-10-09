@@ -25,7 +25,7 @@ export function mountOrbs(canvas: HTMLCanvasElement) {
       const dx = Math.cos(t*o.sp + o.off + i)*o.amp
       const dy = Math.sin(t*o.sp*0.9 + o.off - i)*o.amp
       let x = o.x + dx, y = o.y + dy
-      if(mx!==null){ x += (mx*DPR-x)*0.002; y += (my*DPR-y)*0.002 }
+      if(mx!==null && my!==null){ x += (mx*DPR-x)*0.002; y += (my*DPR-y)*0.002 }
       const g = ctx.createRadialGradient(x,y,0,x,y,o.r)
       g.addColorStop(0, `hsla(${(o.hue + t*0.05)%360}, 80%, 60%, 0.10)`)
       g.addColorStop(1, "rgba(0,0,0,0)")
