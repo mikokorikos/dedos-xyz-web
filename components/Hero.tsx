@@ -1,45 +1,70 @@
+const HERO_STATS = [
+  { value: "+10K", label: "Pedidos" },
+  { value: "Minutos", label: "Entrega media" },
+  { value: "4.9/5", label: "Satisfacción" },
+];
+
+const FEATURED = [
+  {
+    title: "Robux",
+    subtitle: "Carga segura",
+    img: "https://images.unsplash.com/photo-1605901309584-818e25960a8b?q=80&w=600&auto=format&fit=crop",
+    chips: [
+      { label: "Gaming", tone: "green" },
+      { label: "Best seller", tone: "gold" },
+    ],
+  },
+  {
+    title: "Discord Nitro",
+    subtitle: "Mensual y anual",
+    img: "https://images.unsplash.com/photo-1611162618071-b39a2ec4d1ef?q=80&w=600&auto=format&fit=crop",
+    chips: [
+      { label: "Discord", tone: "blue" },
+      { label: "Popular", tone: "pink" },
+    ],
+  },
+  {
+    title: "Decoraciones",
+    subtitle: "Banners, íconos, packs",
+    img: "https://images.unsplash.com/photo-1563986768817-257bf91c5753?q=80&w=600&auto=format&fit=crop",
+    chips: [{ label: "Estilo", tone: "pink" }],
+  },
+  {
+    title: "Streaming",
+    subtitle: "Crunchyroll, Netflix, Disney+",
+    img: "https://images.unsplash.com/photo-1598899134739-24b24967b74e?q=80&w=600&auto=format&fit=crop",
+    chips: [
+      { label: "HD", tone: "blue" },
+      { label: "Oferta", tone: "gold" },
+    ],
+  },
+  {
+    title: "VPNs",
+    subtitle: "Top providers",
+    img: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=600&auto=format&fit=crop",
+    chips: [{ label: "Privacidad", tone: "green" }],
+  },
+  {
+    title: "Boosts",
+    subtitle: "Niveles garantizados",
+    img: "https://images.unsplash.com/photo-1550439062-609e1531270e?q=80&w=600&auto=format&fit=crop",
+    chips: [
+      { label: "Discord", tone: "blue" },
+      { label: "Rápido", tone: "gold" },
+    ],
+  },
+];
+
 export default function Hero() {
   return (
-    <section style={{ padding: "52px 0 56px" }}>
-      <div style={{ maxWidth: 1280, margin: "0 auto", width: "94%" }}>
-        <div
-          style={{
-            background:
-              "linear-gradient(135deg, rgba(15,23,42,.75), rgba(30,41,59,.45))",
-            border: "1px solid rgba(148,163,184,.22)",
-            backdropFilter: "blur(18px) saturate(140%)",
-            borderRadius: 16,
-            padding: 26,
-          }}
-        >
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1.2fr 1fr",
-              gap: 28,
-              alignItems: "center",
-            }}
-          >
+    <section className="hero">
+      <div className="container">
+        <div className="glass" style={{ padding: 26 }}>
+          <div className="hero-grid">
             <div>
-              <span
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: 8,
-                  padding: "6px 10px",
-                  borderRadius: 999,
-                  background: "rgba(255,255,255,.12)",
-                  border: "1px solid rgba(255,255,255,.16)",
-                  fontSize: 13,
-                  color: "rgba(255,255,255,.92)",
-                }}
-              >
-                {"\u2728 Dise\u00F1o espectacular + microinteracciones"}
-              </span>
-
+              <span className="pill">✨ Diseño espectacular + microinteracciones</span>
               <h1
                 style={{
-                  fontFamily: "Space Grotesk, sans-serif",
                   fontSize: "clamp(32px, 6vw, 56px)",
                   lineHeight: 1.05,
                   margin: "12px 0 6px",
@@ -50,31 +75,22 @@ export default function Hero() {
                 Tu hub de{" "}
                 <span
                   style={{
-                    background:
-                      "linear-gradient(90deg,#a78bfa,#60a5fa,#67e8f9,#ec4899,#a78bfa)",
-                    backgroundSize: "300% 100%",
+                    background: "var(--grad)",
                     WebkitBackgroundClip: "text",
                     backgroundClip: "text",
                     color: "transparent",
-                    animation: "lettersShift 8s linear infinite",
-                  } as any}
+                  }}
                 >
                   suscripciones y gaming
                 </span>
               </h1>
-
               <p
-                style={{
-                  color: "rgba(226,232,240,.75)",
-                  fontSize: "clamp(14px, 2.2vw, 18px)",
-                  margin: "10px 0 18px",
-                }}
+                className="muted"
+                style={{ fontSize: "clamp(14px, 2.2vw, 18px)", margin: "10px 0 18px" }}
               >
-                Robux, Discord Nitro, boosts, decoraciones, streaming, VPNs y
-                m\u00E1s. Fondo algor\u00EDtmico con geometr\u00EDa sagrada y
-                galaxias vivas.
+                Robux, Discord Nitro, boosts, decoraciones, streaming, VPNs y más. Una página
+                principal enfocada en animaciones, degradados y confianza instantánea.
               </p>
-
               <div
                 style={{
                   display: "flex",
@@ -84,50 +100,42 @@ export default function Hero() {
                 }}
               >
                 <a
+                  className="btn btn-primary"
                   href="https://discord.gg/dedos"
                   target="_blank"
                   rel="noopener"
-                  style={{
-                    textDecoration: "none",
-                    background: "#fff",
-                    color: "#0b1224",
-                    fontWeight: 700,
-                    padding: ".75rem 1.25rem",
-                    borderRadius: 999,
-                  }}
                 >
                   Ir al servidor
                 </a>
                 <a
-                  href="#catalogo"
+                  className="btn"
                   style={{
-                    textDecoration: "none",
                     background: "transparent",
                     border: "1px solid rgba(255,255,255,.2)",
                     color: "#fff",
-                    padding: ".75rem 1.25rem",
-                    borderRadius: 999,
                   }}
+                  href="#catalogo"
                 >
-                  Ver cat\u00E1logo
+                  Ver catálogo
                 </a>
-                <span className="pill">{"\u2714 Garant\u00EDa & soporte"}</span>
-                <span className="pill">{"\uD83E\uDD1D Middleman moderno"}</span>
-                <span className="pill">{"\u23F1\uFE0F Trades 24/7"}</span>
+                <span className="pill">✔ Garantía & soporte</span>
+                <span className="pill">🤝 Middleman moderno</span>
+                <span className="pill">⏱️ Trades 24/7</span>
+              </div>
+              <div className="stats">
+                {HERO_STATS.map((stat) => (
+                  <div className="stat" key={stat.label}>
+                    <div style={{ fontWeight: 800, fontSize: 22 }}>{stat.value}</div>
+                    <div className="muted" style={{ fontSize: 12 }}>
+                      {stat.label}
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
-
             <div>
-              <div
-                style={{
-                  background:
-                    "linear-gradient(135deg, rgba(15,23,42,.75), rgba(30,41,59,.45))",
-                  border: "1px solid rgba(148,163,184,.22)",
-                  backdropFilter: "blur(18px) saturate(140%)",
-                  borderRadius: 16,
-                  padding: 16,
-                }}
-              >
+              <div className="glass" style={{ padding: 16, position: "relative" }}>
+                <div className="glow" />
                 <div
                   style={{
                     display: "grid",
@@ -135,13 +143,27 @@ export default function Hero() {
                     gap: 12,
                   }}
                 >
-                  <MiniCard title="Robux" subtitle="Carga segura" />
-                  <MiniCard title="Discord Nitro" subtitle="Mensual y anual" />
-                  <MiniCard title="Decoraciones" subtitle="Banners, \u00EDconos" />
-                  <MiniCard
-                    title="Streaming"
-                    subtitle="Crunchyroll, Netflix, Disney+"
-                  />
+                  {FEATURED.map((item) => (
+                    <article className="card" key={item.title}>
+                      <div className="glow" aria-hidden="true" />
+                      <div className="product">
+                        <img src={item.img} alt={item.title} loading="lazy" />
+                        <div>
+                          <h3 style={{ margin: "0 0 4px" }}>{item.title}</h3>
+                          <div className="muted" style={{ fontSize: 13 }}>
+                            {item.subtitle}
+                          </div>
+                          <div className="chips">
+                            {item.chips.map((chip) => (
+                              <span className={`chip ${chip.tone}`} key={chip.label}>
+                                {chip.label}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </article>
+                  ))}
                 </div>
               </div>
             </div>
@@ -149,22 +171,5 @@ export default function Hero() {
         </div>
       </div>
     </section>
-  );
-}
-
-function MiniCard({ title, subtitle }: { title: string; subtitle: string }) {
-  return (
-    <article
-      style={{
-        background:
-          "linear-gradient(135deg, rgba(15,23,42,.75), rgba(30,41,59,.45))",
-        border: "1px solid rgba(148,163,184,.22)",
-        borderRadius: 16,
-        padding: 12,
-      }}
-    >
-      <h3 style={{ margin: "0 0 4px" }}>{title}</h3>
-      <small style={{ color: "rgba(226,232,240,.75)" }}>{subtitle}</small>
-    </article>
   );
 }

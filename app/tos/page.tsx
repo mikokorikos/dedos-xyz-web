@@ -1,26 +1,28 @@
-export const metadata = { title: "T\u00E9rminos de Servicio \u2014 Dedos Store" };
+import Footer from "@/components/Footer";
+import FXBackdrop from "@/components/fx/FXBackdrop";
+import Navbar from "@/components/Navbar";
+
+export const metadata = { title: "Términos de Servicio — Dedos Store" };
 
 export default function TOSPage() {
   return (
-    <main style={{ padding: "48px 0 64px" }}>
-      <div style={{ maxWidth: 900, margin: "0 auto", width: "94%" }}>
-        <div
-          style={{
-            background:
-              "linear-gradient(135deg, rgba(15,23,42,.75), rgba(30,41,59,.45))",
-            border: "1px solid rgba(148,163,184,.22)",
-            borderRadius: 16,
-            padding: 20,
-            color: "#fff",
-          }}
-        >
-          <h1 style={{ marginTop: 0 }}>T\u00E9rminos de Servicio</h1>
-          <p style={{ opacity: 0.8 }}>
-            Pasa tu texto legal y lo pegamos aqu\u00ED (reembolsos, garant\u00EDas,
-            tiempos, restricciones, contacto\u2026).
-          </p>
+    <>
+      <FXBackdrop />
+      <Navbar />
+      <main className="section" style={{ paddingTop: 48 }}>
+        <div className="container" style={{ maxWidth: 900 }}>
+          <div className="glass" style={{ padding: 24 }}>
+            <h1 style={{ marginTop: 0, fontSize: "clamp(28px, 4vw, 42px)" }}>
+              Términos de Servicio
+            </h1>
+            <p className="muted" style={{ marginTop: 12 }}>
+              Pasa tu texto legal y lo pegamos aquí (reembolsos, garantías, tiempos,
+              restricciones, contacto, etc.).
+            </p>
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
+      <Footer />
+    </>
   );
 }

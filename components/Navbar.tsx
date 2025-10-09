@@ -1,102 +1,94 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
+
+const NAV_ITEMS = [
+  { label: "Catálogo", href: "#catalogo" },
+  { label: "¿Por qué?", href: "#por-que" },
+  { label: "Servicios", href: "#servicios" },
+  { label: "FAQ", href: "#faq" },
+  { label: "TOS", href: "/tos" },
+  { label: "Grupo de Roblox", href: "/roblox" },
+];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const isHome = pathname === "/" || pathname === "";
 
   return (
-    <header style={{ position: "sticky", top: 0, zIndex: 50 }}>
-      <div style={{ maxWidth: 1280, margin: "0 auto", width: "94%" }}>
-        <div
-          style={{
-            background:
-              "linear-gradient(135deg, rgba(15,23,42,.75), rgba(30,41,59,.45))",
-            border: "1px solid rgba(148,163,184,.22)",
-            backdropFilter: "blur(18px) saturate(140%)",
-            borderRadius: 16,
-            padding: "10px 14px",
-            marginTop: 10,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: 16,
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 10,
-              fontWeight: 900,
-              letterSpacing: "-.02em",
-            }}
-          >
-            <span
-              style={{
-                width: 20,
-                height: 20,
-                borderRadius: 8,
-                background:
-                  "linear-gradient(135deg, #8b5cf6 0%, #3b82f6 50%, #06b6d4 100%)",
-                boxShadow: "0 0 24px rgba(139,92,246,.45)",
-                display: "inline-block",
-              }}
-            />
+    <header className="nav">
+      <div className="container">
+        <div className="glass nav-inner" style={{ position: "relative" }}>
+          <div className="brand">
+            <span className="dot" aria-hidden="true" />
             <span>
               dedos <span style={{ opacity: 0.7 }}>store</span>
             </span>
           </div>
 
           <nav
-            style={{
-              display: open ? "flex" : "none",
-              gap: 14,
-              alignItems: "center",
-              flexWrap: "wrap",
-            }}
             className="nav-links"
             aria-label="Principal"
+            data-open={open}
+            id="primary-navigation"
           >
-            <a href="#catalogo">Cat\u00E1logo</a>
-            <a href="#por-que">\u00BFPor qu\u00E9?</a>
-            <a href="#servicios">Servicios</a>
-            <a href="#faq">FAQ</a>
-            <Link href="/tos">TOS</Link>
-            <Link href="/roblox">Grupo de Roblox</Link>
+            {NAV_ITEMS.map((item) => {
+              const href = item.href.startsWith("#")
+                ? isHome
+                  ? item.href
+                  : `/${item.href}`
+                : item.href;
+
+              if (href.startsWith("http")) {
+                return (
+                  <a
+                    key={item.href}
+                    href={href}
+                    onClick={() => setOpen(false)}
+                  >
+                    {item.label}
+                  </a>
+                );
+              }
+
+              return (
+                <Link key={item.href} href={href} onClick={() => setOpen(false)}>
+                  {item.label}
+                </Link>
+              );
+            })}
+            <a
+              href="https://discord.gg/dedos"
+              target="_blank"
+              rel="noopener"
+              className="btn btn-gradient nav-cta"
+            >
+              Entrar a Discord →
+            </a>
           </nav>
 
-          <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+          <div className="navbar-actions">
             <button
-              aria-label="Abrir men\u00FA"
-              onClick={() => setOpen(!open)}
-              style={{
-                background: "transparent",
-                border: 0,
-                color: "#fff",
-                fontSize: 22,
-                display: "inline-flex",
-              }}
+              aria-label="Abrir menú"
+              className="nav-toggle"
+              onClick={() => setOpen((prev) => !prev)}
+              aria-expanded={open}
+              aria-controls="primary-navigation"
+              type="button"
             >
-              {"\u2630"}
+              ☰
             </button>
-
-            <Link
-              href="/discord"
-              style={{
-                textDecoration: "none",
-                background:
-                  "linear-gradient(135deg, #8b5cf6 0%, #3b82f6 50%, #06b6d4 100%)",
-                color: "#fff",
-                fontWeight: 700,
-                padding: ".6rem 1rem",
-                borderRadius: 999,
-                boxShadow: "0 8px 30px rgba(139,92,246,.25)",
-              }}
+            <a
+              href="https://discord.gg/dedos"
+              target="_blank"
+              rel="noopener"
+              className="btn btn-gradient"
             >
-              Entrar a Discord {"\u2192"}
-            </Link>
+              Entrar a Discord →
+            </a>
           </div>
         </div>
       </div>
