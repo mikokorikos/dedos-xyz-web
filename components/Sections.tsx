@@ -197,6 +197,13 @@ export function Catalog() {
                     <strong className="text-white">Consultar</strong>
                   </div>
                 </div>
+                <a
+                  className="mt-auto inline-flex items-center justify-center gap-2 text-sm font-semibold text-cyan-200 transition hover:text-cyan-100"
+                  href={DISCORD_URL}
+                  onClick={handleDiscordClick}
+                >
+                  Comprar en Discord →
+                </a>
               </div>
               <div className="mt-auto flex flex-col gap-4 pt-6">
                 <p className="text-sm leading-relaxed text-slate-200/75">
@@ -300,7 +307,7 @@ export function FAQ() {
             return (
               <div key={item.q} className="border-b border-white/10 last:border-0">
                 <button
-                  className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left text-base font-semibold text-white transition hover:text-cyan-200"
+                  className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left text-base font-semibold text-white transition hover:text-cyan-200"
                   onClick={() => setOpen(isOpen ? null : index)}
                   type="button"
                 >
@@ -308,7 +315,7 @@ export function FAQ() {
                   <svg
                     aria-hidden="true"
                     className={cn(
-                      "h-5 w-5 transform text-slate-200/80 transition",
+                      "h-5 w-5 transform text-slate-200/80 transition duration-300",
                       isOpen ? "rotate-90 text-cyan-200" : ""
                     )}
                     fill="none"

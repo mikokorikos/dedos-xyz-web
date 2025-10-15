@@ -111,13 +111,13 @@ export default function Hero() {
                   ⏱️ Trades 24/7
                 </span>
               </div>
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                 {HERO_STATS.map((stat) => (
                   <div
-                    className="rounded-2xl border border-white/10 bg-white/5 p-4 text-center shadow-inner"
+                    className="rounded-2xl border border-white/10 bg-white/5 p-4 text-center shadow-[0_12px_28px_rgba(8,8,18,0.4)]"
                     key={stat.label}
                   >
-                    <div className="text-2xl font-extrabold text-white">{stat.value}</div>
+                    <div className="text-2xl font-extrabold text-white sm:text-3xl">{stat.value}</div>
                     <div className="text-xs uppercase tracking-[0.14em] text-slate-200/70">{stat.label}</div>
                   </div>
                 ))}
@@ -129,8 +129,8 @@ export default function Hero() {
                   "relative rounded-[22px] border border-white/10 bg-white/5 p-5 shadow-[0_22px_52px_rgba(8,8,18,0.5)] backdrop-blur-xl backdrop-saturate-150"
                 )}
               >
-                <div className="pointer-events-none absolute inset-0 rounded-[22px] border border-transparent">
-                  <div className="absolute inset-[-2px] rounded-[24px] bg-gradient-to-r from-fuchsia-400 via-violet-400 to-cyan-300 opacity-0 blur-xl transition-opacity duration-200" />
+                <div className="pointer-events-none absolute inset-0 rounded-[26px] border border-transparent">
+                  <div className="absolute inset-[-3%] rounded-[30px] bg-gradient-to-r from-fuchsia-400 via-violet-400 to-cyan-300 opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-100" />
                 </div>
                 <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3 xl:gap-8 justify-center">
                   {FEATURED.map((item) => (

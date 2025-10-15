@@ -94,7 +94,7 @@ export default function PlanCard({ plan }: PlanCardProps) {
         </header>
         <div
           aria-label={`Detalles del plan ${plan.title}`}
-          className="mt-5 flex flex-wrap items-center gap-3"
+          className="mt-6 flex flex-wrap items-center gap-3"
           role="list"
         >
           <span

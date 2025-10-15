@@ -380,6 +380,7 @@ export default async function RobuxPlansPage() {
                       <p className="text-base leading-relaxed text-slate-200/80">{value.description}</p>
                     </div>
                   </div>
+                  <span className="mt-6 text-sm font-semibold uppercase tracking-[0.14em] text-slate-200/60">Cobertura total</span>
                 </article>
               ))}
             </div>
@@ -413,6 +414,7 @@ export default async function RobuxPlansPage() {
                       <p className="text-base leading-relaxed text-slate-200/80">{step.description}</p>
                     </div>
                   </div>
+                  <span className="mt-6 text-sm font-semibold uppercase tracking-[0.14em] text-slate-200/60">Paso garantizado</span>
                 </article>
               ))}
             </div>
