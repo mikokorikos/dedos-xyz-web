@@ -34,7 +34,7 @@ export default function Navbar() {
       <div className={cn(layoutContainerClass, "py-4")}>
         <div
           className={cn(
-            "relative flex items-center justify-between gap-4 rounded-[22px] border border-white/10 bg-white/5 px-5 py-3 shadow-[0_18px_40px_rgba(8,8,18,0.45)] backdrop-blur-xl backdrop-saturate-150"
+            "relative flex items-center justify-between gap-4 rounded-[28px] border border-white/10 bg-white/5 px-5 py-3 shadow-[0_22px_52px_rgba(8,8,18,0.5)] backdrop-blur-xl backdrop-saturate-150"
           )}
         >
           <div className="flex items-center gap-3 font-extrabold uppercase tracking-tight">
@@ -49,7 +49,7 @@ export default function Navbar() {
 
           <nav
             className={cn(
-              "absolute left-0 right-0 top-full mt-3 flex flex-col gap-4 rounded-2xl border border-white/10 bg-[#080812]/95 p-5 shadow-xl backdrop-blur-xl md:static md:mt-0 md:flex-row md:items-center md:border-0 md:bg-transparent md:p-0 md:shadow-none",
+              "absolute left-0 right-0 top-full mt-3 flex flex-col gap-4 rounded-2xl border border-white/10 bg-[#080812]/95 p-5 shadow-[0_22px_52px_rgba(8,8,18,0.55)] backdrop-blur-xl md:static md:mt-0 md:flex-row md:items-center md:border-0 md:bg-transparent md:p-0 md:shadow-none",
               open ? "flex" : "hidden",
               "md:flex"
             )}
@@ -64,7 +64,7 @@ export default function Navbar() {
                     : `/${item.href}`
                   : item.href;
 
-                const linkClass = "text-sm font-medium text-slate-200/80 transition hover:text-cyan-200";
+                const linkClass = "text-sm font-medium text-slate-200/80 transition-colors duration-200 hover:text-white";
 
                 if (href.startsWith("http")) {
                   return (

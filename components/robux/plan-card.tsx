@@ -36,15 +36,12 @@ const highlightToneStyles: Record<PlanHighlight["tone"], string> = {
   gold: "shadow-[0_0_28px_rgba(251,191,36,0.45)]"
 };
 
-const columnLayoutClass =
-  "mt-6 grid flex-1 gap-6 xl:grid-cols-[minmax(0,0.58fr)_minmax(0,0.42fr)]";
-
 export default function PlanCard({ plan }: PlanCardProps) {
   return (
     <article
       className={cn(
-        "group relative flex h-full flex-col overflow-hidden rounded-[26px] border border-white/10 bg-white/5 p-7 shadow-[0_28px_60px_rgba(8,8,18,0.55)] backdrop-blur-xl backdrop-saturate-150 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-white/20 hover:shadow-[0_44px_90px_rgba(8,8,18,0.65)]",
-        plan.highlight ? "border-white/30" : ""
+        "group relative mx-auto flex min-h-[620px] max-w-[420px] flex-col justify-between rounded-[32px] border border-white/10 bg-white/5 p-6 shadow-[0_22px_52px_rgba(8,8,18,0.5)] backdrop-blur-xl backdrop-saturate-150 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-white/20 hover:shadow-[0_32px_70px_rgba(8,8,18,0.6)] md:p-7 lg:p-8",
+        plan.highlight ? "border-white/25" : ""
       )}
     >
       <div
@@ -52,7 +49,7 @@ export default function PlanCard({ plan }: PlanCardProps) {
         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
       >
         <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-white/10" />
-        <div className="absolute -top-24 right-0 h-56 w-56 rounded-full bg-gradient-to-br from-white/20 via-white/10 to-transparent blur-3xl" />
+        <div className="absolute -top-[12vh] right-[4vw] h-[28vh] w-[28vw] rounded-full bg-gradient-to-br from-white/25 via-white/10 to-transparent blur-[140px]" />
       </div>
       {plan.highlight ? (
         <span
@@ -66,7 +63,7 @@ export default function PlanCard({ plan }: PlanCardProps) {
         </span>
       ) : null}
       <div className="relative flex h-full flex-col">
-        <header className="flex flex-col gap-6 border-b border-white/10 pb-6 lg:flex-row lg:items-center lg:justify-between">
+        <header className="space-y-6 border-b border-white/10 pb-6">
           <div className="flex items-start gap-4">
             <span
               aria-hidden="true"
@@ -77,20 +74,20 @@ export default function PlanCard({ plan }: PlanCardProps) {
             >
               {PLAN_ICONS[plan.icon]}
             </span>
-            <div className="space-y-1.5">
-              <h2 className="text-xl font-semibold text-white lg:text-2xl">{plan.title}</h2>
+            <div className="space-y-2">
+              <h2 className="text-2xl font-semibold text-white">{plan.title}</h2>
               <p className="text-sm text-slate-200/75">{plan.tagline}</p>
             </div>
           </div>
-          <div className="flex flex-col items-start gap-1 text-left lg:items-end">
+          <div className="flex flex-col gap-1 text-left">
             <span className="text-xs uppercase tracking-[0.16em] text-slate-200/60">Total estimado</span>
-            <strong className="text-3xl font-extrabold text-white lg:text-4xl">{plan.priceMXNLabel}</strong>
+            <strong className="text-4xl font-extrabold text-white">{plan.priceMXNLabel}</strong>
             <span className="text-sm text-slate-200/70">{plan.priceUSDLabel}</span>
           </div>
         </header>
         <div
           aria-label={`Detalles del plan ${plan.title}`}
-          className="mt-5 flex flex-wrap items-center gap-3"
+          className="mt-6 flex flex-wrap items-center gap-3"
           role="list"
         >
           <span
@@ -103,33 +100,40 @@ export default function PlanCard({ plan }: PlanCardProps) {
             {plan.amountLabel}
           </span>
         </div>
-        <div className={columnLayoutClass}>
-          <div className="flex flex-col gap-6">
-            <p className="text-sm leading-relaxed text-slate-200/85">{plan.description}</p>
-            <section className="space-y-3 rounded-2xl border border-white/10 bg-white/5 p-5 transition-colors duration-300 group-hover:border-white/20 group-hover:bg-white/10">
-              <h3 className="text-[13px] font-semibold uppercase tracking-[0.16em] text-slate-200/70">Entrega</h3>
-              <p className="text-sm text-slate-200/85">{plan.delivery}</p>
-            </section>
-            {plan.cta ? (
-              <a
-                className={cn(
-                  gradientButtonClass,
-                  "inline-flex w-full justify-center text-sm shadow-[0_16px_32px_rgba(56,189,248,0.25)] transition hover:shadow-[0_24px_44px_rgba(56,189,248,0.35)]"
-                )}
-                href={plan.cta.href}
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                {plan.cta.label}
-              </a>
-            ) : null}
-          </div>
-          <div className="space-y-5">
-            <section className="space-y-3 rounded-2xl border border-white/10 bg-white/5 p-5 transition-colors duration-300 group-hover:border-white/20 group-hover:bg-white/10">
-              <h3 className="text-[13px] font-semibold uppercase tracking-[0.16em] text-slate-200/70">Requisitos</h3>
+        <div className="mt-6 space-y-6">
+          <p className="text-sm leading-relaxed text-slate-200/85">{plan.description}</p>
+          <section className="space-y-3 rounded-[22px] border border-white/10 bg-white/5 p-5 transition-colors duration-300 group-hover:border-white/20 group-hover:bg-white/10">
+            <h3 className="text-[13px] font-semibold uppercase tracking-[0.16em] text-slate-200/70">Entrega</h3>
+            <p className="text-sm text-slate-200/85">{plan.delivery}</p>
+          </section>
+          <section className="space-y-3 rounded-[22px] border border-white/10 bg-white/5 p-5 transition-colors duration-300 group-hover:border-white/20 group-hover:bg-white/10">
+            <h3 className="text-[13px] font-semibold uppercase tracking-[0.16em] text-slate-200/70">Requisitos</h3>
+            <ul className="grid gap-3 text-sm text-slate-200/85">
+              {plan.requirements.map((item) => (
+                <li className="flex items-start gap-3" key={item}>
+                  <span aria-hidden="true" className="mt-1 text-cyan-200">
+                    <svg className="h-4 w-4" viewBox="0 0 24 24">
+                      <path
+                        d="m5 12 4 4 10-10"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                      />
+                    </svg>
+                  </span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+          {plan.extras ? (
+            <section className="space-y-3 rounded-[22px] border border-white/10 bg-white/5 p-5 transition-colors duration-300 group-hover:border-white/20 group-hover:bg-white/10">
+              <h3 className="text-[13px] font-semibold uppercase tracking-[0.16em] text-slate-200/70">Extras</h3>
               <ul className="grid gap-3 text-sm text-slate-200/85">
-                {plan.requirements.map((item) => (
-                  <li className="flex items-start gap-3" key={item}>
+                {plan.extras.map((extra) => (
+                  <li className="flex items-start gap-3" key={extra}>
                     <span aria-hidden="true" className="mt-1 text-cyan-200">
                       <svg className="h-4 w-4" viewBox="0 0 24 24">
                         <path
@@ -142,37 +146,26 @@ export default function PlanCard({ plan }: PlanCardProps) {
                         />
                       </svg>
                     </span>
-                    <span>{item}</span>
+                    <span>{extra}</span>
                   </li>
                 ))}
               </ul>
             </section>
-            {plan.extras ? (
-              <section className="space-y-3 rounded-2xl border border-white/10 bg-white/5 p-5 transition-colors duration-300 group-hover:border-white/20 group-hover:bg-white/10">
-                <h3 className="text-[13px] font-semibold uppercase tracking-[0.16em] text-slate-200/70">Extras</h3>
-                <ul className="grid gap-3 text-sm text-slate-200/85">
-                  {plan.extras.map((extra) => (
-                    <li className="flex items-start gap-3" key={extra}>
-                      <span aria-hidden="true" className="mt-1 text-cyan-200">
-                        <svg className="h-4 w-4" viewBox="0 0 24 24">
-                          <path
-                            d="m5 12 4 4 10-10"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                          />
-                        </svg>
-                      </span>
-                      <span>{extra}</span>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            ) : null}
-          </div>
+          ) : null}
         </div>
+        {plan.cta ? (
+          <a
+            className={cn(
+              gradientButtonClass,
+              "mt-auto inline-flex w-full justify-center text-sm shadow-[0_16px_32px_rgba(56,189,248,0.25)] transition hover:shadow-[0_24px_44px_rgba(56,189,248,0.35)]"
+            )}
+            href={plan.cta.href}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            {plan.cta.label}
+          </a>
+        ) : null}
       </div>
     </article>
   );
