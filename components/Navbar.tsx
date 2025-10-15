@@ -5,6 +5,12 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 import { openDiscordInvite } from "@/lib/deepLink";
+import {
+  cn,
+  gradientButtonClass,
+  layoutContainerClass,
+  subtleButtonClass,
+} from "@/lib/utils";
 
 const NAV_ITEMS = [
   { label: "Catálogo", href: "#catalogo" },
@@ -24,78 +30,96 @@ export default function Navbar() {
   const isHome = pathname === "/" || pathname === "";
 
   return (
-    <header className="nav">
-      <div className="container">
-        <div className="glass nav-inner" style={{ position: "relative" }}>
-          <div className="brand">
-            <span className="dot" aria-hidden="true" />
-            <span>
-              dedos <span style={{ opacity: 0.7 }}>store</span>
+    <header className="sticky top-0 z-50 bg-[#080812]/70 backdrop-blur-xl">
+      <div className={cn(layoutContainerClass, "py-4")}>
+        <div
+          className={cn(
+            "relative flex items-center justify-between gap-4 rounded-[22px] border border-white/10 bg-white/5 px-5 py-3 shadow-[0_18px_40px_rgba(8,8,18,0.45)] backdrop-blur-xl backdrop-saturate-150"
+          )}
+        >
+          <div className="flex items-center gap-3 font-extrabold uppercase tracking-tight">
+            <span
+              aria-hidden="true"
+              className="inline-flex h-5 w-5 animate-spinSlow rounded-full bg-gradient-to-br from-fuchsia-400 via-violet-400 to-cyan-300"
+            />
+            <span className="text-sm sm:text-base">
+              dedos <span className="opacity-70">store</span>
             </span>
           </div>
 
           <nav
-            className="nav-links"
+            className={cn(
+              "absolute left-0 right-0 top-full mt-3 flex flex-col gap-4 rounded-2xl border border-white/10 bg-[#080812]/95 p-5 shadow-xl backdrop-blur-xl md:static md:mt-0 md:flex-row md:items-center md:border-0 md:bg-transparent md:p-0 md:shadow-none",
+              open ? "flex" : "hidden",
+              "md:flex"
+            )}
             aria-label="Principal"
-            data-open={open}
             id="primary-navigation"
           >
-            {NAV_ITEMS.map((item) => {
-              const href = item.href.startsWith("#")
-                ? isHome
-                  ? item.href
-                  : `/${item.href}`
-                : item.href;
+            <ul className="flex flex-col gap-3 md:flex-row md:items-center md:gap-5">
+              {NAV_ITEMS.map((item) => {
+                const href = item.href.startsWith("#")
+                  ? isHome
+                    ? item.href
+                    : `/${item.href}`
+                  : item.href;
 
-              if (href.startsWith("http")) {
+                const linkClass = "text-sm font-medium text-slate-200/80 transition hover:text-cyan-200";
+
+                if (href.startsWith("http")) {
+                  return (
+                    <li key={item.href}>
+                      <a
+                        className={linkClass}
+                        href={href}
+                        onClick={() => setOpen(false)}
+                      >
+                        {item.label}
+                      </a>
+                    </li>
+                  );
+                }
+
                 return (
-                  <a
-                    key={item.href}
-                    href={href}
-                    onClick={() => setOpen(false)}
-                  >
-                    {item.label}
-                  </a>
+                  <li key={item.href}>
+                    <Link className={linkClass} href={href} onClick={() => setOpen(false)}>
+                      {item.label}
+                    </Link>
+                  </li>
                 );
-              }
-
-              return (
-                <Link key={item.href} href={href} onClick={() => setOpen(false)}>
-                  {item.label}
-                </Link>
-              );
-            })}
+              })}
+            </ul>
             <a
+              className={cn(gradientButtonClass, "justify-center text-sm md:hidden")}
               href={DISCORD_URL}
               onClick={(event) => {
                 event.preventDefault();
                 openDiscordInvite(DISCORD_INVITE);
                 setOpen(false);
               }}
-              className="btn btn-gradient nav-cta"
             >
               Entrar a Discord →
             </a>
           </nav>
 
-          <div className="navbar-actions">
+          <div className="flex items-center gap-3">
             <button
-              aria-label="Abrir menú"
-              className="nav-toggle"
-              onClick={() => setOpen((prev) => !prev)}
-              aria-expanded={open}
               aria-controls="primary-navigation"
+              aria-expanded={open}
+              aria-label="Abrir menú"
+              className={cn(subtleButtonClass, "px-3 py-2 text-base md:hidden")}
+              onClick={() => setOpen((prev) => !prev)}
               type="button"
             >
               ☰
             </button>
             <a
+              className={cn(gradientButtonClass, "hidden text-sm md:inline-flex")}
               href={DISCORD_URL}
               onClick={(event) => {
                 event.preventDefault();
                 openDiscordInvite(DISCORD_INVITE);
               }}
-              className="btn btn-gradient"
             >
               Entrar a Discord →
             </a>
