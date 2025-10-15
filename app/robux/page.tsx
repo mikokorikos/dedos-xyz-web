@@ -304,10 +304,10 @@ export default async function RobuxPlansPage() {
       <main className="pb-24">
         <section className="py-20">
           <div className={layoutContainerClass}>
-            <div className="relative overflow-hidden rounded-[32px] border border-white/10 bg-white/5 px-8 py-14 shadow-[0_28px_70px_rgba(8,8,18,0.55)] backdrop-blur-xl backdrop-saturate-150 sm:px-12">
+            <div className="relative rounded-[36px] border border-white/10 bg-white/5 px-8 py-14 shadow-[0_22px_52px_rgba(8,8,18,0.5)] backdrop-blur-xl backdrop-saturate-150 transition-all duration-300 ease-out sm:px-12 lg:px-16">
               <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-                <div className="absolute -left-24 top-0 h-72 w-72 rounded-full bg-gradient-to-br from-fuchsia-400/30 via-violet-400/10 to-transparent blur-3xl" />
-                <div className="absolute -bottom-32 right-0 h-80 w-80 rounded-full bg-gradient-to-tr from-cyan-400/25 via-sky-300/10 to-transparent blur-3xl" />
+                <div className="absolute -left-[12vw] top-[4vh] h-[40vh] w-[40vw] rounded-full bg-gradient-to-br from-fuchsia-400/30 via-violet-400/10 to-transparent blur-[140px]" />
+                <div className="absolute -right-[14vw] bottom-[6vh] h-[42vh] w-[44vw] rounded-full bg-gradient-to-tr from-cyan-400/25 via-sky-300/10 to-transparent blur-[150px]" />
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.08),_transparent_55%)]" />
               </div>
               <div className="relative max-w-3xl">
@@ -334,19 +334,19 @@ export default async function RobuxPlansPage() {
           <div className={layoutContainerClass}>
             <div className="mb-12 space-y-3 text-center">
               <span className={pillClass}>Nuestros planes</span>
-              <h2 className="text-3xl font-extrabold text-white sm:text-4xl">Tres formas seguras de conseguir tus Robux</h2>
-              <p className="mx-auto max-w-2xl text-base leading-relaxed text-slate-200/80">
+              <h2 className="text-4xl font-extrabold text-white sm:text-5xl">Tres formas seguras de conseguir tus Robux</h2>
+              <p className="mx-auto max-w-2xl text-base leading-relaxed text-slate-200/80 sm:text-lg">
                 Elegimos los métodos que nos permiten garantizar transparencia en cada movimiento, con seguimiento en vivo y soporte inmediato.
               </p>
             </div>
-            <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3 xl:gap-10">
+            <div className="grid justify-center gap-8 md:grid-cols-2 xl:grid-cols-3 xl:gap-10">
               {plansWithUsd.map((plan) => (
                 <PlanCard key={plan.id} plan={plan} />
               ))}
             </div>
-            <div className="mt-10 flex flex-col gap-3 rounded-2xl border border-white/10 bg-white/5 px-6 py-5 text-sm text-slate-200/80 sm:flex-row sm:items-center sm:justify-between">
-              <p className="font-medium text-white/90">{exchangeNotice}</p>
-              <p className="max-w-xl">
+            <div className="mt-10 flex flex-col gap-4 rounded-[28px] border border-white/10 bg-white/5 px-6 py-6 text-sm text-slate-200/80 shadow-[0_22px_52px_rgba(8,8,18,0.5)] sm:flex-row sm:items-center sm:justify-between sm:px-8">
+              <p className="font-medium text-white/90 sm:text-base">{exchangeNotice}</p>
+              <p className="max-w-xl sm:text-base">
                 Los precios en dólares se recalculan automáticamente con datos de Open&nbsp;ER&nbsp;API y pueden variar ligeramente al momento de pagar.
               </p>
             </div>
@@ -357,27 +357,28 @@ export default async function RobuxPlansPage() {
           <div className={layoutContainerClass}>
             <div className="mb-12 space-y-3 text-center">
               <span className={pillClass}>¿Por qué Dedos.xyz?</span>
-              <h2 className="text-3xl font-extrabold text-white sm:text-4xl">Beneficios pensados para tu próxima compra</h2>
-              <p className="mx-auto max-w-2xl text-base leading-relaxed text-slate-200/80">
+              <h2 className="text-4xl font-extrabold text-white sm:text-5xl">Beneficios pensados para tu próxima compra</h2>
+              <p className="mx-auto max-w-2xl text-base leading-relaxed text-slate-200/80 sm:text-lg">
                 No solo recargamos Robux: te acompañamos con procesos claros, soporte inmediato y transparencia en cada paso.
               </p>
             </div>
-            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            <div className="grid justify-center gap-8 md:grid-cols-2 xl:grid-cols-3 xl:gap-10">
               {VALUE_POINTS.map((value) => (
                 <article
                   key={value.id}
-                  className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6 text-left shadow-[0_22px_52px_rgba(8,8,18,0.5)] transition-all duration-300 hover:-translate-y-1 hover:border-white/20 hover:shadow-[0_32px_70px_rgba(8,8,18,0.6)]"
+                  className="group relative flex min-h-[260px] max-w-[420px] flex-col justify-between rounded-[28px] border border-white/10 bg-white/5 p-6 text-left shadow-[0_22px_52px_rgba(8,8,18,0.5)] transition-all duration-300 hover:-translate-y-1 hover:border-white/20 hover:shadow-[0_32px_70px_rgba(8,8,18,0.6)] md:p-7"
                 >
                   <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                     <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-white/10" />
                   </div>
-                  <div className="relative">
+                  <div className="relative space-y-4">
                     <span className="mb-4 inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-white/15 bg-white/10 text-cyan-200 shadow-[0_12px_28px_rgba(8,8,18,0.45)]">
                       {value.icon}
                     </span>
                     <h3 className="text-lg font-semibold text-white">{value.title}</h3>
                     <p className="mt-2 text-sm leading-relaxed text-slate-200/80">{value.description}</p>
                   </div>
+                  <span className="mt-6 text-sm font-semibold uppercase tracking-[0.14em] text-slate-200/60">Cobertura total</span>
                 </article>
               ))}
             </div>
@@ -388,27 +389,28 @@ export default async function RobuxPlansPage() {
           <div className={layoutContainerClass}>
             <div className="mb-12 space-y-3 text-center">
               <span className={pillClass}>Proceso guiado</span>
-              <h2 className="text-3xl font-extrabold text-white sm:text-4xl">Así aseguramos una entrega sin estrés</h2>
-              <p className="mx-auto max-w-2xl text-base leading-relaxed text-slate-200/80">
+              <h2 className="text-4xl font-extrabold text-white sm:text-5xl">Así aseguramos una entrega sin estrés</h2>
+              <p className="mx-auto max-w-2xl text-base leading-relaxed text-slate-200/80 sm:text-lg">
                 Sigue estos pasos cuando abras tu ticket. Nuestro equipo verifica datos, confirma montos y libera la compra con evidencia.
               </p>
             </div>
-            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            <div className="grid justify-center gap-8 md:grid-cols-2 xl:grid-cols-3 xl:gap-10">
               {PURCHASE_STEPS.map((step, index) => (
                 <article
                   key={step.id}
-                  className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6 shadow-[0_22px_52px_rgba(8,8,18,0.5)] transition-all duration-300 hover:-translate-y-1 hover:border-white/20 hover:shadow-[0_32px_70px_rgba(8,8,18,0.6)]"
+                  className="group relative flex min-h-[260px] max-w-[420px] flex-col justify-between rounded-[28px] border border-white/10 bg-white/5 p-6 shadow-[0_22px_52px_rgba(8,8,18,0.5)] transition-all duration-300 hover:-translate-y-1 hover:border-white/20 hover:shadow-[0_32px_70px_rgba(8,8,18,0.6)] md:p-7"
                 >
                   <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                     <div className="absolute inset-0 bg-gradient-to-tr from-white/10 via-transparent to-white/10" />
                   </div>
-                  <div className="relative">
+                  <div className="relative space-y-4">
                     <span className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/15 bg-white/10 text-lg font-bold text-cyan-200 shadow-[0_12px_28px_rgba(8,8,18,0.45)]">
                       {index + 1}
                     </span>
                     <h3 className="text-lg font-semibold text-white">{step.title}</h3>
                     <p className="mt-2 text-sm leading-relaxed text-slate-200/80">{step.description}</p>
                   </div>
+                  <span className="mt-6 text-sm font-semibold uppercase tracking-[0.14em] text-slate-200/60">Paso garantizado</span>
                 </article>
               ))}
             </div>
@@ -417,11 +419,11 @@ export default async function RobuxPlansPage() {
 
         <section className="py-20 pt-0">
           <div className={layoutContainerClass}>
-            <div className="grid gap-8 rounded-[28px] border border-white/10 bg-white/5 px-8 py-10 shadow-[0_32px_72px_rgba(8,8,18,0.55)] backdrop-blur-xl backdrop-saturate-150 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:px-12">
-              <div className="max-w-2xl space-y-3">
+            <div className="flex flex-col gap-8 rounded-[36px] border border-white/10 bg-white/5 px-8 py-12 shadow-[0_22px_52px_rgba(8,8,18,0.5)] backdrop-blur-xl backdrop-saturate-150 transition-all duration-300 ease-out lg:flex-row lg:items-center lg:justify-between lg:gap-10 lg:px-14">
+              <div className="max-w-2xl space-y-4">
                 <span className={pillClass}>¿Cómo comprar?</span>
-                <h2 className="text-3xl font-extrabold text-white sm:text-4xl">Abre un ticket en nuestro Discord</h2>
-                <p className="text-sm leading-relaxed text-slate-200/80 sm:text-base">
+                <h2 className="text-4xl font-extrabold text-white sm:text-5xl">Abre un ticket en nuestro Discord</h2>
+                <p className="text-base leading-relaxed text-slate-200/80 sm:text-lg">
                   Ingresa al servidor, selecciona la categoría de Robux y comparte los datos de tu pedido. Nuestro staff confirmará el precio,
                   te indicará los métodos de pago disponibles y te acompañará hasta la entrega.
                 </p>
