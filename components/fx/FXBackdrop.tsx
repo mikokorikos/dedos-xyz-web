@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { mountOrbs } from "./fx-orbs";
 import { mountStars } from "./fx-stars";
+import styles from "./FXBackdrop.module.css";
 
 export default function FXBackdrop() {
   const orbsRef = useRef<HTMLCanvasElement>(null);
@@ -22,14 +23,14 @@ export default function FXBackdrop() {
   }, []);
 
   return (
-    <div className="fx-root" aria-hidden="true">
-      <canvas ref={orbsRef} className="fx-canvas orbs" aria-hidden="true" />
-      <canvas ref={starsRef} className="fx-canvas stars" aria-hidden="true" />
-      <div className="veil" />
-      <div className="bg-wrap">
-        <div className="blob one" />
-        <div className="blob two" />
-        <div className="blob three" />
+    <div className={styles.root} aria-hidden="true">
+      <canvas ref={orbsRef} className={`${styles.canvas} ${styles.orbs}`} aria-hidden="true" />
+      <canvas ref={starsRef} className={`${styles.canvas} ${styles.stars}`} aria-hidden="true" />
+      <div className={styles.veil} />
+      <div className={styles.bgWrap}>
+        <div className={`${styles.blob} ${styles.one}`} />
+        <div className={`${styles.blob} ${styles.two}`} />
+        <div className={`${styles.blob} ${styles.three}`} />
       </div>
     </div>
   );
