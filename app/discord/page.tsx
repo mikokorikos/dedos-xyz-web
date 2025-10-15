@@ -31,10 +31,10 @@ export default function DiscordRedirect() {
     <>
       <FXBackdrop />
       <Navbar />
-      <main className="flex min-h-[70vh] items-center py-16">
+      <main className="flex min-h-[70vh] items-center py-20">
         <div className={layoutContainerClass}>
-          <div className="mx-auto max-w-xl rounded-[26px] border border-white/10 bg-white/5 p-8 text-center shadow-[0_24px_60px_rgba(8,8,18,0.55)] backdrop-blur-xl backdrop-saturate-150">
-            <h1 className="text-3xl font-extrabold text-white sm:text-4xl">Abriendo Discord…</h1>
+          <div className="mx-auto max-w-xl rounded-[26px] border border-white/10 bg-white/5 p-6 text-center shadow-[0_22px_52px_rgba(8,8,18,0.5)] backdrop-blur-xl backdrop-saturate-150 md:p-7 lg:p-8">
+            <h1 className="text-4xl font-extrabold text-white sm:text-5xl">Abriendo Discord…</h1>
             <p className="mt-3 text-base leading-relaxed text-slate-200/80">
               Si no se abre automáticamente, te redirigiremos al navegador en {second}s.
             </p>

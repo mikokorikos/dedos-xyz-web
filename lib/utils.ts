@@ -3,7 +3,7 @@ export function cn(...classes: Array<string | undefined | null | false>) {
 }
 
 export const layoutContainerClass =
-  "mx-auto w-full max-w-[1340px] px-4 sm:px-6 lg:px-8 xl:max-w-[1480px]";
+  "mx-auto w-full max-w-[1400px] px-6 sm:px-8 lg:px-12";
 
 export const glassPanelClass =
   "relative overflow-hidden rounded-[18px] border border-white/15 bg-white/5 p-6 shadow-[0_18px_40px_rgba(8,8,18,0.45)] backdrop-blur-xl backdrop-saturate-150";

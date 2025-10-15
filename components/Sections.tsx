@@ -151,61 +151,66 @@ const FAQS = [
 
 export function Catalog() {
   return (
-    <section className="py-16" id="catalogo">
-      <div className={cn(layoutContainerClass, "space-y-8")}>
-        <div className="space-y-3">
-          <h2 className="text-3xl font-extrabold sm:text-4xl">Catálogo</h2>
-          <p className="text-slate-200/80">Todo en un mismo lugar. Hover para ver la magia ✨</p>
+    <section className="py-20" id="catalogo">
+      <div className={cn(layoutContainerClass, "space-y-10")}> 
+        <div className="space-y-4 text-center md:text-left">
+          <h2 className="text-4xl font-extrabold sm:text-5xl">Catálogo</h2>
+          <p className="text-base leading-relaxed text-slate-200/80 sm:text-lg">
+            Todo en un mismo lugar. Hover para ver la magia ✨
+          </p>
         </div>
-        <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3 xl:gap-10 justify-center">
           {CATALOG_ITEMS.map((item) => (
             <article
-              className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-5 shadow-[0_10px_30px_rgba(8,8,18,0.35)] transition hover:-translate-y-1 hover:shadow-[0_20px_45px_rgba(8,8,18,0.55)]"
+              className="group relative mx-auto flex h-full min-h-[620px] max-w-[420px] flex-col justify-between overflow-hidden rounded-[26px] border border-white/10 bg-white/5 p-6 shadow-[0_22px_52px_rgba(8,8,18,0.5)] transition-all duration-300 ease-out hover:-translate-y-1 hover:border-white/20 hover:shadow-[0_32px_70px_rgba(8,8,18,0.6)] md:p-7 lg:p-8"
               key={item.title}
             >
-              <div className="flex gap-4">
-                <img
-                  alt={item.title}
-                  className="h-16 w-16 flex-shrink-0 rounded-xl border border-white/15 object-cover"
-                  loading="lazy"
-                  src={item.image}
-                />
-                <div className="flex-1 space-y-4">
-                  <header className="flex items-start justify-between gap-3">
-                    <div>
-                      <h3 className="text-lg font-semibold text-white">{item.title}</h3>
-                      <small className="text-sm text-slate-200/70">{item.subtitle}</small>
-                    </div>
-                    <span aria-hidden="true" className="text-lg text-cyan-200">
-                      ★
-                    </span>
-                  </header>
-                  <div className="flex flex-wrap gap-2">
-                    {item.chips.map((chip) => (
-                      <span
-                        className={cn(
-                          "inline-flex items-center gap-2 rounded-full border border-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-100",
-                          chipToneStyles[chip.tone]
-                        )}
-                        key={chip.label}
-                      >
-                        {chip.label}
-                      </span>
-                    ))}
+              <div className="flex flex-col gap-6">
+                <div className="flex items-start gap-4">
+                  <img
+                    alt={item.title}
+                    className="h-16 w-16 flex-shrink-0 rounded-xl border border-white/15 object-cover"
+                    loading="lazy"
+                    src={item.image}
+                  />
+                  <div className="space-y-2">
+                    <h3 className="text-2xl font-semibold text-white">{item.title}</h3>
+                    <p className="text-sm text-slate-200/75">{item.subtitle}</p>
                   </div>
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-slate-200/70">Desde</span>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {item.chips.map((chip) => (
+                    <span
+                      className={cn(
+                        "inline-flex items-center gap-2 rounded-full border border-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-100",
+                        chipToneStyles[chip.tone]
+                      )}
+                      key={chip.label}
+                    >
+                      {chip.label}
+                    </span>
+                  ))}
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                  <div className="flex items-center justify-between text-sm text-slate-200/75">
+                    <span>Desde</span>
                     <strong className="text-white">Consultar</strong>
                   </div>
-                  <a
-                    className="inline-flex items-center gap-2 text-sm font-semibold text-cyan-200 transition hover:text-cyan-100"
-                    href={DISCORD_URL}
-                    onClick={handleDiscordClick}
-                  >
-                    Comprar en Discord →
-                  </a>
                 </div>
               </div>
+              <div className="mt-auto flex flex-col gap-4 pt-6">
+                <p className="text-sm leading-relaxed text-slate-200/75">
+                  Escríbenos por Discord y cotiza en segundos con nuestro equipo.
+                </p>
+                <a
+                  className="mt-auto inline-flex items-center gap-2 text-sm font-semibold text-cyan-200 transition hover:text-cyan-100"
+                  href={DISCORD_URL}
+                  onClick={handleDiscordClick}
+                >
+                  Comprar en Discord →
+                </a>
+              </div>
+              <div className="pointer-events-none absolute -left-[10vw] top-[8vh] h-[40vh] w-[40vw] rounded-full bg-gradient-to-br from-fuchsia-400/30 via-violet-400/10 to-transparent blur-[100px] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
             </article>
           ))}
         </div>
@@ -216,16 +221,16 @@ export function Catalog() {
 
 export function Services() {
   return (
-    <section className="py-16" id="servicios">
+    <section className="py-20" id="servicios">
       <div className={layoutContainerClass}>
-        <div className="grid gap-5 rounded-[24px] border border-white/10 bg-white/5 p-6 shadow-[0_18px_40px_rgba(8,8,18,0.45)] backdrop-blur-xl backdrop-saturate-150 sm:grid-cols-2">
+        <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3 xl:gap-10 justify-center">
           {SERVICES.map((service) => (
             <article
-              className="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-[0_10px_30px_rgba(8,8,18,0.35)]"
+              className="mx-auto flex h-full max-w-[420px] flex-col gap-4 rounded-[26px] border border-white/10 bg-white/5 p-6 shadow-[0_22px_52px_rgba(8,8,18,0.5)] transition-all duration-300 ease-out hover:-translate-y-1 hover:border-white/20 hover:shadow-[0_32px_70px_rgba(8,8,18,0.6)] md:p-7 lg:p-8"
               key={service.title}
             >
-              <h3 className="text-xl font-semibold text-white">{service.title}</h3>
-              <p className="text-sm text-slate-200/80">{service.copy}</p>
+              <h3 className="text-2xl font-semibold text-white">{service.title}</h3>
+              <p className="text-base leading-relaxed text-slate-200/80">{service.copy}</p>
             </article>
           ))}
         </div>
@@ -236,26 +241,26 @@ export function Services() {
 
 export function Why() {
   return (
-    <section className="py-16" id="por-que">
-      <div className={cn(layoutContainerClass, "space-y-8")}>
-        <div className="text-center">
-          <h2 className="text-3xl font-extrabold sm:text-4xl">
+    <section className="py-20" id="por-que">
+      <div className={cn(layoutContainerClass, "space-y-10 text-center")}> 
+        <div className="space-y-4">
+          <h2 className="text-4xl font-extrabold sm:text-5xl">
             ¿Por qué comprar con {" "}
             <span className="bg-gradient-to-r from-fuchsia-300 via-violet-300 to-cyan-300 bg-clip-text text-transparent">
               dedos
             </span>
             ?
           </h2>
-          <p className="text-slate-200/80">Velocidad, seguridad y un diseño que enamora.</p>
+          <p className="text-base leading-relaxed text-slate-200/80 sm:text-lg">Velocidad, seguridad y un diseño que enamora.</p>
         </div>
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-4 xl:gap-10 justify-center">
           {WHY_POINTS.map((point) => (
             <article
-              className="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-[0_10px_30px_rgba(8,8,18,0.35)]"
+              className="mx-auto flex h-full max-w-[320px] flex-col gap-4 rounded-[26px] border border-white/10 bg-white/5 p-6 shadow-[0_22px_52px_rgba(8,8,18,0.5)] transition-all duration-300 ease-out hover:-translate-y-1 hover:border-white/20 hover:shadow-[0_32px_70px_rgba(8,8,18,0.6)] md:p-7"
               key={point.title}
             >
-              <h3 className="text-lg font-semibold text-white">{point.title}</h3>
-              <p className="text-sm text-slate-200/80">{point.copy}</p>
+              <h3 className="text-xl font-semibold text-white">{point.title}</h3>
+              <p className="text-base leading-relaxed text-slate-200/80">{point.copy}</p>
             </article>
           ))}
         </div>
@@ -266,12 +271,12 @@ export function Why() {
 
 export function CTA() {
   return (
-    <section className="py-16">
+    <section className="py-20">
       <div className={layoutContainerClass}>
-        <div className="flex flex-wrap items-center justify-between gap-6 rounded-[26px] border border-white/10 bg-white/5 p-8 shadow-[0_20px_45px_rgba(8,8,18,0.5)] backdrop-blur-xl backdrop-saturate-150">
-          <div className="space-y-2">
-            <h3 className="text-2xl font-extrabold text-white sm:text-3xl">¿Listo para empezar?</h3>
-            <p className="text-slate-200/80">Entra a nuestro servidor y abre tu primer ticket.</p>
+        <div className="flex flex-wrap items-center justify-between gap-6 rounded-[26px] border border-white/10 bg-white/5 p-6 shadow-[0_22px_52px_rgba(8,8,18,0.5)] backdrop-blur-xl backdrop-saturate-150 md:p-7 lg:p-8">
+          <div className="space-y-3">
+            <h3 className="text-3xl font-extrabold text-white sm:text-4xl">¿Listo para empezar?</h3>
+            <p className="text-base leading-relaxed text-slate-200/80 sm:text-lg">Entra a nuestro servidor y abre tu primer ticket.</p>
           </div>
           <a className={gradientButtonClass} href={DISCORD_URL} onClick={handleDiscordClick}>
             Entrar a Discord
@@ -286,10 +291,10 @@ export function FAQ() {
   const [open, setOpen] = useState<number | null>(0)
 
   return (
-    <section className="py-16" id="faq">
-      <div className={cn(layoutContainerClass, "max-w-3xl")}>
-        <h2 className="mb-6 text-center text-3xl font-extrabold sm:text-4xl">Preguntas frecuentes</h2>
-        <div className="overflow-hidden rounded-[22px] border border-white/10 bg-white/5 shadow-[0_18px_40px_rgba(8,8,18,0.45)] backdrop-blur-xl backdrop-saturate-150">
+    <section className="py-20" id="faq">
+      <div className={cn(layoutContainerClass, "max-w-3xl space-y-8 text-center")}> 
+        <h2 className="text-4xl font-extrabold sm:text-5xl">Preguntas frecuentes</h2>
+        <div className="overflow-hidden rounded-[24px] border border-white/10 bg-white/5 shadow-[0_22px_52px_rgba(8,8,18,0.5)] backdrop-blur-xl backdrop-saturate-150">
           {FAQS.map((item, index) => {
             const isOpen = open === index
             return (
@@ -316,7 +321,7 @@ export function FAQ() {
                     <polyline points="9 18 15 12 9 6" />
                   </svg>
                 </button>
-                <div className={cn("px-5 pb-5 text-sm text-slate-200/80", isOpen ? "block" : "hidden")}>{item.a}</div>
+                <div className={cn("px-5 pb-5 text-base leading-relaxed text-slate-200/80", isOpen ? "block" : "hidden")}>{item.a}</div>
               </div>
             )
           })}
@@ -328,11 +333,11 @@ export function FAQ() {
 
 export function TOSPreview() {
   return (
-    <section className="pb-16" id="tos">
-      <div className={cn(layoutContainerClass, "max-w-4xl")}>
-        <div className="space-y-3 rounded-[22px] border border-white/10 bg-white/5 p-6 shadow-[0_18px_40px_rgba(8,8,18,0.45)] backdrop-blur-xl backdrop-saturate-150">
-          <h2 className="text-2xl font-semibold text-white">Términos de Servicio (resumen)</h2>
-          <p className="text-sm text-slate-200/80">
+    <section className="py-20 pt-0" id="tos">
+      <div className={cn(layoutContainerClass, "max-w-4xl")}> 
+        <div className="space-y-4 rounded-[26px] border border-white/10 bg-white/5 p-6 shadow-[0_22px_52px_rgba(8,8,18,0.5)] backdrop-blur-xl backdrop-saturate-150 md:p-7 lg:p-8">
+          <h2 className="text-3xl font-semibold text-white sm:text-4xl">Términos de Servicio (resumen)</h2>
+          <p className="text-base leading-relaxed text-slate-200/80">
             Este es un placeholder. Pásame tus TOS y los pego aquí. Ejemplos: políticas de reembolso, tiempos de entrega,
             garantías, restricciones de uso, contacto de soporte.
           </p>
