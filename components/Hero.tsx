@@ -64,22 +64,20 @@ const FEATURED = [
 
 export default function Hero() {
   return (
-    <section className="py-20 lg:py-24">
+    <section className="py-20">
       <div className={layoutContainerClass}>
         <div
           className={cn(
-            "relative rounded-[28px] border border-white/10 bg-white/5 p-8 shadow-[0_22px_52px_rgba(8,8,18,0.5)] backdrop-blur-xl backdrop-saturate-150 transition-all duration-300 ease-out",
-            "md:p-10 lg:p-12"
+            "relative overflow-hidden rounded-[24px] border border-white/10 bg-white/5 p-6 shadow-[0_22px_52px_rgba(8,8,18,0.5)] backdrop-blur-xl backdrop-saturate-150 transition-colors duration-300",
+            "md:p-7 lg:p-8 xl:p-10"
           )}
         >
-          <div className="absolute -left-[10vw] top-[6vh] h-[38vh] w-[38vw] rounded-full bg-gradient-to-br from-fuchsia-400/25 via-violet-400/10 to-transparent blur-[110px]" />
-          <div className="absolute -right-[12vw] bottom-[10vh] h-[36vh] w-[40vw] rounded-full bg-gradient-to-br from-cyan-400/20 via-sky-400/10 to-transparent blur-[120px]" />
-          <div className="relative grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-center">
-            <div className="space-y-8">
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-start xl:gap-12">
+            <div className="space-y-6">
               <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm text-slate-200/90">
                 ✨ Diseño espectacular + microinteracciones
               </span>
-              <h1 className="text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl lg:text-6xl xl:text-7xl">
+              <h1 className="text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
                 Tu hub de {" "}
                 <span className="bg-gradient-to-r from-fuchsia-300 via-violet-300 to-cyan-300 bg-clip-text text-transparent">
                   suscripciones y gaming
@@ -125,32 +123,33 @@ export default function Hero() {
                 ))}
               </div>
             </div>
-            <div className="relative">
+            <div>
               <div
                 className={cn(
-                  "group relative rounded-[26px] border border-white/10 bg-white/5 p-6 shadow-[0_22px_52px_rgba(8,8,18,0.5)] backdrop-blur-xl backdrop-saturate-150",
-                  "sm:p-7"
+                  "relative rounded-[22px] border border-white/10 bg-white/5 p-5 shadow-[0_22px_52px_rgba(8,8,18,0.5)] backdrop-blur-xl backdrop-saturate-150"
                 )}
               >
                 <div className="pointer-events-none absolute inset-0 rounded-[26px] border border-transparent">
                   <div className="absolute inset-[-3%] rounded-[30px] bg-gradient-to-r from-fuchsia-400 via-violet-400 to-cyan-300 opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-100" />
                 </div>
-                <div className="grid gap-4 sm:grid-cols-2">
+                <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3 xl:gap-8 justify-center">
                   {FEATURED.map((item) => (
                     <article
-                      className="relative rounded-2xl border border-white/10 bg-white/5 p-4 shadow-[0_22px_52px_rgba(8,8,18,0.45)] transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_32px_70px_rgba(8,8,18,0.6)]"
+                      className="relative flex min-h-[260px] flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-5 shadow-[0_22px_52px_rgba(8,8,18,0.5)] transition-all duration-300 ease-out hover:-translate-y-1 hover:border-white/20 hover:shadow-[0_32px_70px_rgba(8,8,18,0.6)]"
                       key={item.title}
                     >
-                      <div className="flex gap-3">
+                      <div className="flex flex-1 gap-3">
                         <img
                           alt={item.title}
                           className="h-14 w-14 flex-shrink-0 rounded-xl border border-white/15 object-cover"
                           loading="lazy"
                           src={item.img}
                         />
-                        <div className="space-y-2">
-                          <h3 className="text-lg font-semibold text-white">{item.title}</h3>
-                          <div className="text-sm text-slate-200/75">{item.subtitle}</div>
+                        <div className="flex flex-1 flex-col gap-3">
+                          <div>
+                            <h3 className="text-lg font-semibold text-white">{item.title}</h3>
+                            <div className="text-sm text-slate-200/75">{item.subtitle}</div>
+                          </div>
                           <div className="flex flex-wrap gap-2">
                             {item.chips.map((chip) => (
                               <span
@@ -164,6 +163,7 @@ export default function Hero() {
                               </span>
                             ))}
                           </div>
+                          <div className="mt-auto text-sm text-slate-200/70">Destacado</div>
                         </div>
                       </div>
                     </article>

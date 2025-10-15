@@ -12,9 +12,9 @@ export default function TOSPage() {
       <Navbar />
       <main className="py-20">
         <div className={layoutContainerClass}>
-          <div className="mx-auto max-w-3xl rounded-[32px] border border-white/10 bg-white/5 p-8 shadow-[0_22px_52px_rgba(8,8,18,0.5)] backdrop-blur-xl backdrop-saturate-150 md:p-10">
+          <div className="mx-auto max-w-3xl rounded-[26px] border border-white/10 bg-white/5 p-6 shadow-[0_22px_52px_rgba(8,8,18,0.5)] backdrop-blur-xl backdrop-saturate-150 md:p-7 lg:p-8">
             <h1 className="text-4xl font-extrabold text-white sm:text-5xl">Términos de Servicio</h1>
-            <p className="mt-4 text-base leading-relaxed text-slate-200/80 sm:text-lg">
+            <p className="mt-4 text-base leading-relaxed text-slate-200/80">
               Pasa tu texto legal y lo pegamos aquí (reembolsos, garantías, tiempos, restricciones, contacto, etc.).
             </p>
           </div>
