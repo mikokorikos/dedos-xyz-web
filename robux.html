@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang=\"es\">
+  <head>
+    <meta charset=\"utf-8\" />
+    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />
+    <title>Planes Robux — Dedos.xyz</title>
+    <meta
+      name=\"description\"
+      content=\"Elige recarga por grupo, regalo o gamepass. Acompañamiento 1:1 en Discord y seguimiento en vivo para cada compra.\"
+    />
+    <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\" />
+    <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin />
+    <link
+      href=\"https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap\"
+      rel=\"stylesheet\"
+    />
+    <link rel=\"stylesheet\" href=\"assets/css/styles.css\" />
+    <script>
+      tailwind = window.tailwind || {};
+      tailwind.config = {
+        theme: {
+          extend: {
+            animation: {
+              spinSlow: 'spinSlow 9s linear infinite',
+            },
+            keyframes: {
+              spinSlow: {
+                to: { transform: 'rotate(360deg)' },
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <script src=\"https://cdn.tailwindcss.com\"></script>
+  </head>
+  <body data-page=\"robux\" data-discord-invite=\"dedos\" data-roblox-url=\"https://www.roblox.com/es/communities/12082479/unnamed#!/about\" data-exchange-endpoint=\"https://open.er-api.com/v6/latest/MXN\">
+    <div class=\"fx-backdrop\" data-fx-backdrop>
+      <canvas class=\"fx-backdrop__canvas fx-backdrop__canvas--orbs\" data-fx-orbs aria-hidden=\"true\"></canvas>
+      <canvas class=\"fx-backdrop__canvas fx-backdrop__canvas--stars\" data-fx-stars aria-hidden=\"true\"></canvas>
+      <div class=\"fx-backdrop__veil\" aria-hidden=\"true\"></div>
+      <div class=\"fx-backdrop__bg-wrap\" aria-hidden=\"true\">
+        <div class=\"fx-backdrop__blob fx-backdrop__blob--one\"></div>
+        <div class=\"fx-backdrop__blob fx-backdrop__blob--two\"></div>
+        <div class=\"fx-backdrop__blob fx-backdrop__blob--three\"></div>
+      </div>
+    </div>
+
+    <header class=\"sticky top-0 z-50 bg-[#080812]/70 backdrop-blur-xl\">
+      <div class=\"mx-auto w-full max-w-[1400px] px-6 sm:px-8 lg:px-12 py-4\">
+        <div class=\"relative flex items-center justify-between gap-4 rounded-[22px] border border-white/10 bg-white/5 px-5 py-3 shadow-[0_18px_40px_rgba(8,8,18,0.45)] backdrop-blur-xl backdrop-saturate-150\">
+          <div class=\"flex items-center gap-3 font-extrabold uppercase tracking-tight\">
+            <span aria-hidden=\"true\" class=\"inline-flex h-5 w-5 animate-spinSlow rounded-full bg-gradient-to-br from-fuchsia-400 via-violet-400 to-cyan-300\"></span>
+            <span class=\"text-sm sm:text-base\">dedos <span class=\"opacity-70\">store</span></span>
+          </div>
+          <nav
+            class=\"absolute left-0 right-0 top-full mt-3 hidden flex-col gap-4 rounded-2xl border border-white/10 bg-[#080812]/95 p-5 shadow-xl backdrop-blur-xl md:static md:mt-0 md:flex md:flex-row md:items-center md:border-0 md:bg-transparent md:p-0 md:shadow-none\"
+            aria-label=\"Principal\"
+            data-nav
+            id=\"primary-navigation\"
+          >
+            <ul class=\"flex flex-col gap-3 md:flex-row md:items-center md:gap-5\">
+              <li><a class=\"text-sm font-medium text-slate-200/80 transition hover:text-cyan-200\" data-section-link=\"catalogo\" href=\"index.html#catalogo\">Catálogo</a></li>
+              <li><a class=\"text-sm font-medium text-slate-200/80 transition hover:text-cyan-200\" data-section-link=\"por-que\" href=\"index.html#por-que\">¿Por qué?</a></li>
+              <li><a class=\"text-sm font-medium text-slate-200/80 transition hover:text-cyan-200\" data-section-link=\"servicios\" href=\"index.html#servicios\">Servicios</a></li>
+              <li><a class=\"text-sm font-medium text-slate-200/80 transition hover:text-cyan-200\" data-section-link=\"faq\" href=\"index.html#faq\">FAQ</a></li>
+              <li><a class=\"text-sm font-medium text-slate-200/80 transition hover:text-cyan-200\" href=\"tos.html\">TOS</a></li>
+              <li><a class=\"text-sm font-medium text-slate-200/80 transition hover:text-cyan-200\" href=\"roblox.html\">Grupo de Roblox</a></li>
+            </ul>
+            <a class=\"inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold text-white transition-transform duration-200 ease-out hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300 bg-gradient-to-r from-fuchsia-300 via-violet-300 to-cyan-300 text-slate-900 justify-center md:hidden\" href=\"https://discord.gg/dedos\" data-discord-link>Entrar a Discord →</a>
+          </nav>
+          <div class=\"flex items-center gap-3\">
+            <button aria-controls=\"primary-navigation\" aria-expanded=\"false\" aria-label=\"Abrir menú\" class=\"inline-flex items-center gap-2 rounded-full px-3 py-2 text-base font-semibold text-white transition-transform duration-200 ease-out hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300 border border-white/20 bg-transparent md:hidden\" data-nav-toggle type=\"button\">☰</button>
+            <a class=\"hidden text-sm md:inline-flex inline-flex items-center gap-2 rounded-full px-5 py-3 font-semibold text-white transition-transform duration-200 ease-out hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300 bg-gradient-to-r from-fuchsia-300 via-violet-300 to-cyan-300 text-slate-900\" href=\"https://discord.gg/dedos\" data-discord-link>Entrar a Discord →</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class=\"pb-24\">
+      <section class=\"py-20\">
+        <div class=\"mx-auto w-full max-w-[1400px] px-6 sm:px-8 lg:px-12\">
+          <div class=\"relative overflow-hidden rounded-[32px] border border-white/10 bg-white/5 p-6 shadow-[0_22px_52px_rgba(8,8,18,0.5)] backdrop-blur-xl backdrop-saturate-150 md:p-8 lg:p-12\">
+            <div aria-hidden=\"true\" class=\"pointer-events-none absolute inset-0\">
+              <div class=\"absolute -left-[12vw] top-[6vh] h-[48vh] w-[48vh] rounded-full bg-gradient-to-br from-fuchsia-400/30 via-violet-400/10 to-transparent blur-[160px]\"></div>
+              <div class=\"absolute -bottom-[14vh] right-[8vw] h-[46vh] w-[46vh] rounded-full bg-gradient-to-tr from-cyan-400/25 via-sky-300/10 to-transparent blur-[160px]\"></div>
+              <div class=\"absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.08),_transparent_55%)]\"></div>
+            </div>
+            <div class=\"relative max-w-3xl space-y-5\">
+              <span class=\"inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.1em] text-slate-200/80\">Robux al mejor precio</span>
+              <h1 class=\"text-4xl font-black tracking-tight text-white sm:text-5xl\">Planes Robux Dedos.xyz</h1>
+              <p class=\"text-base leading-relaxed text-slate-200/80 sm:text-lg\">Selecciona el método que se ajusta a tu forma de jugar. Todos los planes incluyen acompañamiento 1:1 en Discord y comprobantes de pago para que tengas total tranquilidad.</p>
+            </div>
+            <div class=\"relative mt-8 flex flex-wrap gap-4\">
+              <a class=\"inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold text-white transition-transform duration-200 ease-out hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300 bg-gradient-to-r from-fuchsia-300 via-violet-300 to-cyan-300 text-slate-900\" href=\"https://discord.gg/dedos\" data-discord-link>Entrar a Discord</a>
+              <a class=\"inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold text-white transition-transform duration-200 ease-out hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300 border border-white/20 bg-transparent\" href=\"discord.html\">¿Problemas para unirte?</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class=\"py-20 pt-0\">
+        <div class=\"mx-auto w-full max-w-[1400px] px-6 sm:px-8 lg:px-12\">
+          <div class=\"mb-12 space-y-4 text-center\">
+            <span class=\"inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.1em] text-slate-200/80\">Nuestros planes</span>
+            <h2 class=\"text-4xl font-extrabold text-white sm:text-5xl\">Tres formas seguras de conseguir tus Robux</h2>
+            <p class=\"mx-auto max-w-2xl text-base leading-relaxed text-slate-200/80 sm:text-lg\">Elegimos los métodos que nos permiten garantizar transparencia en cada movimiento, con seguimiento en vivo y soporte inmediato.</p>
+          </div>
+          <div class=\"grid gap-8 md:grid-cols-2 xl:grid-cols-3 xl:gap-10 justify-center\" data-robux-plans></div>
+          <div class=\"mt-10 flex flex-col gap-4 rounded-2xl border border-white/10 bg-white/5 px-6 py-5 text-base text-slate-200/80 sm:flex-row sm:items-center sm:justify-between\">
+            <p class=\"font-medium text-white/90\" data-exchange-notice>Obteniendo tipo de cambio…</p>
+            <p class=\"max-w-xl leading-relaxed\">Los precios en dólares se recalculan automáticamente con datos de Open&nbsp;ER&nbsp;API y pueden variar ligeramente al momento de pagar.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class=\"py-20 pt-0\">
+        <div class=\"mx-auto w-full max-w-[1400px] px-6 sm:px-8 lg:px-12\">
+          <div class=\"mb-12 space-y-4 text-center\">
+            <span class=\"inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.1em] text-slate-200/80\">¿Por qué Dedos.xyz?</span>
+            <h2 class=\"text-4xl font-extrabold text-white sm:text-5xl\">Beneficios pensados para tu próxima compra</h2>
+            <p class=\"mx-auto max-w-2xl text-base leading-relaxed text-slate-200/80 sm:text-lg\">No solo recargamos Robux: te acompañamos con procesos claros, soporte inmediato y transparencia en cada paso.</p>
+          </div>
+          <div class=\"grid gap-8 md:grid-cols-2 xl:grid-cols-3 xl:gap-10 justify-center\" data-robux-values></div>
+        </div>
+      </section>
+
+      <section class=\"py-20 pt-0\">
+        <div class=\"mx-auto w-full max-w-[1400px] px-6 sm:px-8 lg:px-12\">
+          <div class=\"mb-12 space-y-4 text-center\">
+            <span class=\"inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.1em] text-slate-200/80\">Proceso guiado</span>
+            <h2 class=\"text-4xl font-extrabold text-white sm:text-5xl\">Así aseguramos una entrega sin estrés</h2>
+            <p class=\"mx-auto max-w-2xl text-base leading-relaxed text-slate-200/80 sm:text-lg\">Sigue estos pasos cuando abras tu ticket. Nuestro equipo verifica datos, confirma montos y libera la compra con evidencia.</p>
+          </div>
+          <div class=\"grid gap-8 md:grid-cols-2 xl:grid-cols-3 xl:gap-10 justify-center\" data-robux-steps></div>
+        </div>
+      </section>
+
+      <section class=\"py-20 pt-0\">
+        <div class=\"mx-auto w-full max-w-[1400px] px-6 sm:px-8 lg:px-12\">
+          <div class=\"grid gap-8 rounded-[28px] border border-white/10 bg-white/5 p-6 shadow-[0_22px_52px_rgba(8,8,18,0.5)] backdrop-blur-xl backdrop-saturate-150 md:p-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:p-10\">
+            <div class=\"max-w-2xl space-y-3\">
+              <span class=\"inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.1em] text-slate-200/80\">¿Cómo comprar?</span>
+              <h2 class=\"text-4xl font-extrabold text-white sm:text-5xl\">Abre un ticket en nuestro Discord</h2>
+              <p class=\"text-base leading-relaxed text-slate-200/80 sm:text-lg\">Ingresa al servidor, selecciona la categoría de Robux y comparte los datos de tu pedido. Nuestro staff confirmará el precio, te indicará los métodos de pago disponibles y te acompañará hasta la entrega.</p>
+            </div>
+            <div class=\"flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-end\">
+              <a class=\"inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold text-white transition-transform duration-200 ease-out hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300 bg-gradient-to-r from-fuchsia-300 via-violet-300 to-cyan-300 text-slate-900\" href=\"https://discord.gg/dedos\" data-discord-link>Entrar a Discord</a>
+              <a class=\"inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold text-white transition-transform duration-200 ease-out hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300 bg-white text-slate-900\" href=\"https://www.roblox.com/es/communities/12082479/unnamed#!/about\" target=\"_blank\" rel=\"noopener noreferrer\" data-roblox-link>Ir al grupo oficial</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class=\"border-t border-white/10 py-8 text-sm text-slate-200/70\">
+      <div class=\"mx-auto w-full max-w-[1400px] px-6 sm:px-8 lg:px-12 flex flex-wrap items-center justify-between gap-4\">
+        <div>© <span data-current-year></span> dedos store. Todos los derechos reservados.</div>
+        <div class=\"flex items-center gap-4\">
+          <a class=\"transition hover:text-cyan-200\" href=\"tos.html\">Términos</a>
+          <a class=\"transition hover:text-cyan-200\" href=\"https://discord.gg/dedos\" data-discord-link>Discord</a>
+        </div>
+      </div>
+    </footer>
+
+    <script type=\"module\" src=\"assets/js/main.js\"></script>
+  </body>
+</html>
