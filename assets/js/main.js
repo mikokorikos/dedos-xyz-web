@@ -323,8 +323,8 @@ function chipToneClass(tone) {
 function renderHeroStats(container) {
   container.innerHTML = HERO_STATS.map(
     (stat) => `
-      <div class="rounded-2xl border border-white/10 bg-white/5 p-4 text-center shadow-inner">
-        <div class="text-2xl font-extrabold text-white">${stat.value}</div>
+      <div class="rounded-2xl border border-white/10 bg-white/5 p-4 text-center shadow-[0_12px_28px_rgba(8,8,18,0.4)]">
+        <div class="text-2xl font-extrabold text-white sm:text-3xl">${stat.value}</div>
         <div class="text-xs uppercase tracking-[0.14em] text-slate-200/70">${stat.label}</div>
       </div>
     `,
@@ -334,10 +334,13 @@ function renderHeroStats(container) {
 function renderHeroFeatured(container) {
   container.innerHTML = HERO_FEATURED.map(
     (item) => `
-      <article class="relative flex min-h-[260px] flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-5 shadow-[0_22px_52px_rgba(8,8,18,0.5)] transition-all duration-300 ease-out hover:-translate-y-1 hover:border-white/20 hover:shadow-[0_32px_70px_rgba(8,8,18,0.6)]">
-        <div class="flex flex-1 gap-3">
+      <article class="group relative rounded-2xl border border-white/10 bg-white/5 p-5 shadow-[0_22px_52px_rgba(8,8,18,0.5)] transition-all duration-300 ease-out hover:-translate-y-1 hover:border-white/20 hover:shadow-[0_32px_70px_rgba(8,8,18,0.6)]">
+        <div class="pointer-events-none absolute inset-0 rounded-2xl border border-transparent">
+          <div class="absolute inset-[-3%] rounded-[28px] bg-gradient-to-r from-fuchsia-400 via-violet-400 to-cyan-300 opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-100"></div>
+        </div>
+        <div class="relative flex gap-3">
           <img alt="${item.title}" class="h-14 w-14 flex-shrink-0 rounded-xl border border-white/15 object-cover" src="${item.image}" loading="lazy" />
-          <div class="flex flex-1 flex-col gap-3">
+          <div class="space-y-3">
             <div>
               <h3 class="text-lg font-semibold text-white">${item.title}</h3>
               <div class="text-sm text-slate-200/75">${item.subtitle}</div>
@@ -364,22 +367,27 @@ function renderCatalog(container) {
     (item) => `
       <article class="group relative flex h-full min-h-[620px] w-full max-w-[420px] flex-col justify-between overflow-hidden rounded-[26px] border border-white/10 bg-white/5 p-6 shadow-[0_22px_52px_rgba(8,8,18,0.5)] transition-all duration-300 ease-out hover:-translate-y-1 hover:border-white/20 hover:shadow-[0_32px_70px_rgba(8,8,18,0.6)] md:p-7 lg:p-8">
         <div class="flex flex-col gap-6">
-          <div class="flex items-start gap-4">
+          <header class="flex items-start gap-4">
             <img alt="${item.title}" class="h-16 w-16 flex-shrink-0 rounded-xl border border-white/15 object-cover" src="${item.image}" loading="lazy" />
-            <div class="space-y-2">
-              <h3 class="text-2xl font-semibold text-white">${item.title}</h3>
-              <p class="text-sm text-slate-200/75">${item.subtitle}</p>
+            <div class="flex-1 space-y-2">
+              <div class="flex items-start justify-between gap-3">
+                <div>
+                  <h3 class="text-2xl font-semibold text-white">${item.title}</h3>
+                  <p class="text-sm text-slate-200/75">${item.subtitle}</p>
+                </div>
+                <span aria-hidden="true" class="text-lg text-cyan-200">★</span>
+              </div>
+              <div class="flex flex-wrap gap-2">
+                ${item.chips
+                  .map(
+                    (chip) => `
+                      <span class="inline-flex items-center gap-2 rounded-full border border-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-100 ${chipToneClass(chip.tone)}">${chip.label}</span>
+                    `,
+                  )
+                  .join('')}
+              </div>
             </div>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            ${item.chips
-              .map(
-                (chip) => `
-                  <span class="inline-flex items-center gap-2 rounded-full border border-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-100 ${chipToneClass(chip.tone)}">${chip.label}</span>
-                `,
-              )
-              .join('')}
-          </div>
+          </header>
           <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
             <div class="flex items-center justify-between text-sm text-slate-200/75">
               <span>Desde</span>
@@ -402,9 +410,12 @@ function renderCatalog(container) {
 function renderServices(container) {
   container.innerHTML = SERVICES.map(
     (service) => `
-      <article class="flex h-full w-full max-w-[420px] flex-col gap-4 rounded-[26px] border border-white/10 bg-white/5 p-6 shadow-[0_22px_52px_rgba(8,8,18,0.5)] transition-all duration-300 ease-out hover:-translate-y-1 hover:border-white/20 hover:shadow-[0_32px_70px_rgba(8,8,18,0.6)] md:p-7 lg:p-8">
-        <h3 class="text-2xl font-semibold text-white">${service.title}</h3>
-        <p class="text-base leading-relaxed text-slate-200/80">${service.copy}</p>
+      <article class="flex h-full min-h-[260px] w-full max-w-[420px] flex-col justify-between rounded-[24px] border border-white/10 bg-white/5 p-6 shadow-[0_22px_52px_rgba(8,8,18,0.5)] transition-all duration-300 ease-out hover:-translate-y-1 hover:border-white/20 hover:shadow-[0_32px_70px_rgba(8,8,18,0.6)] md:p-7 lg:p-8">
+        <div class="space-y-3">
+          <h3 class="text-2xl font-semibold text-white">${service.title}</h3>
+          <p class="text-sm leading-relaxed text-slate-200/80">${service.copy}</p>
+        </div>
+        <span class="mt-6 text-sm font-semibold uppercase tracking-[0.14em] text-slate-200/60">Servicio dedicado</span>
       </article>
     `,
   ).join('');
@@ -413,9 +424,12 @@ function renderServices(container) {
 function renderWhy(container) {
   container.innerHTML = WHY_POINTS.map(
     (point) => `
-      <article class="flex h-full w-full max-w-[320px] flex-col gap-4 rounded-[26px] border border-white/10 bg-white/5 p-6 shadow-[0_22px_52px_rgba(8,8,18,0.5)] transition-all duration-300 ease-out hover:-translate-y-1 hover:border-white/20 hover:shadow-[0_32px_70px_rgba(8,8,18,0.6)] md:p-7">
-        <h3 class="text-xl font-semibold text-white">${point.title}</h3>
-        <p class="text-base leading-relaxed text-slate-200/80">${point.copy}</p>
+      <article class="flex h-full min-h-[260px] w-full max-w-[320px] flex-col justify-between rounded-[24px] border border-white/10 bg-white/5 p-6 shadow-[0_22px_52px_rgba(8,8,18,0.5)] transition-all duration-300 ease-out hover:-translate-y-1 hover:border-white/20 hover:shadow-[0_32px_70px_rgba(8,8,18,0.6)] md:p-7">
+        <div class="space-y-3">
+          <h3 class="text-xl font-semibold text-white">${point.title}</h3>
+          <p class="text-sm leading-relaxed text-slate-200/80">${point.copy}</p>
+        </div>
+        <span class="mt-6 text-sm font-semibold uppercase tracking-[0.14em] text-slate-200/60">Confianza Dedos.xyz</span>
       </article>
     `,
   ).join('');
