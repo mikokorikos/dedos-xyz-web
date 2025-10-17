@@ -862,7 +862,7 @@
     let width = 0;
     let height = 0;
     const stars = [];
-    const STAR_COUNT = 140;
+    const BASE_STAR_DENSITY = 7500;
 
     const resize = () => {
       width = canvas.width = win.innerWidth;
@@ -871,33 +871,48 @@
 
     const seed = () => {
       stars.length = 0;
-      for (let i = 0; i < STAR_COUNT; i += 1) {
+      const count = Math.max(120, Math.min(220, Math.round((width * height) / BASE_STAR_DENSITY)));
+      for (let i = 0; i < count; i += 1) {
+        const velocityScale = Math.random() * 0.6 + 0.2;
         stars.push({
           x: Math.random() * width,
           y: Math.random() * height,
           r: Math.random() * 1.2 + 0.2,
-          s: Math.random() * 0.6 + 0.2
+          vx: (Math.random() - 0.5) * 0.35 * velocityScale,
+          vy: (Math.random() - 0.5) * 0.25 * velocityScale,
+          twinkle: Math.random() * Math.PI * 2
         });
       }
     };
 
     const draw = () => {
       ctx.clearRect(0, 0, width, height);
-      ctx.fillStyle = 'rgba(255,255,255,.85)';
       stars.forEach((star) => {
-        star.x += star.s * 0.08;
-        if (star.x > width) star.x = 0;
+        const twinkle = (Math.sin(star.twinkle) + 1) / 2;
+        const radius = star.r * (0.7 + twinkle * 0.6);
+        ctx.fillStyle = `rgba(255,255,255,${0.55 + twinkle * 0.4})`;
         ctx.beginPath();
-        ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
+        ctx.arc(star.x, star.y, radius, 0, Math.PI * 2);
         ctx.fill();
+        star.x += star.vx;
+        star.y += star.vy;
+        star.twinkle += 0.008 + Math.random() * 0.004;
+        if (star.x < 0) star.x = width;
+        if (star.x > width) star.x = 0;
+        if (star.y < 0) star.y = height;
+        if (star.y > height) star.y = 0;
       });
       win.requestAnimationFrame(draw);
     };
 
-    resize();
-    seed();
+    const handleResize = () => {
+      resize();
+      seed();
+    };
+
+    handleResize();
     draw();
-    win.addEventListener('resize', resize, { passive: true });
+    win.addEventListener('resize', handleResize, { passive: true });
   };
 
   const setupSmoothScroll = () => {
