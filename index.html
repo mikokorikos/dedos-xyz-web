@@ -6,197 +6,161 @@
   <title>Dedos.xyz — Suscripciones y gaming</title>
   <meta name="theme-color" content="#0b0b15" />
   <meta name="description" content="Robux, Discord Nitro, boosts, streaming, VPNs y más. Diseño glassmorphism con soporte 24/7 para tu comunidad." />
-
-  <!-- Tailwind (ok para archivo local) -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { inter: ['Inter','system-ui','sans-serif'] },
-          colors: {
-            base: { 900:'#0b0b15' },
-            ink: { 200:'#e5e7eb', 300:'#cbd5e1', 400:'#94a3b8' },
-            brand: { pink:'#ff71ce', violet:'#b967ff', cyan:'#00e5ff', mint:'#7df9e6' }
-          },
-          borderRadius: { xl2:'22px', xl3:'28px' },
-          boxShadow: {
-            glass:'0 22px 52px rgba(8,8,18,.45)',
-            insetGlow:'inset 0 0 0 1px rgba(255,255,255,.06), 0 10px 30px rgba(0,0,0,.35)'
-          }
-        }
-      }
-    };
-  </script>
-
-  <!-- Fuentes e iconos -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/app.css" />
   <script defer src="https://unpkg.com/lucide@latest"></script>
-
-  <!-- AOS / GSAP / Lenis (UMD, sin modules) -->
-  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
-  <script defer src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.32/bundled/lenis.min.js"></script>
-
-  <!-- Tu CSS -->
-  <link rel="stylesheet" href="assets/css/app.css" />
 </head>
-
-<body class="bg-base-900 text-ink-200 font-inter antialiased"
-      data-page="home" data-discord-invite="dedos"
-      data-roblox-url="https://www.roblox.com/es/communities/12082479/unnamed#!/about">
-  <!-- Fondo -->
-  <canvas id="fx-stars" class="fixed inset-0 -z-20"></canvas>
+<body data-page="home" data-discord-invite="dedos" data-roblox-url="https://www.roblox.com/es/communities/12082479/unnamed#!/about">
+  <canvas id="fx-stars"></canvas>
   <div class="fixed inset-0 -z-10 pointer-events-none">
-    <div class="blob blob--one"></div>
-    <div class="blob blob--two"></div>
-    <div class="blob blob--three"></div>
+    <div class="blob blob--one" aria-hidden="true"></div>
+    <div class="blob blob--two" aria-hidden="true"></div>
+    <div class="blob blob--three" aria-hidden="true"></div>
   </div>
 
-  <!-- Header -->
-  <header class="sticky top-0 z-50 backdrop-blur-xl bg-black/50">
-    <div class="container py-4">
-      <div class="flex items-center justify-between gap-4 rounded-[28px] border border-white/10 bg-white/5 px-5 py-3 shadow-glass">
-        <a class="flex items-center gap-3 font-extrabold uppercase tracking-tight" href="#">
-          <span class="inline-flex h-5 w-5 rounded-full bg-gradient-to-br from-brand-pink via-brand-violet to-brand-cyan animate-[spin_9s_linear_infinite]"></span>
-          <span>DEDOS <span class="opacity-70">STORE</span></span>
+  <header class="site-header">
+    <div class="shell">
+      <div class="site-header__bar" data-animate="fade">
+        <a class="site-brand" href="index.html">
+          <span class="site-brand__pulse" aria-hidden="true"></span>
+          <span>Dedos <span class="text-soft">Store</span></span>
         </a>
-        <nav class="hidden md:flex items-center gap-6 text-sm">
-          <a class="navlink" href="#catalogo">Catálogo</a>
-          <a class="navlink" href="#por-que">¿Por qué?</a>
-          <a class="navlink" href="#servicios">Servicios</a>
-          <a class="navlink" href="#faq">FAQ</a>
-          <a class="navlink" href="#tos">TOS</a>
-          <a class="navlink" href="roblox.html">Grupo de Roblox</a>
+        <nav class="site-nav" aria-label="Principal">
+          <ul class="site-nav__list">
+            <li><a class="site-nav__link" data-section-link="catalogo" href="#catalogo">Catálogo</a></li>
+            <li><a class="site-nav__link" data-section-link="por-que" href="#por-que">¿Por qué?</a></li>
+            <li><a class="site-nav__link" data-section-link="servicios" href="#servicios">Servicios</a></li>
+            <li><a class="site-nav__link" data-section-link="faq" href="#faq">FAQ</a></li>
+            <li><a class="site-nav__link" href="tos.html">TOS</a></li>
+            <li><a class="site-nav__link" href="roblox.html">Grupo de Roblox</a></li>
+          </ul>
         </nav>
-        <div class="flex items-center gap-3">
-          <a class="btn btn--gradient hidden md:inline-flex" href="https://discord.gg/dedos">Entrar a Discord</a>
-          <button class="btn btn--ghost md:hidden" id="nav-toggle" aria-expanded="false" aria-controls="mobile-nav">☰</button>
+        <div class="site-header__actions">
+          <a class="btn btn--primary hide-on-mobile" href="https://discord.gg/dedos" data-discord-link>Entrar a Discord</a>
+          <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="mobile-nav" aria-label="Abrir menú">☰</button>
         </div>
       </div>
     </div>
-    <nav id="mobile-nav" hidden class="mx-4 mb-3 rounded-[22px] border border-white/10 bg-black/80 backdrop-blur-xl p-3 shadow-glass md:hidden">
-      <div class="grid gap-2 text-sm">
-        <a class="mobile-link" href="#catalogo">Catálogo</a>
-        <a class="mobile-link" href="#por-que">¿Por qué?</a>
-        <a class="mobile-link" href="#servicios">Servicios</a>
-        <a class="mobile-link" href="#faq">FAQ</a>
-        <a class="mobile-link" href="#tos">TOS</a>
-        <a class="mobile-link" href="roblox.html">Grupo de Roblox</a>
-        <a class="btn btn--gradient justify-center" href="https://discord.gg/dedos">Entrar a Discord →</a>
+    <nav class="mobile-drawer" id="mobile-nav" hidden data-nav-panel>
+      <div class="mobile-drawer__content">
+        <a class="mobile-drawer__link" data-section-link="catalogo" href="#catalogo">Catálogo</a>
+        <a class="mobile-drawer__link" data-section-link="por-que" href="#por-que">¿Por qué?</a>
+        <a class="mobile-drawer__link" data-section-link="servicios" href="#servicios">Servicios</a>
+        <a class="mobile-drawer__link" data-section-link="faq" href="#faq">FAQ</a>
+        <a class="mobile-drawer__link" href="tos.html">TOS</a>
+        <a class="mobile-drawer__link" href="roblox.html">Grupo de Roblox</a>
+        <a class="btn btn--primary" href="https://discord.gg/dedos" data-discord-link>Entrar a Discord →</a>
       </div>
     </nav>
   </header>
 
   <main>
-    <!-- Hero -->
-    <section class="py-20">
-      <div class="container">
-        <div class="grid gap-10 lg:grid-cols-[1.05fr,0.95fr] xl:gap-12">
-          <div class="space-y-6" data-aos="fade-up">
-            <span class="chip chip--mint">✨ Diseño espectacular + microinteracciones</span>
-            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight">
-              Tu hub de <span class="hero__title-gradient">suscripciones y gaming</span>
-            </h1>
-            <p class="text-lg text-ink-300">
-              Robux, Discord Nitro, boosts, decoraciones, streaming, VPNs y más. Una página principal enfocada en animaciones, degradados y confianza instantánea.
-            </p>
-            <div class="flex flex-wrap items-center gap-3">
-              <a class="btn btn--white" href="https://discord.gg/dedos"><i data-lucide="rocket" class="w-4 h-4"></i> Ir al servidor</a>
-              <a class="btn btn--outline" href="#catalogo"><i data-lucide="grid-3x3" class="w-4 h-4"></i> Ver catálogo</a>
-              <span class="tag tag--cyan"><i data-lucide="shield-check" class="w-4 h-4"></i> Garantía & soporte</span>
-              <span class="tag tag--violet"><i data-lucide="handshake" class="w-4 h-4"></i> Middleman moderno</span>
-              <span class="tag tag--pink"><i data-lucide="clock" class="w-4 h-4"></i> Trades 24/7</span>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3" id="hero-stats"></div>
+    <section class="hero section" id="inicio">
+      <div class="shell hero__grid">
+        <div class="hero__content" data-animate="rise">
+          <span class="hero__eyebrow">✨ Diseño espectacular + microinteracciones</span>
+          <h1 class="hero__title">Tu hub de <span class="hero__title-highlight">suscripciones y gaming</span></h1>
+          <p class="hero__body">Robux, Discord Nitro, boosts, decoraciones, streaming, VPNs y más. Un escaparate moderno con glassmorphism, gradientes y confianza instantánea.</p>
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="https://discord.gg/dedos" data-discord-link><i data-lucide="rocket" aria-hidden="true"></i> Ir al servidor</a>
+            <a class="btn btn--secondary" data-section-link="catalogo" href="#catalogo"><i data-lucide="grid-3x3" aria-hidden="true"></i> Ver catálogo</a>
+            <span class="tag" data-tone="cyan"><i data-lucide="shield-check" aria-hidden="true"></i> Garantía &amp; soporte</span>
+            <span class="tag" data-tone="violet"><i data-lucide="handshake" aria-hidden="true"></i> Middleman moderno</span>
+            <span class="tag" data-tone="pink"><i data-lucide="clock" aria-hidden="true"></i> Trades 24/7</span>
           </div>
-
-          <aside data-aos="zoom-in">
-            <div class="glass rounded-[22px] p-5 panel">
-              <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3 xl:gap-8 justify-center" id="hero-featured"></div>
-            </div>
-          </aside>
+          <div class="hero__stats" id="hero-stats"></div>
         </div>
+        <aside class="hero__panel" data-animate="zoom">
+          <div class="feature-grid" id="hero-featured"></div>
+        </aside>
       </div>
     </section>
 
-    <!-- Catálogo -->
     <section class="section" id="catalogo">
-      <div class="container">
-        <div class="text-center md:text-left mb-10">
-          <h2 class="text-4xl font-extrabold">Catálogo</h2>
-          <p class="text-ink-400">Todo en un mismo lugar. Hover para ver la magia ✨</p>
+      <div class="shell">
+        <div class="section__head" data-animate="fade">
+          <h2 class="section__title">Catálogo</h2>
+          <p class="section__lead">Todo en un mismo lugar. Hover para ver la magia ✨</p>
         </div>
-        <div class="cards-grid" id="grid-catalog"></div>
+        <div class="grid-cards" id="grid-catalog"></div>
       </div>
     </section>
 
-    <!-- Servicios -->
     <section class="section" id="servicios">
-      <div class="container">
-        <div class="cards-grid" id="grid-services"></div>
+      <div class="shell">
+        <div class="section__head" data-animate="fade">
+          <h2 class="section__title">Servicios dedicados</h2>
+          <p class="section__lead">Automatización, soporte real y un equipo obsesionado con la experiencia.</p>
+        </div>
+        <div class="grid-cards" id="grid-services"></div>
       </div>
     </section>
 
-    <!-- ¿Por qué? -->
-    <section class="section text-center" id="por-que">
-      <div class="container">
-        <h2 class="text-4xl font-extrabold">¿Por qué comprar con <span class="title-gradient">dedos</span>?</h2>
-        <p class="text-ink-400 mb-10">Velocidad, seguridad y un diseño que enamora.</p>
-        <div class="cards-grid" id="grid-why"></div>
+    <section class="section" id="por-que">
+      <div class="shell">
+        <div class="section__head" data-align="center" data-animate="fade">
+          <h2 class="section__title">¿Por qué comprar con <span class="hero__title-highlight">Dedos</span>?</h2>
+          <p class="section__lead">Velocidad, seguridad y un diseño que enamora desde el primer scroll.</p>
+        </div>
+        <div class="grid-cards" id="grid-why"></div>
       </div>
     </section>
 
-    <!-- CTA -->
-    <section class="section pt-0">
-      <div class="container">
-        <div class="glass rounded-[32px] p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6">
+    <section class="section" id="cta">
+      <div class="shell">
+        <div class="callout" data-animate="rise">
           <div>
-            <h3 class="text-3xl font-extrabold text-white sm:text-4xl">¿Listo para empezar?</h3>
-            <p class="text-base leading-relaxed text-ink-400 sm:text-lg">Entra a nuestro servidor y abre tu primer ticket.</p>
+            <h3 class="callout__title">¿Listo para empezar?</h3>
+            <p class="callout__body">Entra a nuestro servidor y abre tu primer ticket. Te acompañamos en cada paso con transparencia total.</p>
           </div>
-          <a class="btn btn--gradient" href="https://discord.gg/dedos">Entrar a Discord</a>
+          <div class="callout__actions">
+            <a class="btn btn--primary" href="https://discord.gg/dedos" data-discord-link>Entrar a Discord</a>
+            <a class="btn btn--ghost" href="discord.html">¿Problemas para unirte?</a>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- FAQ -->
     <section class="section" id="faq">
-      <div class="container">
-        <div class="mx-auto max-w-3xl space-y-8 text-center">
-          <h2 class="text-4xl font-extrabold">Preguntas frecuentes</h2>
-          <div class="faq" id="faq-root"></div>
+      <div class="shell">
+        <div class="section__head" data-align="center" data-animate="fade">
+          <h2 class="section__title">Preguntas frecuentes</h2>
+          <p class="section__lead">Transparencia total: resolvemos tus dudas antes de abrir ticket.</p>
         </div>
+        <div class="accordion" id="faq-root" data-faq></div>
       </div>
     </section>
 
-    <!-- TOS -->
-    <section class="section pt-0" id="tos">
-      <div class="container max-w-4xl">
-        <div class="glass rounded-[26px] p-6 md:p-7 lg:p-8">
-          <h2 class="text-3xl font-semibold text-white sm:text-4xl">Términos de Servicio (resumen)</h2>
-          <p class="text-base leading-relaxed text-ink-400">Este es un placeholder. Pásame tus TOS y los pego aquí. Ejemplos: políticas de reembolso, tiempos de entrega, garantías, restricciones de uso, contacto de soporte.</p>
+    <section class="section" id="tos">
+      <div class="shell">
+        <div class="section__head" data-align="center" data-animate="fade">
+          <h2 class="section__title">Términos de Servicio (resumen)</h2>
+          <p class="section__lead">Pasa tu texto legal y lo pegamos aquí. Mientras, este bloque describe reembolsos, garantías y tiempos.</p>
         </div>
+        <article class="tos-card" data-animate="rise">
+          <p>Este es un placeholder. Pásame tus TOS y los pego aquí. Ejemplos: políticas de reembolso, tiempos de entrega, garantías, restricciones de uso, contacto de soporte.</p>
+        </article>
       </div>
     </section>
   </main>
 
-  <footer class="border-t border-white/10 py-12 text-sm text-ink-400">
-    <div class="container flex flex-col items-center justify-between gap-6 text-center md:flex-row md:text-left">
-      <div>© <span id="year"></span> dedos store. Todos los derechos reservados.</div>
-      <div class="flex flex-wrap items-center justify-center gap-4">
-        <a class="link" href="tos.html">Términos</a>
-        <a class="link" href="https://discord.gg/dedos">Discord</a>
+  <footer class="page-footer">
+    <div class="shell">
+      <div class="page-footer__inner">
+        <div>© <span id="year"></span> Dedos Store. Todos los derechos reservados.</div>
+        <div class="page-footer__links">
+          <a href="tos.html">Términos</a>
+          <a href="https://discord.gg/dedos" data-discord-link>Discord</a>
+        </div>
       </div>
     </div>
   </footer>
 
-  <!-- JS clásico, sin modules -->
   <script src="assets/js/app.js"></script>
 </body>
 </html>
