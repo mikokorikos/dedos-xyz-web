@@ -1,6 +1,6 @@
 # Dedos.xyz — versión estática
 
-Este repositorio contiene una versión 100% estática del sitio Dedos.xyz. Todo el layout se construyó con HTML, CSS y JavaScript vanilla aprovechando la CDN de Tailwind para los estilos utilitarios y efectos glassmorphism.
+Este repositorio contiene una versión 100% estática del sitio Dedos.xyz. Todo el layout se construyó con HTML, CSS y JavaScript vanilla empleando un diseño propio con glassmorphism, gradientes y microinteracciones modernas.
 
 ## Estructura
 
@@ -10,7 +10,7 @@ robux.html          # Planes y proceso de compra de Robux
 roblox.html         # Redirección al grupo oficial de Roblox
 discord.html        # Redirección al servidor de Discord
 tos.html            # Términos de servicio
-assets/css/styles.css
+assets/css/app.css  # Design system y estilos globales
 assets/js/main.js   # Renderizado dinámico y efectos responsivos
 assets/js/fx-*.js   # Background animado de orbes y estrellas
 ```
@@ -24,7 +24,7 @@ assets/js/fx-*.js   # Background animado de orbes y estrellas
 
 * Cambia el código de invitación de Discord editando el atributo `data-discord-invite` en los archivos HTML.
 * Actualiza la URL del grupo de Roblox mediante `data-roblox-url` en `index.html` y `robux.html`.
-* Ajusta el estilo global en `assets/css/styles.css` (por ejemplo, colores base o animaciones del backdrop).
+* Ajusta el estilo global en `assets/css/app.css` (por ejemplo, colores base, gradientes o animaciones del backdrop).
 
 ## Notas
 
