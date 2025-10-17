@@ -62,9 +62,9 @@ var HERO_FEATURED = [
 ];
 
 var CATALOG = [
-  { title:'Robux', copy:'Carga segura', badges:['GAMING','BEST SELLER'], cta:'Consultar', icon:'gamepad-2', tone:'cyan' },
-  { title:'Discord Nitro', copy:'Mensual y anual', badges:['DISCORD','POPULAR'], cta:'Consultar', icon:'bolt', tone:'violet' },
-  { title:'Decoraciones Discord', copy:'Banners, iconos, packs', badges:['ESTILO'], cta:'Consultar', icon:'palette', tone:'pink' }
+  { title:'Robux', copy:'Carga segura', badges:['GAMING','BEST SELLER'], cta:{ label:'Consultar', useDiscordInvite:true }, icon:'gamepad-2', tone:'cyan' },
+  { title:'Discord Nitro', copy:'Mensual y anual', badges:['DISCORD','POPULAR'], cta:{ label:'Consultar', useDiscordInvite:true }, icon:'bolt', tone:'violet' },
+  { title:'Decoraciones Discord', copy:'Banners, iconos, packs', badges:['ESTILO'], cta:{ label:'Consultar', useDiscordInvite:true }, icon:'palette', tone:'pink' }
 ];
 
 var SERVICES = [
@@ -89,6 +89,50 @@ var FAQ = [
 
 // Helpers
 function el(html){ var t=document.createElement('template'); t.innerHTML=html.trim(); return t.content.firstElementChild; }
+function buildCta(cta){
+  if(!cta) return '';
+  var config = typeof cta === 'string' ? { label: cta } : Object.assign({}, cta);
+  if(!config.label) return '';
+
+  var className = config.className || 'btn btn--outline';
+  var invite = config.invite || (document.body && document.body.dataset && document.body.dataset.discordInvite);
+  var shouldUseDiscord = Boolean(config.useDiscordInvite || config.discord);
+  if(shouldUseDiscord && !invite) shouldUseDiscord = false;
+
+  var href = config.href;
+  if(!href && shouldUseDiscord && invite){
+    href = 'https://discord.gg/' + invite;
+  }
+
+  var attrs = ['class="'+className+'"'];
+  if(config.target) attrs.push('target="'+config.target+'"');
+  if(config.rel) attrs.push('rel="'+config.rel+'"');
+  if(config.id) attrs.push('id="'+config.id+'"');
+  if(config.ariaLabel) attrs.push('aria-label="'+config.ariaLabel+'"');
+
+  if(config.dataDiscordLink || shouldUseDiscord){
+    attrs.push('data-discord-link');
+  }
+
+  if(config.attributes){
+    Object.keys(config.attributes).forEach(function(key){
+      var value = config.attributes[key];
+      if(value === undefined || value === null || value === false) return;
+      if(value === true){
+        attrs.push(key);
+      } else {
+        attrs.push(key+'="'+value+'"');
+      }
+    });
+  }
+
+  if(href){
+    attrs.push('href="'+href+'"');
+    return '<a '+attrs.join(' ')+'>'+config.label+'</a>';
+  }
+
+  return '<button type="button" '+attrs.join(' ')+'>'+config.label+'</button>';
+}
 function card(o){
   var tone = o.tone || 'cyan';
   return el(
@@ -100,7 +144,7 @@ function card(o){
         '</div>'+
         '<div class="card__body">'+ (o.copy || o.subtitle || '') +'</div>'+
         '<div class="card__badges">'+ (o.badges||[]).map(function(b){ return '<span class="badge">'+b+'</span>'; }).join('') +'</div>'+
-        '<div class="card__footer">'+ (o.cta?'<a href="#" class="btn btn--outline">'+o.cta+'</a>':'') +'</div>'+
+        '<div class="card__footer">'+ buildCta(o.cta) +'</div>'+
       '</div>'+
     '</article>'
   );
@@ -112,10 +156,10 @@ function mountList(sel, arr, builder){
 }
 
 // Render
-mountList('#hero-featured', HERO_FEATURED, function(it){ return card({title:it.title, copy:it.subtitle, badges:it.badges, cta:'Destacado', icon:it.icon, tone:it.tone}); });
+mountList('#hero-featured', HERO_FEATURED, function(it){ return card({title:it.title, copy:it.subtitle, badges:it.badges, cta:{ label:'Destacado', useDiscordInvite:true }, icon:it.icon, tone:it.tone}); });
 mountList('#grid-catalog', CATALOG, card);
-mountList('#grid-services', SERVICES, function(it){ return card({title:it.title, copy:it.copy, badges:[], cta:'Más info', icon:it.icon, tone:it.tone}); });
-mountList('#grid-why', WHY, function(it){ return card({title:it.title, copy:it.copy, badges:[], cta:'', icon:it.icon, tone:it.tone}); });
+mountList('#grid-services', SERVICES, function(it){ return card({title:it.title, copy:it.copy, badges:[], cta:{ label:'Más info', useDiscordInvite:true }, icon:it.icon, tone:it.tone}); });
+mountList('#grid-why', WHY, function(it){ return card({title:it.title, copy:it.copy, badges:[], icon:it.icon, tone:it.tone}); });
 
 // Stats
 (function(){
