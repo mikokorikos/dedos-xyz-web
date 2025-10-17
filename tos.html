@@ -1,108 +1,91 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Términos de Servicio — Dedos.xyz</title>
-    <meta
-      name="description"
-      content="Consulta las políticas de Dedos.xyz: reembolsos, tiempos de entrega, garantías y contacto de soporte."
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="assets/css/styles.css" />
-    <script>
-      tailwind = window.tailwind || {};
-      tailwind.config = {
-        theme: {
-          extend: {
-            animation: {
-              spinSlow: 'spinSlow 9s linear infinite',
-            },
-            keyframes: {
-              spinSlow: {
-                to: { transform: 'rotate(360deg)' },
-              },
-            },
-          },
-        },
-      };
-    </script>
-    <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body data-page="tos" data-discord-invite="dedos" data-roblox-url="https://www.roblox.com/es/communities/12082479/unnamed#!/about">
-    <div class="fx-backdrop" data-fx-backdrop>
-      <canvas class="fx-backdrop__canvas fx-backdrop__canvas--orbs" data-fx-orbs aria-hidden="true"></canvas>
-      <canvas class="fx-backdrop__canvas fx-backdrop__canvas--stars" data-fx-stars aria-hidden="true"></canvas>
-      <div class="fx-backdrop__veil" aria-hidden="true"></div>
-      <div class="fx-backdrop__bg-wrap" aria-hidden="true">
-        <div class="fx-backdrop__blob fx-backdrop__blob--one"></div>
-        <div class="fx-backdrop__blob fx-backdrop__blob--two"></div>
-        <div class="fx-backdrop__blob fx-backdrop__blob--three"></div>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Términos de Servicio — Dedos.xyz</title>
+  <meta name="description" content="Consulta las políticas de Dedos.xyz: reembolsos, tiempos de entrega, garantías y contacto de soporte." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/app.css" />
+</head>
+<body data-page="tos" data-discord-invite="dedos" data-roblox-url="https://www.roblox.com/es/communities/12082479/unnamed#!/about">
+  <div class="backdrop" data-fx-backdrop>
+    <canvas class="backdrop__canvas" data-fx-orbs aria-hidden="true"></canvas>
+    <canvas class="backdrop__canvas" data-fx-stars aria-hidden="true"></canvas>
+    <div class="backdrop__veil" aria-hidden="true"></div>
+    <div class="backdrop__blob backdrop__blob--one"></div>
+    <div class="backdrop__blob backdrop__blob--two"></div>
+    <div class="backdrop__blob backdrop__blob--three"></div>
+  </div>
+
+  <header class="site-header">
+    <div class="shell">
+      <div class="site-header__bar" data-animate="fade">
+        <a class="site-brand" href="index.html">
+          <span class="site-brand__pulse" aria-hidden="true"></span>
+          <span>Dedos <span class="text-soft">Store</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Principal">
+          <ul class="site-nav__list">
+            <li><a class="site-nav__link" data-section-link="catalogo" href="index.html#catalogo">Catálogo</a></li>
+            <li><a class="site-nav__link" data-section-link="por-que" href="index.html#por-que">¿Por qué?</a></li>
+            <li><a class="site-nav__link" data-section-link="servicios" href="index.html#servicios">Servicios</a></li>
+            <li><a class="site-nav__link" data-section-link="faq" href="index.html#faq">FAQ</a></li>
+            <li><a class="site-nav__link" href="robux.html">Planes Robux</a></li>
+            <li><a class="site-nav__link" href="roblox.html">Grupo de Roblox</a></li>
+          </ul>
+        </nav>
+        <div class="site-header__actions">
+          <a class="btn btn--primary hide-on-mobile" href="https://discord.gg/dedos" data-discord-link>Entrar a Discord</a>
+          <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="mobile-nav" aria-label="Abrir menú">☰</button>
+        </div>
       </div>
     </div>
+    <nav class="mobile-drawer" id="mobile-nav" hidden data-nav-panel>
+      <div class="mobile-drawer__content">
+        <a class="mobile-drawer__link" data-section-link="catalogo" href="index.html#catalogo">Catálogo</a>
+        <a class="mobile-drawer__link" data-section-link="por-que" href="index.html#por-que">¿Por qué?</a>
+        <a class="mobile-drawer__link" data-section-link="servicios" href="index.html#servicios">Servicios</a>
+        <a class="mobile-drawer__link" data-section-link="faq" href="index.html#faq">FAQ</a>
+        <a class="mobile-drawer__link" href="robux.html">Planes Robux</a>
+        <a class="mobile-drawer__link" href="roblox.html">Grupo de Roblox</a>
+        <a class="btn btn--primary" href="https://discord.gg/dedos" data-discord-link>Entrar a Discord →</a>
+      </div>
+    </nav>
+  </header>
 
-    <header class="sticky top-0 z-50 bg-[#080812]/70 backdrop-blur-xl">
-      <div class="mx-auto w-full max-w-[1400px] px-6 sm:px-8 lg:px-12 py-4">
-        <div class="relative flex items-center justify-between gap-4 rounded-[28px] border border-white/10 bg-white/5 px-5 py-3 shadow-[0_22px_52px_rgba(8,8,18,0.5)] backdrop-blur-xl backdrop-saturate-150">
-          <div class="flex items-center gap-3 font-extrabold uppercase tracking-tight">
-            <span aria-hidden="true" class="inline-flex h-5 w-5 animate-spinSlow rounded-full bg-gradient-to-br from-fuchsia-400 via-violet-400 to-cyan-300"></span>
-            <span class="text-sm sm:text-base">dedos <span class="opacity-70">store</span></span>
-          </div>
-          <nav
-            class="absolute left-0 right-0 top-full mt-3 hidden flex-col gap-4 rounded-2xl border border-white/10 bg-[#080812]/95 p-5 shadow-[0_22px_52px_rgba(8,8,18,0.55)] backdrop-blur-xl md:static md:mt-0 md:flex md:flex-row md:items-center md:border-0 md:bg-transparent md:p-0 md:shadow-none"
-            aria-label="Principal"
-            data-nav
-            id="primary-navigation"
-          >
-            <ul class="flex flex-col gap-3 md:flex-row md:items-center md:gap-5">
-              <li><a class="text-sm font-medium text-slate-200/80 transition hover:text-cyan-200" data-section-link="catalogo" href="index.html#catalogo">Catálogo</a></li>
-              <li><a class="text-sm font-medium text-slate-200/80 transition hover:text-cyan-200" data-section-link="por-que" href="index.html#por-que">¿Por qué?</a></li>
-              <li><a class="text-sm font-medium text-slate-200/80 transition hover:text-cyan-200" data-section-link="servicios" href="index.html#servicios">Servicios</a></li>
-              <li><a class="text-sm font-medium text-slate-200/80 transition hover:text-cyan-200" data-section-link="faq" href="index.html#faq">FAQ</a></li>
-              <li><a class="text-sm font-medium text-slate-200/80 transition hover:text-cyan-200" href="robux.html">Planes Robux</a></li>
-              <li><a class="text-sm font-medium text-slate-200/80 transition hover:text-cyan-200" href="roblox.html">Grupo de Roblox</a></li>
-            </ul>
-            <a class="inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold text-white transition-transform duration-200 ease-out hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300 bg-gradient-to-r from-fuchsia-300 via-violet-300 to-cyan-300 text-slate-900 md:hidden" href="https://discord.gg/dedos" data-discord-link>Entrar a Discord →</a>
-          </nav>
-          <div class="flex items-center gap-3">
-            <button aria-controls="primary-navigation" aria-expanded="false" aria-label="Abrir menú" class="inline-flex items-center gap-2 rounded-full px-3 py-2 text-base font-semibold text-white transition-transform duration-200 ease-out hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300 border border-white/20 bg-transparent md:hidden" data-nav-toggle type="button">☰</button>
-            <a class="hidden md:inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold text-white transition-transform duration-200 ease-out hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300 bg-gradient-to-r from-fuchsia-300 via-violet-300 to-cyan-300 text-slate-900" href="https://discord.gg/dedos" data-discord-link>Entrar a Discord →</a>
-          </div>
+  <main>
+    <section class="section">
+      <div class="shell">
+        <div class="section__head" data-align="center" data-animate="fade">
+          <h1 class="section__title">Términos de Servicio</h1>
+          <p class="section__lead">Actualiza este texto con tus políticas reales: reembolsos, garantías, tiempos de entrega, restricciones y contacto de soporte.</p>
+        </div>
+        <article class="tos-card" data-animate="rise">
+          <p><strong class="text-white">Reembolsos:</strong> las solicitudes se revisan caso por caso. Comparte evidencia dentro del ticket para resolverlo en menos de 48 horas.</p>
+          <p><strong class="text-white">Tiempos:</strong> la mayoría de pedidos se procesan el mismo día. Los servicios con espera (ej. Robux por grupo) pueden tardar según políticas de Roblox.</p>
+          <p><strong class="text-white">Garantías:</strong> mantenemos registros de pago y entrega. Si algo falla, compensamos con saldo o reposición equivalente.</p>
+          <p><strong class="text-white">Conducta:</strong> prohibido revender productos robados, compartir material ilegal o acosar al staff. Nos reservamos el derecho de negar servicio.</p>
+          <p><strong class="text-white">Contacto:</strong> abre un ticket en Discord o escribe al correo soporte@dedos.xyz.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="page-footer">
+    <div class="shell">
+      <div class="page-footer__inner">
+        <div>© <span data-current-year></span> Dedos Store. Todos los derechos reservados.</div>
+        <div class="page-footer__links">
+          <a href="robux.html">Planes Robux</a>
+          <a href="https://discord.gg/dedos" data-discord-link>Discord</a>
         </div>
       </div>
-    </header>
+    </div>
+  </footer>
 
-    <main class="py-20">
-      <div class="mx-auto w-full max-w-[1400px] px-6 sm:px-8 lg:px-12">
-        <div class="mx-auto max-w-3xl space-y-6 rounded-[26px] border border-white/10 bg-white/5 p-6 shadow-[0_22px_52px_rgba(8,8,18,0.5)] backdrop-blur-xl backdrop-saturate-150 md:p-7 lg:p-8">
-          <h1 class="text-4xl font-extrabold text-white sm:text-5xl">Términos de Servicio</h1>
-          <p class="text-base leading-relaxed text-slate-200/80">Pasa tu texto legal y lo pegamos aquí (reembolsos, garantías, tiempos, restricciones, contacto, etc.).</p>
-          <div class="space-y-4 text-left text-sm leading-relaxed text-slate-200/75">
-            <p><strong class="text-white">Reembolsos:</strong> las solicitudes se revisan caso por caso. Comparte evidencia dentro del ticket para resolverlo en menos de 48 horas.</p>
-            <p><strong class="text-white">Tiempos:</strong> la mayoría de pedidos se procesan el mismo día. Los servicios con espera (ej. Robux por grupo) pueden tardar según políticas de Roblox.</p>
-            <p><strong class="text-white">Garantías:</strong> mantenemos registros de pago y entrega. Si algo falla, compensamos con saldo o reposición equivalente.</p>
-            <p><strong class="text-white">Conducta:</strong> prohibido revender productos robados, compartir material ilegal o acosar al staff. Nos reservamos el derecho de negar servicio.</p>
-            <p><strong class="text-white">Contacto:</strong> abre un ticket en Discord o escribe al correo soporte@dedos.xyz.</p>
-          </div>
-        </div>
-      </div>
-    </main>
-
-    <footer class="border-t border-white/10 py-12 text-sm text-slate-200/70">
-      <div class="mx-auto w-full max-w-[1400px] px-6 sm:px-8 lg:px-12 flex flex-col items-center justify-between gap-6 text-center md:flex-row md:text-left">
-        <div>© <span data-current-year></span> dedos store. Todos los derechos reservados.</div>
-        <div class="flex flex-wrap items-center justify-center gap-4">
-          <a class="transition-colors duration-200 hover:text-white" href="robux.html">Planes Robux</a>
-          <a class="transition-colors duration-200 hover:text-white" href="https://discord.gg/dedos" data-discord-link>Discord</a>
-        </div>
-      </div>
-    </footer>
-
-    <script type="module" src="assets/js/main.js"></script>
-  </body>
+  <script type="module" src="assets/js/main.js"></script>
+</body>
 </html>
