@@ -80,7 +80,7 @@ var WHY = [
   { title:'Atención real', copy:'Soporte humano con criterio.', icon:'sparkles', tone:'pink' }
 ];
 
-var FAQ = [
+const FAQ_ITEMS = [
   { q:'¿Cómo compro?', a:'Entra a Discord, abre ticket, confirma método. Te guiamos paso a paso.' },
   { q:'¿Tiempos de entrega?', a:'La mayoría en minutos. Si hay verificación manual, te avisamos.' },
   { q:'¿Reembolsos?', a:'Depende del caso y del estado del pedido. Todo está en TOS.' },
@@ -173,13 +173,7 @@ document.addEventListener('pointermove', function(e){
 // FAQ
 (function(){
   var root = document.getElementById('faq-root'); if(!root) return;
-  var FAQ = [
-    { q:'¿Cómo compro?', a:'Entra a Discord, abre ticket, confirma método. Te guiamos paso a paso.' },
-    { q:'¿Tiempos de entrega?', a:'La mayoría en minutos. Si hay verificación manual, te avisamos.' },
-    { q:'¿Reembolsos?', a:'Depende del caso y del estado del pedido. Todo está en TOS.' },
-    { q:'¿Es seguro?', a:'Middleman, comprobantes y verificación 4/4 en transacciones.' }
-  ];
-  FAQ.forEach(function(item){
+  FAQ_ITEMS.forEach(function(item){
     root.appendChild(el(
       '<details>'+
         '<summary>'+item.q+'<i data-lucide="chevron-down"></i></summary>'+
