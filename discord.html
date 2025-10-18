@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="assets/css/app.css" />
   <script defer src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body data-page="discord-services" data-discord-invite="dedos" data-exchange-endpoint="https://open.er-api.com/v6/latest/MXN">
+<body data-page="discord-services" data-discord-invite="dedos" data-exchange-rate="0.0585" data-exchange-updated="2024-05-14T00:00:00Z">
   <div class="backdrop" data-fx-backdrop>
     <canvas class="backdrop__canvas" data-fx-orbs aria-hidden="true"></canvas>
     <canvas class="backdrop__canvas" data-fx-stars aria-hidden="true"></canvas>
@@ -102,7 +102,7 @@
             <span class="chip" data-tone="cyan"><i data-lucide="shield-check" aria-hidden="true"></i> Confirma en ticket</span>
           </div>
           <p class="card__body" data-exchange-notice>Obteniendo tipo de cambio…</p>
-          <p class="card__body">Usamos datos de Open&nbsp;ER&nbsp;API para convertir MXN → USD en tiempo real. Confirma el valor final en tu ticket antes de pagar.</p>
+          <p class="card__body">Mostramos MXN y USD usando nuestro tipo de cambio de referencia actualizado por el equipo. Confirma el valor final en tu ticket antes de pagar.</p>
         </div>
       </div>
     </section>
@@ -167,6 +167,6 @@
     </div>
   </footer>
 
-  <script type="module" src="assets/js/main.js"></script>
+  <script defer src="assets/js/main.js"></script>
 </body>
 </html>

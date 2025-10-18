@@ -758,39 +758,43 @@
 
   const renderPlanCard = (plan, priceLabels, index) => {
     const highlight = plan.highlight
-      ? `<span class="plan-card__badge" data-tone="${plan.highlight.tone}">${plan.highlight.label}</span>`
+      ? `<span class="catalog-card__badge" data-tone="${plan.highlight.tone}">${plan.highlight.label}</span>`
       : '';
     const extras = plan.extras?.length
-      ? `<section class="plan-card__section"><h4>Extras</h4><ul>${plan.extras.map((extra) => `<li>${extra}</li>`).join('')}</ul></section>`
+      ? `<section class="catalog-card__section"><h4>Extras incluidos</h4><ul class="catalog-card__bullets">${plan.extras
+          .map((extra) => `<li>${extra}</li>`)
+          .join('')}</ul></section>`
       : '';
     return createElement(`
-      <article class="plan-card" data-animate="rise" data-tone="${plan.tone}">
+      <article class="catalog-card" data-animate="rise" data-tone="${plan.tone}">
         ${highlight}
-        <header class="plan-card__header">
-          <div class="plan-card__identity">
-            <span class="plan-card__icon" aria-hidden="true">${PLAN_ICON_SVGS[plan.icon] || ''}</span>
-            <div class="plan-card__headings">
-              <h3 class="plan-card__title">${plan.title}</h3>
-              <p class="plan-card__subtitle">${plan.tagline}</p>
+        <header class="catalog-card__header">
+          <div class="catalog-card__identity">
+            <span class="catalog-card__icon" aria-hidden="true">${PLAN_ICON_SVGS[plan.icon] || ''}</span>
+            <div class="catalog-card__heading">
+              <h3 class="catalog-card__title">${plan.title}</h3>
+              <p class="catalog-card__subtitle">${plan.tagline}</p>
             </div>
           </div>
-          <div class="plan-card__pricing">
-            <span class="plan-card__label">${plan.amountLabel}</span>
-            <span class="plan-card__price">${priceLabels.mx}</span>
-            <span class="plan-card__meta">${priceLabels.usd}</span>
+          <div class="catalog-card__pricing">
+            <p class="catalog-card__eyebrow">${plan.amountLabel}</p>
+            <span class="catalog-card__price-mx">${priceLabels.mx}</span>
+            <span class="catalog-card__price-usd">${priceLabels.usd}</span>
           </div>
         </header>
-        <p class="plan-card__description">${plan.description}</p>
-        <section class="plan-card__section">
-          <h4>Entrega</h4>
-          <p>${plan.delivery}</p>
-        </section>
-        <section class="plan-card__section">
-          <h4>Requisitos</h4>
-          <ul>${plan.requirements.map((req) => `<li>${req}</li>`).join('')}</ul>
-        </section>
-        ${extras}
-        ${plan.cta ? `<a class="btn btn--primary plan-card__cta" href="${plan.cta.href}" target="_blank" rel="noopener" data-roblox-link>${plan.cta.label}</a>` : ''}
+        <div class="catalog-card__body">
+          <p class="catalog-card__description">${plan.description}</p>
+          <section class="catalog-card__section">
+            <h4>Entrega</h4>
+            <p>${plan.delivery}</p>
+          </section>
+          <section class="catalog-card__section">
+            <h4>Requisitos</h4>
+            <ul class="catalog-card__bullets">${plan.requirements.map((req) => `<li>${req}</li>`).join('')}</ul>
+          </section>
+          ${extras}
+        </div>
+        ${plan.cta ? `<a class="btn btn--primary catalog-card__cta" href="${plan.cta.href}" target="_blank" rel="noopener" data-roblox-link>${plan.cta.label}</a>` : ''}
       </article>
     `);
   };

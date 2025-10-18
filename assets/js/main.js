@@ -1,14 +1,242 @@
-import { mountOrbs } from './fx-orbs.js';
-import { mountStars } from './fx-stars.js';
+(function () {
+  'use strict';
 
-const doc = document;
-const win = window;
-const body = doc.body;
-const page = body.dataset.page || 'home';
-const discordInvite = body.dataset.discordInvite || 'dedos';
-const robloxUrl = body.dataset.robloxUrl || 'https://www.roblox.com/es/communities/12082479/unnamed#!/about';
+  function mountOrbs(canvas) {
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return () => {};
 
-const createElement = (markup) => {
+    let width = 0;
+    let height = 0;
+    let time = 0;
+    let pointerX = null;
+    let pointerY = null;
+    let orbs = [];
+    const DPR = Math.min(2, window.devicePixelRatio || 1);
+
+    const rand = (a = 0, b = 1) => a + Math.random() * (b - a);
+
+    function seed() {
+      const count = Math.floor(rand(7, 12));
+      orbs = Array.from({ length: count }, () => ({
+        x: rand(0, width),
+        y: rand(0, height),
+        radius: rand(140 * DPR, 280 * DPR),
+        hue: rand(0, 360),
+        speed: rand(0.0008, 0.0018),
+        offset: rand(0, Math.PI * 2),
+        amplitude: rand(20 * DPR, 60 * DPR)
+      }));
+    }
+
+    function resize() {
+      width = canvas.width = Math.floor(window.innerWidth * DPR);
+      height = canvas.height = Math.floor(window.innerHeight * DPR);
+      canvas.style.width = `${window.innerWidth}px`;
+      canvas.style.height = `${window.innerHeight}px`;
+      seed();
+    }
+
+    function draw() {
+      time += 1;
+      ctx.clearRect(0, 0, width, height);
+      ctx.globalCompositeOperation = 'screen';
+
+      orbs.forEach((orb, index) => {
+        const dx = Math.cos(time * orb.speed + orb.offset + index) * orb.amplitude;
+        const dy = Math.sin(time * orb.speed * 0.9 + orb.offset - index) * orb.amplitude;
+        let x = orb.x + dx;
+        let y = orb.y + dy;
+
+        if (pointerX !== null && pointerY !== null) {
+          x += (pointerX * DPR - x) * 0.002;
+          y += (pointerY * DPR - y) * 0.002;
+        }
+
+        const gradient = ctx.createRadialGradient(x, y, 0, x, y, orb.radius);
+        gradient.addColorStop(0, `hsla(${(orb.hue + time * 0.05) % 360}, 80%, 60%, 0.10)`);
+        gradient.addColorStop(1, 'rgba(0,0,0,0)');
+
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.arc(x, y, orb.radius, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      requestAnimationFrame(draw);
+    }
+
+    const handleMouseMove = (event) => {
+      pointerX = event.clientX;
+      pointerY = event.clientY;
+    };
+
+    const handleKeyDown = (event) => {
+      if (event.key.toLowerCase() === 'r') {
+        seed();
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('resize', resize, { passive: true });
+
+    resize();
+    draw();
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('resize', resize);
+    };
+  }
+
+  function mountStars(canvas) {
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return () => {};
+
+    let width = 0;
+    let height = 0;
+    let stars = [];
+    let meteors = [];
+    const DPR = Math.min(2, window.devicePixelRatio || 1);
+
+    function resize() {
+      width = canvas.width = Math.floor(window.innerWidth * DPR);
+      height = canvas.height = Math.floor(window.innerHeight * DPR);
+      canvas.style.width = `${window.innerWidth}px`;
+      canvas.style.height = `${window.innerHeight}px`;
+      generateStars();
+    }
+
+    function generateStars() {
+      const count = Math.min(320, Math.floor((width * height) / (15000 * DPR)));
+      stars = Array.from({ length: count }, () => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        radius: (Math.random() * 1.4 + 0.2) * DPR,
+        baseAlpha: Math.random() * 0.6 + 0.25,
+        hue: Math.floor(Math.random() * 360),
+        twinkle: Math.random() * Math.PI * 2,
+        twinkleSpeed: 0.02 + Math.random() * 0.03
+      }));
+    }
+
+    function spawnMeteor() {
+      const side = Math.floor(Math.random() * 4);
+      const speed = (6 + Math.random() * 5) * DPR;
+      let x;
+      let y;
+      let vx;
+      let vy;
+
+      if (side === 0) {
+        x = Math.random() * width;
+        y = -20;
+        vx = (Math.random() - 0.5) * speed;
+        vy = speed;
+      } else if (side === 1) {
+        x = width + 20;
+        y = Math.random() * height;
+        vx = -speed;
+        vy = (Math.random() - 0.5) * speed;
+      } else if (side === 2) {
+        x = Math.random() * width;
+        y = height + 20;
+        vx = (Math.random() - 0.5) * speed;
+        vy = -speed;
+      } else {
+        x = -20;
+        y = Math.random() * height;
+        vx = speed;
+        vy = (Math.random() - 0.5) * speed;
+      }
+
+      meteors.push({ x, y, vx, vy, life: 0, maxLife: 120 + Math.random() * 80 });
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, width, height);
+
+      stars.forEach((star) => {
+        star.twinkle += star.twinkleSpeed;
+        const alpha = star.baseAlpha * (0.7 + 0.3 * Math.sin(star.twinkle));
+        star.hue = (star.hue + 0.03) % 360;
+        ctx.globalAlpha = alpha;
+        ctx.fillStyle = `hsl(${star.hue} 80% 90%)`;
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      ctx.globalAlpha = 1;
+      meteors = meteors.filter((meteor) => meteor.life < meteor.maxLife);
+
+      meteors.forEach((meteor) => {
+        meteor.x += meteor.vx;
+        meteor.y += meteor.vy;
+        meteor.life += 1;
+        const trail = 60;
+        const gradient = ctx.createLinearGradient(
+          meteor.x,
+          meteor.y,
+          meteor.x - meteor.vx * trail,
+          meteor.y - meteor.vy * trail
+        );
+        gradient.addColorStop(0, 'rgba(255,255,255,.95)');
+        gradient.addColorStop(0.5, 'rgba(167,139,250,.5)');
+        gradient.addColorStop(1, 'rgba(103,232,249,0)');
+        ctx.strokeStyle = gradient;
+        ctx.lineWidth = 2 * DPR;
+        ctx.beginPath();
+        ctx.moveTo(meteor.x - meteor.vx * trail, meteor.y - meteor.vy * trail);
+        ctx.lineTo(meteor.x, meteor.y);
+        ctx.stroke();
+      });
+    }
+
+    let tick = 0;
+    let lastSpawn = 0;
+
+    function loop() {
+      tick += 1;
+      if (tick - lastSpawn > 120 + Math.random() * 160) {
+        spawnMeteor();
+        lastSpawn = tick;
+      }
+      draw();
+      requestAnimationFrame(loop);
+    }
+
+    let lastScrollY = 0;
+    let parallax = 0;
+
+    const handleScroll = () => {
+      const currentY = window.scrollY || window.pageYOffset;
+      parallax += (currentY - lastScrollY) * -0.03;
+      lastScrollY = currentY;
+      canvas.style.transform = `translateY(${parallax}px)`;
+    };
+
+    window.addEventListener('resize', resize, { passive: true });
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    resize();
+    loop();
+
+    return () => {
+      window.removeEventListener('resize', resize);
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }
+
+  const doc = document;
+  const win = window;
+  const body = doc.body;
+  const page = body.dataset.page || 'home';
+  const discordInvite = body.dataset.discordInvite || 'dedos';
+  const robloxUrl = body.dataset.robloxUrl || 'https://www.roblox.com/es/communities/12082479/unnamed#!/about';
+
+  const createElement = (markup) => {
   const template = doc.createElement('template');
   template.innerHTML = markup.trim();
   return template.content.firstElementChild;
@@ -258,21 +486,15 @@ const setupLinkHandlers = () => {
   });
 };
 
-const fetchExchangeRate = async () => {
-  try {
-    const response = await fetch(body.dataset.exchangeEndpoint || 'https://open.er-api.com/v6/latest/MXN', { cache: 'no-store' });
-    if (!response.ok) return { rate: null, updatedAt: null };
-    const data = await response.json();
-    const usd = data?.rates?.USD;
-    const updatedAt = data?.time_last_update_utc ?? null;
-    return {
-      rate: typeof usd === 'number' ? usd : null,
-      updatedAt
-    };
-  } catch (error) {
-    console.error('Failed to fetch MXN → USD rate', error);
-    return { rate: null, updatedAt: null };
-  }
+const getExchangeInfo = () => {
+  const rateAttr = body.dataset.exchangeRate;
+  const updatedAttr = body.dataset.exchangeUpdated;
+  const parsed = rateAttr ? Number.parseFloat(rateAttr) : Number.NaN;
+  const rate = Number.isFinite(parsed) && parsed > 0 ? parsed : null;
+  return {
+    rate,
+    updatedAt: updatedAttr || null
+  };
 };
 
 const MX_FORMATTER = new Intl.NumberFormat('es-MX', {
@@ -325,27 +547,27 @@ const createPriceListMarkup = (plans, rate) => {
   const items = plans
     .map((plan) => {
       const labels = formatPriceLabels(plan, rate);
-      const note = plan.note ? `<span class="price-list__note">${plan.note}</span>` : '';
+      const note = plan.note ? `<span class="catalog-card__price-note">${plan.note}</span>` : '';
       return `
-        <li class="price-list__item">
-          <div class="price-list__label">
+        <li class="catalog-card__price-row">
+          <div class="catalog-card__price-label">
             <span>${plan.label}</span>
             ${note}
           </div>
-          <div class="price-list__prices">
-            <span class="price-list__mx">${labels.mx}</span>
-            <span class="price-list__usd">${labels.usd}</span>
+          <div class="catalog-card__price-values">
+            <span class="catalog-card__price-mx-value">${labels.mx}</span>
+            <span class="catalog-card__price-usd-value">${labels.usd}</span>
           </div>
         </li>
       `;
     })
     .join('');
-  return `<ul class="price-list">${items}</ul>`;
+  return `<ul class="catalog-card__price-list">${items}</ul>`;
 };
 
 const createNotesList = (notes) => {
   if (!Array.isArray(notes) || notes.length === 0) return '';
-  return `<ul class="note-list">${notes.map((note) => `<li>${note}</li>`).join('')}</ul>`;
+  return `<ul class="catalog-card__note-list">${notes.map((note) => `<li>${note}</li>`).join('')}</ul>`;
 };
 
 const PLAN_ICON_SVGS = {
@@ -542,55 +764,53 @@ const ROBUX_PLANS = [
 
 const renderPlanCard = (plan, priceLabels, delay) => {
   const highlight = plan.highlight
-    ? `<span class="plan-card__badge" data-tone="${plan.highlight.tone}">${plan.highlight.label}</span>`
+    ? `<span class="catalog-card__badge" data-tone="${plan.highlight.tone}">${plan.highlight.label}</span>`
     : '';
   const extras = plan.extras?.length
-    ? `<section class="plan-card__section"><h4>Extras</h4><ul>${plan.extras.map((extra) => `<li>${extra}</li>`).join('')}</ul></section>`
+    ? `<section class="catalog-card__section"><h4>Extras incluidos</h4><ul class="catalog-card__bullets">${plan.extras
+        .map((extra) => `<li>${extra}</li>`)
+        .join('')}</ul></section>`
     : '';
   const node = createElement(`
-    <article class="plan-card" data-animate="rise" data-tone="${plan.tone}">
+    <article class="catalog-card" data-animate="rise" data-tone="${plan.tone}">
       ${highlight}
-      <header class="plan-card__header">
-        <div class="plan-card__identity">
-          <span class="plan-card__icon" aria-hidden="true">${PLAN_ICON_SVGS[plan.icon] || ''}</span>
-          <div class="plan-card__headings">
-            <h3 class="plan-card__title">${plan.title}</h3>
-            <p class="plan-card__subtitle">${plan.tagline}</p>
+      <header class="catalog-card__header">
+        <div class="catalog-card__identity">
+          <span class="catalog-card__icon" aria-hidden="true">${PLAN_ICON_SVGS[plan.icon] || ''}</span>
+          <div class="catalog-card__heading">
+            <h3 class="catalog-card__title">${plan.title}</h3>
+            <p class="catalog-card__subtitle">${plan.tagline}</p>
           </div>
         </div>
-        <div class="plan-card__pricing">
-          <span class="plan-card__label">${plan.amountLabel}</span>
-          <span class="plan-card__price">${priceLabels.mx}</span>
-          <span class="plan-card__meta">${priceLabels.usd}</span>
+        <div class="catalog-card__pricing">
+          <p class="catalog-card__eyebrow">${plan.amountLabel}</p>
+          <span class="catalog-card__price-mx">${priceLabels.mx}</span>
+          <span class="catalog-card__price-usd">${priceLabels.usd}</span>
         </div>
       </header>
-      <p class="plan-card__description">${plan.description}</p>
-      <section class="plan-card__section">
-        <h4>Entrega</h4>
-        <p>${plan.delivery}</p>
-      </section>
-      <section class="plan-card__section">
-        <h4>Requisitos</h4>
-        <ul>${plan.requirements.map((req) => `<li>${req}</li>`).join('')}</ul>
-      </section>
+      <div class="catalog-card__body">
+        <p class="catalog-card__description">${plan.description}</p>
+        <section class="catalog-card__section">
+          <h4>Entrega</h4>
+          <p>${plan.delivery}</p>
+        </section>
+        <section class="catalog-card__section">
+          <h4>Requisitos</h4>
+          <ul class="catalog-card__bullets">${plan.requirements.map((req) => `<li>${req}</li>`).join('')}</ul>
+        </section>
       ${extras}
-      ${plan.cta ? `<a class="btn btn--primary plan-card__cta" href="${plan.cta.href}" target="_blank" rel="noopener" data-roblox-link>${plan.cta.label}</a>` : ''}
+      </div>
+      ${plan.cta ? `<a class="btn btn--primary catalog-card__cta" href="${plan.cta.href}" target="_blank" rel="noopener" data-roblox-link>${plan.cta.label}</a>` : ''}
     </article>
   `);
   node.style.setProperty('--reveal-delay', `${delay}s`);
   return node;
 };
 
-const renderRobuxPage = async () => {
+const renderRobuxPage = () => {
   const planContainer = doc.querySelector('[data-robux-plans]');
   const notice = doc.querySelector('[data-exchange-notice]');
-  let rateInfo = { rate: null, updatedAt: null };
-
-  try {
-    rateInfo = await fetchExchangeRate();
-  } catch (error) {
-    console.error('Exchange fetch failed', error);
-  }
+  const rateInfo = getExchangeInfo();
 
   if (planContainer) {
     planContainer.innerHTML = '';
@@ -613,16 +833,10 @@ const renderRobuxPage = async () => {
   observeReveal();
 };
 
-const renderDigitalServicesPage = async () => {
+const renderDigitalServicesPage = () => {
   const servicesContainer = doc.querySelector('[data-digital-services]');
   const notice = doc.querySelector('[data-exchange-notice]');
-  let rateInfo = { rate: null, updatedAt: null };
-
-  try {
-    rateInfo = await fetchExchangeRate();
-  } catch (error) {
-    console.error('Exchange fetch failed', error);
-  }
+  const rateInfo = getExchangeInfo();
 
   if (servicesContainer) {
     servicesContainer.innerHTML = '';
@@ -632,24 +846,26 @@ const renderDigitalServicesPage = async () => {
       const priceList = createPriceListMarkup(service.plans, rateInfo.rate);
       const notes = createNotesList(service.notes);
       const node = createElement(`
-        <article class="plan-card" data-animate="rise" data-tone="${service.tone ?? 'mint'}">
-          <header class="plan-card__header">
-            <div class="plan-card__identity">
-              <div class="plan-card__icon" data-plan-icon><i data-lucide="${service.icon}"></i></div>
-              <div class="plan-card__headings">
-                <h3 class="plan-card__title">${service.title}</h3>
-                ${service.subtitle ? `<p class="plan-card__subtitle">${service.subtitle}</p>` : ''}
+        <article class="catalog-card" data-animate="rise" data-tone="${service.tone ?? 'mint'}">
+          <header class="catalog-card__header">
+            <div class="catalog-card__identity">
+              <div class="catalog-card__icon" data-plan-icon><i data-lucide="${service.icon}"></i></div>
+              <div class="catalog-card__heading">
+                <h3 class="catalog-card__title">${service.title}</h3>
+                ${service.subtitle ? `<p class="catalog-card__subtitle">${service.subtitle}</p>` : ''}
               </div>
             </div>
-            <div class="plan-card__pricing">
-              <span class="plan-card__label">${primaryPlan?.label ?? 'Consulta en Discord'}</span>
-              <span class="plan-card__price">${primaryLabels.mx}</span>
-              <span class="plan-card__meta">${primaryLabels.usd}</span>
+            <div class="catalog-card__pricing">
+              <p class="catalog-card__eyebrow">${primaryPlan?.label ?? 'Consulta en Discord'}</p>
+              <span class="catalog-card__price-mx">${primaryLabels.mx}</span>
+              <span class="catalog-card__price-usd">${primaryLabels.usd}</span>
             </div>
           </header>
-          <p class="plan-card__description">${service.description}</p>
-          ${priceList}
-          ${notes}
+          <div class="catalog-card__body">
+            <p class="catalog-card__description">${service.description}</p>
+            ${priceList}
+            ${notes}
+          </div>
         </article>
       `);
       node.style.setProperty('--reveal-delay', `${index * 0.08}s`);
@@ -675,24 +891,26 @@ const renderDiscordOffers = (rate) => {
     const priceList = createPriceListMarkup(offer.plans, rate);
     const notes = createNotesList(offer.notes);
     const node = createElement(`
-      <article class="plan-card" data-animate="rise" data-tone="${offer.tone ?? 'mint'}">
-        <header class="plan-card__header">
-          <div class="plan-card__identity">
-            <div class="plan-card__icon" data-plan-icon><i data-lucide="${offer.icon}"></i></div>
-            <div class="plan-card__headings">
-              <h3 class="plan-card__title">${offer.title}</h3>
-              ${offer.subtitle ? `<p class="plan-card__subtitle">${offer.subtitle}</p>` : ''}
+      <article class="catalog-card" data-animate="rise" data-tone="${offer.tone ?? 'mint'}">
+        <header class="catalog-card__header">
+          <div class="catalog-card__identity">
+            <div class="catalog-card__icon" data-plan-icon><i data-lucide="${offer.icon}"></i></div>
+            <div class="catalog-card__heading">
+              <h3 class="catalog-card__title">${offer.title}</h3>
+              ${offer.subtitle ? `<p class="catalog-card__subtitle">${offer.subtitle}</p>` : ''}
             </div>
           </div>
-          <div class="plan-card__pricing">
-            <span class="plan-card__label">${primaryPlan?.label ?? 'Consulta en Discord'}</span>
-            <span class="plan-card__price">${primaryLabels.mx}</span>
-            <span class="plan-card__meta">${primaryLabels.usd}</span>
+          <div class="catalog-card__pricing">
+            <p class="catalog-card__eyebrow">${primaryPlan?.label ?? 'Consulta en Discord'}</p>
+            <span class="catalog-card__price-mx">${primaryLabels.mx}</span>
+            <span class="catalog-card__price-usd">${primaryLabels.usd}</span>
           </div>
         </header>
-        <p class="plan-card__description">${offer.description}</p>
-        ${priceList}
-        ${notes}
+        <div class="catalog-card__body">
+          <p class="catalog-card__description">${offer.description}</p>
+          ${priceList}
+          ${notes}
+        </div>
       </article>
     `);
     node.style.setProperty('--reveal-delay', `${index * 0.08}s`);
@@ -728,15 +946,9 @@ const renderDecorationMatrix = (rate) => {
   observeReveal();
 };
 
-const renderDiscordServicesPage = async () => {
+const renderDiscordServicesPage = () => {
   const notice = doc.querySelector('[data-exchange-notice]');
-  let rateInfo = { rate: null, updatedAt: null };
-
-  try {
-    rateInfo = await fetchExchangeRate();
-  } catch (error) {
-    console.error('Exchange fetch failed', error);
-  }
+  const rateInfo = getExchangeInfo();
 
   renderDiscordOffers(rateInfo.rate);
   renderDecorationMatrix(rateInfo.rate);
@@ -825,3 +1037,4 @@ const init = () => {
 };
 
 doc.addEventListener('DOMContentLoaded', init);
+})();
