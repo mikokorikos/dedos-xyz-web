@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Paquetes Discord — Dedos.xyz</title>
-  <meta name="description" content="Server boosts, Nitro y decoraciones para tu comunidad. Entregas guiadas por Discord y evidencias en video para cada pedido." />
+  <title>Servicios digitales — Dedos.xyz</title>
+  <meta name="description" content="Spotify, YouTube, Crunchyroll, ChatGPT Plus y más. Entrega guiada por ticket con precios en MXN y USD convertidos en vivo." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/app.css" />
   <script defer src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body data-page="discord-services" data-discord-invite="dedos" data-exchange-endpoint="https://open.er-api.com/v6/latest/MXN">
+<body data-page="services" data-discord-invite="dedos" data-exchange-endpoint="https://open.er-api.com/v6/latest/MXN">
   <div class="backdrop" data-fx-backdrop>
     <canvas class="backdrop__canvas" data-fx-orbs aria-hidden="true"></canvas>
     <canvas class="backdrop__canvas" data-fx-stars aria-hidden="true"></canvas>
@@ -69,16 +69,16 @@
         <div class="callout" data-animate="rise">
           <div>
             <div class="chip-stack" role="presentation">
-              <span class="chip" data-tone="violet"><i data-lucide="discord" aria-hidden="true"></i> Discord Ready</span>
-              <span class="chip" data-tone="mint"><i data-lucide="sparkles" aria-hidden="true"></i> Entrega guiada</span>
-              <span class="chip" data-tone="cyan"><i data-lucide="shield-check" aria-hidden="true"></i> Evidencia obligatoria</span>
+              <span class="chip" data-tone="mint"><i data-lucide="grid" aria-hidden="true"></i> Servicios digitales</span>
+              <span class="chip" data-tone="pink"><i data-lucide="badge-percent" aria-hidden="true"></i> MXN &amp; USD</span>
+              <span class="chip" data-tone="cyan"><i data-lucide="shield" aria-hidden="true"></i> Sin afiliación oficial</span>
             </div>
-            <h1 class="callout__title">Paquetes Discord: boosts, Nitro y decoraciones</h1>
-            <p class="callout__body">Haz que tu servidor luzca profesional. Automatizamos la entrega de boosts, gestionamos Nitro y cuidamos cada decoración para que no pierdas tiempo en tickets eternos.</p>
+            <h1 class="callout__title">Suscripciones premium al precio justo</h1>
+            <p class="callout__body">Spotify, YouTube, Crunchyroll, ChatGPT Plus y VPNs. Todo se gestiona vía ticket, con pagos manuales (PayPal, SPEI, depósitos OXXO o Litecoin) y soporte humano. Reembolsos solo como cortesía, nunca obligación, y no recabamos datos personales: si compartes información extra es bajo tu responsabilidad.</p>
           </div>
           <div class="callout__actions">
-            <a class="btn btn--primary" href="https://discord.gg/dedos" data-discord-link><i data-lucide="rocket" aria-hidden="true"></i> Abrir ticket</a>
-            <a class="btn btn--ghost" href="#ayuda-discord"><i data-lucide="help-circle" aria-hidden="true"></i> ¿Problemas en Discord?</a>
+            <a class="btn btn--primary" href="https://discord.gg/dedos" data-discord-link><i data-lucide="message-circle" aria-hidden="true"></i> Abrir ticket</a>
+            <a class="btn btn--ghost" href="tos.html"><i data-lucide="file-text" aria-hidden="true"></i> Leer TOS</a>
           </div>
         </div>
       </div>
@@ -87,53 +87,38 @@
     <section class="section">
       <div class="shell">
         <div class="section__head" data-align="center" data-animate="fade">
-          <h2 class="section__title">Ofertas principales</h2>
-          <p class="section__lead">Precios expresados en MXN y USD calculado al momento. Todas las compras incluyen soporte 1:1 y comprobantes.</p>
+          <h2 class="section__title">Catálogo de servicios</h2>
+          <p class="section__lead">Consulta precios en MXN y equivalencia en USD calculada con el tipo de cambio del día. Cada plan requiere evidencia en video y Transaction ID.</p>
         </div>
-        <div class="grid-cards" data-discord-offers></div>
+        <div class="grid-cards" data-digital-services></div>
         <div class="card card--notice" data-animate="fade">
           <p class="card__body" data-exchange-notice>Obteniendo tipo de cambio…</p>
-          <p class="card__body">Usamos datos de Open&nbsp;ER&nbsp;API para convertir MXN → USD en tiempo real. Confirma el valor final en tu ticket antes de pagar.</p>
+          <p class="card__body">Verificamos MXN → USD con Open&nbsp;ER&nbsp;API. Los valores pueden variar ligeramente hasta que confirmes en tu ticket.</p>
         </div>
-      </div>
-    </section>
-
-    <section class="section" id="decoraciones">
-      <div class="shell">
-        <div class="section__head" data-align="center" data-animate="fade">
-          <h2 class="section__title">Decoraciones legales, precio reducido</h2>
-          <p class="section__lead">Comparativa directa contra el precio oficial de Discord. Nuestros valores en MXN se recalculan con el tipo de cambio del día.</p>
-        </div>
-        <div class="matrix" data-decoration-matrix></div>
       </div>
     </section>
 
     <section class="section">
       <div class="shell">
         <div class="section__head" data-align="center" data-animate="fade">
-          <h2 class="section__title">Pagos y garantías</h2>
-          <p class="section__lead">Operamos de forma informal, pero cuidamos la experiencia con procesos claros.</p>
+          <h2 class="section__title">Cómo funciona</h2>
+          <p class="section__lead">Siempre trabajamos con evidencias, tickets y comunicación clara. Mantén tu Transaction ID a la mano.</p>
         </div>
-        <div class="grid-cards" data-discord-policies></div>
+        <div class="grid-cards" data-service-steps></div>
       </div>
     </section>
 
-    <section class="section" id="ayuda-discord">
+    <section class="section">
       <div class="shell">
         <div class="callout" data-animate="rise">
           <div>
-            <span class="tag" data-tone="violet"><i data-lucide="info" aria-hidden="true"></i> Guía rápida</span>
-            <h2 class="callout__title">¿Problemas para entrar al servidor?</h2>
-            <p class="callout__body">Si el enlace no abre la app, utiliza la versión web o copia el código <strong>dedos</strong>. Asegúrate de tener desactivados los bloqueadores y de estar logueado en la cuenta correcta.</p>
-            <ul class="callout__list">
-              <li>Prueba desde navegador (Chrome/Edge) con sesión abierta.</li>
-              <li>En móvil, abre Discord y pega <strong>discord.gg/dedos</strong> en la barra de búsqueda.</li>
-              <li>Si persiste, envíanos captura del error junto a tu Transaction ID.</li>
-            </ul>
+            <span class="tag" data-tone="cyan"><i data-lucide="shield-off" aria-hidden="true"></i> No afiliados</span>
+            <h2 class="callout__title">Marcas independientes</h2>
+            <p class="callout__body">Dedos.xyz no es distribuidor autorizado de Spotify, YouTube, Crunchyroll, OpenAI, Roblox ni ninguna otra marca mencionada. Los nombres se usan solo para describir el servicio y todos los pagos se gestionan de forma informal.</p>
           </div>
           <div class="callout__actions">
-            <a class="btn btn--primary" href="https://discord.gg/dedos" data-discord-link>Reintentar invitación</a>
-            <a class="btn btn--secondary" href="mailto:soporte@dedos.xyz"><i data-lucide="mail" aria-hidden="true"></i> Escribir a soporte</a>
+            <a class="btn btn--primary" href="https://discord.gg/dedos" data-discord-link>Hablar con el staff</a>
+            <a class="btn btn--secondary" href="mailto:soporte@dedos.xyz"><i data-lucide="mail" aria-hidden="true"></i> Escribir correo</a>
           </div>
         </div>
       </div>
