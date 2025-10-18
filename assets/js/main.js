@@ -8,10 +8,23 @@ const page = body.dataset.page || 'home';
 const discordInvite = body.dataset.discordInvite || 'dedos';
 const robloxUrl = body.dataset.robloxUrl || 'https://www.roblox.com/es/communities/12082479/unnamed#!/about';
 
+const USD_FORMATTER = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+
 const createElement = (markup) => {
   const template = doc.createElement('template');
   template.innerHTML = markup.trim();
   return template.content.firstElementChild;
+};
+
+const createTagChip = (badge) => {
+  if (!badge) return '';
+  if (typeof badge === 'string') {
+    return `<span class="tag">${badge}</span>`;
+  }
+  const toneAttr = badge.tone ? ` data-tone="${badge.tone}"` : '';
+  const iconMarkup = badge.icon ? `<i data-lucide="${badge.icon}" aria-hidden="true"></i>` : '';
+  const labelMarkup = badge.label ? `<span>${badge.label}</span>` : '';
+  return `<span class="tag"${toneAttr}>${iconMarkup}${labelMarkup}</span>`;
 };
 
 const applyIcons = () => {
@@ -505,7 +518,7 @@ const ROBUX_PLANS = [
     tone: 'cyan',
     priceMXN: 126,
     icon: 'gift',
-    highlight: { label: 'Alternativa popular', tone: 'violet' },
+    highlight: { label: 'Alternativa recomendada', tone: 'violet' },
     amountLabel: '1,000 Robux',
     description: 'Compramos el gamepass o artículo que elijas para que recibas el valor en Robux al instante. Ideal si no quieres esperar 14 días.',
     requirements: [
@@ -699,6 +712,7 @@ const renderDecorationMatrix = (rate) => {
     row.style.setProperty('--reveal-delay', `${index * 0.06}s`);
     container.appendChild(row);
   });
+  applyIcons();
   observeReveal();
 };
 
@@ -721,6 +735,48 @@ const renderDiscordServicesPage = async () => {
 
   applyIcons();
   observeReveal();
+};
+
+const renderDiscordServicesPage = async () => {
+  const container = doc.querySelector('[data-discord-products]');
+  if (!container) return;
+
+  const notice = doc.querySelector('[data-exchange-notice]');
+  const formatterMx = new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' });
+  let rateInfo = { rate: null, updatedAt: null };
+
+  try {
+    rateInfo = await fetchExchangeRate();
+  } catch (error) {
+    console.error('Exchange fetch failed', error);
+  }
+
+  renderProductCollection(container, DISCORD_SERVICE_PRODUCTS, rateInfo.rate, formatterMx);
+
+  if (notice) {
+    notice.textContent = formatExchangeNotice(rateInfo.rate, rateInfo.updatedAt);
+  }
+};
+
+const renderDigitalServicesPage = async () => {
+  const container = doc.querySelector('[data-digital-services]');
+  if (!container) return;
+
+  const notice = doc.querySelector('[data-exchange-notice]');
+  const formatterMx = new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' });
+  let rateInfo = { rate: null, updatedAt: null };
+
+  try {
+    rateInfo = await fetchExchangeRate();
+  } catch (error) {
+    console.error('Exchange fetch failed', error);
+  }
+
+  renderProductCollection(container, DIGITAL_SERVICE_PRODUCTS, rateInfo.rate, formatterMx);
+
+  if (notice) {
+    notice.textContent = formatExchangeNotice(rateInfo.rate, rateInfo.updatedAt);
+  }
 };
 
 const setupRedirectCountdown = () => {

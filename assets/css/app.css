@@ -1025,6 +1025,15 @@ body.nav-open .mobile-drawer {
   gap: 0.45rem;
 }
 
+.card__meta--tags {
+  gap: var(--space-2);
+}
+
+.card__meta--tags .tag {
+  font-size: 0.78rem;
+  padding: 0.35rem 0.65rem;
+}
+
 .card--service {
   min-height: 220px;
 }
@@ -1317,7 +1326,7 @@ body.nav-open .mobile-drawer {
 .plan-card[data-tone="cyan"] .plan-card__chip { border-color: rgba(0,229,255,0.35); }
 .plan-card[data-tone="violet"] .plan-card__chip { border-color: rgba(185,103,255,0.35); }
 
-.callout {
+.product-card {
   position: relative;
   border-radius: var(--radius-xl);
   border: 1px solid rgba(255, 255, 255, 0.14);
@@ -1355,22 +1364,32 @@ body.nav-open .mobile-drawer {
   mix-blend-mode: screen;
 }
 
-.callout__title {
-  font-size: clamp(2rem, 4vw, 2.6rem);
-  color: var(--color-text-primary);
-  font-weight: 800;
-}
-
-.callout__body {
-  color: var(--color-text-muted);
-  line-height: 1.6;
-}
-
-.callout__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3);
+.product-card__badge {
+  position: absolute;
+  top: 1.4rem;
+  right: 1.4rem;
+  display: inline-flex;
   align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--color-text-primary);
+}
+
+.product-card__badge[data-tone="mint"] { background: rgba(125, 249, 230, 0.16); border-color: rgba(125, 249, 230, 0.32); color: #e6fffb; }
+.product-card__badge[data-tone="violet"] { background: rgba(185, 103, 255, 0.16); border-color: rgba(185, 103, 255, 0.32); color: #efe1ff; }
+.product-card__badge[data-tone="cyan"] { background: rgba(0, 229, 255, 0.16); border-color: rgba(0, 229, 255, 0.32); color: #ddfbff; }
+.product-card__badge[data-tone="pink"] { background: rgba(255, 113, 206, 0.16); border-color: rgba(255, 113, 206, 0.32); color: #ffd9f2; }
+
+.product-card__header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
 }
 
 .callout__list {
@@ -1501,71 +1520,49 @@ body.nav-open .mobile-drawer {
   box-shadow: var(--shadow-md);
 }
 
-.accordion__item + .accordion__item {
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+.product-card__icon i {
+  width: 1.3rem;
+  height: 1.3rem;
 }
 
-.accordion__trigger {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.25rem;
-  padding: 1.25rem 1.5rem;
-  background: transparent;
-  border: 0;
+.product-card__title {
+  margin: 0;
+  font-size: 1.4rem;
+  letter-spacing: -0.01em;
   color: var(--color-text-primary);
-  font-weight: 700;
-  font-size: 1rem;
-  text-align: left;
-  cursor: pointer;
-  transition: color 0.25s ease;
-  list-style: none;
 }
 
-.accordion__trigger::-webkit-details-marker {
-  display: none;
-}
-
-.accordion__trigger:hover,
-.accordion__trigger:focus-visible {
-  color: var(--accent-cyan);
-}
-
-.accordion__icon {
-  width: 1.4rem;
-  height: 1.4rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+.product-card__subtitle {
+  margin: 0.3rem 0 0;
   color: var(--color-text-muted);
-  transition: transform 0.3s ease, color 0.3s ease;
+  font-size: 0.95rem;
 }
 
-.accordion__content {
-  padding: 0 1.5rem 1.4rem;
-  color: var(--color-text-muted);
+.product-card__body {
+  margin: 0;
+  color: var(--color-text-secondary);
   line-height: 1.6;
-  display: none;
 }
 
-.accordion__item[open] .accordion__content {
-  display: block;
+.product-card__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
 }
 
-.accordion__item[open] .accordion__icon {
-  transform: rotate(90deg);
-  color: var(--accent-cyan);
+.product-card__badges .tag {
+  font-size: 0.78rem;
+  padding: 0.35rem 0.65rem;
 }
 
-.tos-card {
-  border-radius: var(--radius-lg);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: rgba(8, 8, 18, 0.72);
-  padding: clamp(1.75rem, 4vw, 2.6rem);
-  box-shadow: var(--shadow-md);
-  line-height: 1.65;
-  color: var(--color-text-muted);
+.product-card__section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 1.1rem;
 }
 
 .doc-hero {
