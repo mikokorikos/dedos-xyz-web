@@ -325,27 +325,27 @@ const createPriceListMarkup = (plans, rate) => {
   const items = plans
     .map((plan) => {
       const labels = formatPriceLabels(plan, rate);
-      const note = plan.note ? `<span class="price-list__note">${plan.note}</span>` : '';
+      const note = plan.note ? `<span class="catalog-card__price-note">${plan.note}</span>` : '';
       return `
-        <li class="price-list__item">
-          <div class="price-list__label">
+        <li class="catalog-card__price-row">
+          <div class="catalog-card__price-label">
             <span>${plan.label}</span>
             ${note}
           </div>
-          <div class="price-list__prices">
-            <span class="price-list__mx">${labels.mx}</span>
-            <span class="price-list__usd">${labels.usd}</span>
+          <div class="catalog-card__price-values">
+            <span class="catalog-card__price-mx-value">${labels.mx}</span>
+            <span class="catalog-card__price-usd-value">${labels.usd}</span>
           </div>
         </li>
       `;
     })
     .join('');
-  return `<ul class="price-list">${items}</ul>`;
+  return `<ul class="catalog-card__price-list">${items}</ul>`;
 };
 
 const createNotesList = (notes) => {
   if (!Array.isArray(notes) || notes.length === 0) return '';
-  return `<ul class="note-list">${notes.map((note) => `<li>${note}</li>`).join('')}</ul>`;
+  return `<ul class="catalog-card__note-list">${notes.map((note) => `<li>${note}</li>`).join('')}</ul>`;
 };
 
 const PLAN_ICON_SVGS = {
@@ -359,10 +359,11 @@ const DIGITAL_SERVICES = [
     id: 'spotify-key',
     title: 'Spotify Premium — Key vitalicia',
     subtitle: 'Upgrade.ac oficial',
-    description: 'Te enviamos una clave para redimir Spotify Premium de por vida. Ideal si administras varias cuentas.',
+    description: 'Te enviamos una clave para redimir Spotify Premium de por vida mediante upgrade.ac. Ideal si administras varias cuentas sin compartir accesos personales.',
     icon: 'music-4',
     tone: 'mint',
-    plans: [{ label: 'Clave vitalicia', priceMXN: 100, note: 'Clave upgrade.ac con instrucciones paso a paso.' }]
+    plans: [{ label: 'Clave vitalicia', priceMXN: 100, note: 'Clave upgrade.ac con instrucciones paso a paso.' }],
+    notes: ['Incluye guía en video para canjear la key.', 'No solicitamos correo ni contraseña personales.']
   },
   {
     id: 'spotify-account',
@@ -377,7 +378,7 @@ const DIGITAL_SERVICES = [
       { label: '6 meses', priceMXN: 339 },
       { label: '12 meses', priceMXN: 549 }
     ],
-    notes: ['Confirma si quieres cuenta nueva o tu usuario actual en el ticket.']
+    notes: ['Confirma si quieres cuenta nueva o tu usuario actual en el ticket.', 'Grabación obligatoria mostrando Transaction ID.']
   },
   {
     id: 'youtube-premium',
@@ -391,7 +392,7 @@ const DIGITAL_SERVICES = [
       { label: '3 meses', priceMXN: 169 },
       { label: '12 meses', priceMXN: 549 }
     ],
-    notes: ['Necesitamos tu Transaction ID y video del proceso para soporte futuro.']
+    notes: ['Necesitamos tu Transaction ID y video del proceso para soporte futuro.', 'Método vía gift o tarjeta según stock disponible.']
   },
   {
     id: 'crunchyroll-provided',
@@ -401,7 +402,7 @@ const DIGITAL_SERVICES = [
     icon: 'tv',
     tone: 'violet',
     plans: [{ label: '1 mes', priceMXN: 20 }],
-    notes: ['Cambiar la contraseña invalida la garantía.']
+    notes: ['Cambiar la contraseña invalida la garantía.', 'Incluye respaldo de acceso por cortesía.']
   },
   {
     id: 'crunchyroll-account',
@@ -413,7 +414,8 @@ const DIGITAL_SERVICES = [
     plans: [
       { label: '1 mes', priceMXN: 59 },
       { label: '12 meses', priceMXN: 499 }
-    ]
+    ],
+    notes: ['Solicitamos correo y código de seguridad temporal solo durante la activación.']
   },
   {
     id: 'chatgpt-plus',
@@ -426,7 +428,7 @@ const DIGITAL_SERVICES = [
       { label: 'Cuenta proporcionada', priceMXN: 59 },
       { label: 'En tu cuenta', priceMXN: 69 }
     ],
-    notes: ['Necesitamos correo y contraseña temporales si trabajamos con tu cuenta.']
+    notes: ['Necesitamos correo y contraseña temporales si trabajamos con tu cuenta.', 'Incluye verificación del estado Plus en vivo.']
   },
   {
     id: 'vpn-nord',
@@ -435,37 +437,41 @@ const DIGITAL_SERVICES = [
     description: 'Protege tus dispositivos con 6 meses de NordVPN. Envío manual y asistencia en la activación.',
     icon: 'shield',
     tone: 'cyan',
-    plans: [{ label: 'Licencia 6 meses', priceMXN: 79 }]
+    plans: [{ label: 'Licencia 6 meses', priceMXN: 79 }],
+    notes: ['Entrega de credenciales y pasos para cambiar la contraseña tras activar.']
   }
 ];
 
 const DISCORD_OFFERS = [
   {
     title: 'Server Boost 1 mes',
-    subtitle: 'Automatizado e instantáneo',
-    description: 'Usamos el enlace de tu servidor para aplicar los boosts en minutos, sin códigos ni llaves.',
+    subtitle: 'Sistema totalmente automatizado',
+    description: 'Aplicamos los boosts apenas confirmas tu pago. Solo necesitas compartir el enlace del servidor, sin claves ni códigos.',
     icon: 'zap',
     tone: 'violet',
     plans: [{ label: 'Boost x1 mes', priceMXN: 60 }],
-    notes: ['Entrega inmediata tras confirmar pago y enlace.']
+    notes: [
+      '📌 Fully Automated System: usamos el enlace de tu servidor para entrega instantánea.',
+      '⚡ Fast & Instant Delivery: los boosts se aplican minutos después del pago confirmado.'
+    ]
   },
   {
     title: 'Discord Nitro mensual',
-    subtitle: 'Legal paid — vía gift o tarjeta',
-    description: 'Nitro clásico al mejor precio. El método (gift o tarjeta) depende del stock al momento de tu compra.',
+    subtitle: 'Dedos Shop — mejor precio',
+    description: 'Vendemos N17r0 B005tz legales por 95 MXN al mes. Puede ser vía gift o tarjeta según el stock disponible en el momento.',
     icon: 'bolt',
     tone: 'mint',
     plans: [{ label: '1 mes', priceMXN: 95 }],
-    notes: ['Confirma la región de tu cuenta para evitar rechazos.']
+    notes: ['Confirma la región de tu cuenta para evitar rechazos.', 'Entregamos evidencia en video del canje o activación.']
   },
   {
     title: 'Decoraciones de perfil',
     subtitle: 'Legal paid por regalo',
-    description: 'Selecciona la decoración oficial que quieras. Nosotros la enviamos como regalo con descuento.',
+    description: 'Selecciona la decoración oficial que quieras y la enviamos como regalo con descuento frente al precio de Discord.',
     icon: 'sparkles',
     tone: 'pink',
     plans: [{ label: 'Desde', priceUSD: 3.1 }],
-    notes: ['Consulta la tabla para ver cada nivel frente al precio oficial.']
+    notes: ['Consulta la tabla para ver cada nivel frente al precio oficial.', 'Mostramos equivalencia en MXN usando el tipo de cambio del día.']
   }
 ];
 
@@ -483,90 +489,96 @@ const ROBUX_PLANS = [
   {
     id: 'group',
     title: 'Recarga por grupo oficial',
-    tagline: 'Ideal para compras recurrentes',
+    tagline: 'Recomendado · Popular',
     tone: 'pink',
     priceMXN: 125,
     icon: 'group',
-    highlight: { label: 'Recomendado', tone: 'mint' },
+    highlight: { label: 'Recomendado · Popular', tone: 'mint' },
     amountLabel: '1,000 Robux',
-    description: 'Compra tus Robux directamente desde nuestro grupo oficial. Perfecto si recargas seguido y quieres la comisión más baja.',
+    description: 'Compra desde nuestro grupo de Roblox para obtener el mejor precio. Ideal si recargas seguido y puedes esperar la antigüedad requerida.',
     requirements: [
       'Unirte al grupo oficial de Dedos.xyz en Roblox.',
-      'Esperar 14 días después de haber ingresado al grupo (política Roblox).'
+      'Esperar 14 días después de ingresar al grupo (política Roblox).'
     ],
-    delivery: 'Liberamos el pago y recibes los Robux en cuanto Roblox procesa la venta tras el periodo inicial.',
-    extras: ['Seguimiento en vivo dentro del ticket.', 'Comisiones mínimas garantizadas.'],
+    delivery: 'Una vez cumplidos los 14 días, liberamos el pago y recibes los Robux prácticamente al instante.',
+    extras: ['Seguimiento en vivo dentro del ticket.', 'Comisiones más bajas garantizadas.'],
     cta: { label: 'Ir al grupo de Roblox', href: robloxUrl }
   },
   {
     id: 'gift',
     title: 'Regalo por juego',
-    tagline: 'Selecciona tu juego favorito',
+    tagline: 'Alternativa recomendada',
     tone: 'cyan',
     priceMXN: 126,
     icon: 'gift',
-    highlight: { label: 'Alternativa popular', tone: 'violet' },
+    highlight: { label: 'Alternativa recomendada', tone: 'violet' },
     amountLabel: '1,000 Robux',
-    description: 'Compramos el gamepass o artículo que elijas para que recibas el valor en Robux al instante. Ideal si no quieres esperar 14 días.',
+    description: 'Elegimos el gamepass o artículo que nos indiques dentro de tu juego favorito. Ideal si no quieres esperar 14 días en el grupo.',
     requirements: [
-      'Contar con un juego o experiencia donde se puedan regalar artículos.',
-      'Enviar el enlace directo al producto en tu ticket de Discord.'
+      'Seleccionar un juego donde se puedan regalar artículos o gamepasses.',
+      'Enviar el enlace directo al artículo desde tu ticket en Discord.'
     ],
-    delivery: 'Recibes el artículo seleccionado y Roblox acredita los Robux inmediatamente.',
-    extras: ['No requiere antigüedad en grupos.', 'Funciona con Blox Fruits, Pet Simulator, Adopt Me!']
+    delivery: 'Compramos el artículo en cuanto confirmamos el pago y recibes los Robux al instante.',
+    extras: ['No requiere antigüedad en grupos.', 'Ejemplo: regalar una fruta perm en Blox Fruits o un gamepass destacado.']
   },
   {
     id: 'pass',
     title: 'Compra directa de gamepass',
-    tagline: 'Opción clásica',
+    tagline: 'Menos recomendada',
     tone: 'violet',
     priceMXN: 136.99,
     icon: 'pass',
+    highlight: { label: 'Menos recomendada', tone: 'pink' },
     amountLabel: '1,000 Robux',
-    description: 'Publica un gamepass con el monto que necesitas y nosotros lo adquirimos. Perfecto si ya tienes un catálogo configurado.',
+    description: 'Publica un gamepass con los montos permitidos y nosotros lo adquirimos. Perfecto si ya tienes tu catálogo configurado sin precios regionales.',
     requirements: [
       'Gamepasses publicados por 500, 100 o 29 Robux sin precios regionales.',
       'Compartir el enlace al gamepass en el ticket.'
     ],
-    delivery: 'La compra se registra de inmediato y Roblox libera los fondos en 5-10 días hábiles.',
+    delivery: 'Tras confirmar el pago, la compra se procesa en unas horas y Roblox libera los Robux en 5-10 días hábiles.',
     extras: ['Excelente para creadores con catálogo propio.', 'Ideal cuando buscas montos específicos.']
   }
 ];
 
 const renderPlanCard = (plan, priceLabels, delay) => {
   const highlight = plan.highlight
-    ? `<span class="plan-card__badge" data-tone="${plan.highlight.tone}">${plan.highlight.label}</span>`
+    ? `<span class="catalog-card__badge" data-tone="${plan.highlight.tone}">${plan.highlight.label}</span>`
     : '';
   const extras = plan.extras?.length
-    ? `<section class="plan-card__section"><h4>Extras</h4><ul>${plan.extras.map((extra) => `<li>${extra}</li>`).join('')}</ul></section>`
+    ? `<section class="catalog-card__section"><h4>Extras incluidos</h4><ul class="catalog-card__bullets">${plan.extras
+        .map((extra) => `<li>${extra}</li>`)
+        .join('')}</ul></section>`
     : '';
   const node = createElement(`
-    <article class="plan-card" data-animate="rise" data-tone="${plan.tone}">
+    <article class="catalog-card" data-animate="rise" data-tone="${plan.tone}">
       ${highlight}
-      <header class="plan-card__header">
-        <span class="plan-card__icon" aria-hidden="true">${PLAN_ICON_SVGS[plan.icon] || ''}</span>
-        <div>
-          <h3 class="plan-card__title">${plan.title}</h3>
-          <p class="plan-card__subtitle">${plan.tagline}</p>
+      <header class="catalog-card__header">
+        <div class="catalog-card__identity">
+          <span class="catalog-card__icon" aria-hidden="true">${PLAN_ICON_SVGS[plan.icon] || ''}</span>
+          <div class="catalog-card__heading">
+            <h3 class="catalog-card__title">${plan.title}</h3>
+            <p class="catalog-card__subtitle">${plan.tagline}</p>
+          </div>
+        </div>
+        <div class="catalog-card__pricing">
+          <p class="catalog-card__eyebrow">${plan.amountLabel}</p>
+          <span class="catalog-card__price-mx">${priceLabels.mx}</span>
+          <span class="catalog-card__price-usd">${priceLabels.usd}</span>
         </div>
       </header>
-      <div class="plan-card__pricing">
-        <span class="plan-card__label">Total estimado</span>
-        <strong class="plan-card__price">${priceLabels.mx}</strong>
-        <span class="plan-card__meta">${priceLabels.usd}</span>
-      </div>
-      <span class="plan-card__chip">${plan.amountLabel}</span>
-      <p class="plan-card__description">${plan.description}</p>
-      <section class="plan-card__section">
-        <h4>Entrega</h4>
-        <p>${plan.delivery}</p>
-      </section>
-      <section class="plan-card__section">
-        <h4>Requisitos</h4>
-        <ul>${plan.requirements.map((req) => `<li>${req}</li>`).join('')}</ul>
-      </section>
+      <div class="catalog-card__body">
+        <p class="catalog-card__description">${plan.description}</p>
+        <section class="catalog-card__section">
+          <h4>Entrega</h4>
+          <p>${plan.delivery}</p>
+        </section>
+        <section class="catalog-card__section">
+          <h4>Requisitos</h4>
+          <ul class="catalog-card__bullets">${plan.requirements.map((req) => `<li>${req}</li>`).join('')}</ul>
+        </section>
       ${extras}
-      ${plan.cta ? `<a class="btn btn--primary plan-card__cta" href="${plan.cta.href}" target="_blank" rel="noopener" data-roblox-link>${plan.cta.label}</a>` : ''}
+      </div>
+      ${plan.cta ? `<a class="btn btn--primary catalog-card__cta" href="${plan.cta.href}" target="_blank" rel="noopener" data-roblox-link>${plan.cta.label}</a>` : ''}
     </article>
   `);
   node.style.setProperty('--reveal-delay', `${delay}s`);
@@ -619,20 +631,31 @@ const renderDigitalServicesPage = async () => {
   if (servicesContainer) {
     servicesContainer.innerHTML = '';
     DIGITAL_SERVICES.forEach((service, index) => {
+      const primaryPlan = Array.isArray(service.plans) && service.plans.length > 0 ? service.plans[0] : null;
+      const primaryLabels = primaryPlan ? formatPriceLabels(primaryPlan, rateInfo.rate) : { mx: 'Consulta en Discord', usd: 'Confirma en ticket' };
       const priceList = createPriceListMarkup(service.plans, rateInfo.rate);
       const notes = createNotesList(service.notes);
       const node = createElement(`
-        <article class="plan-card" data-animate="rise" data-tone="${service.tone ?? 'mint'}">
-          <header class="plan-card__header">
-            <div class="plan-card__icon" data-plan-icon><i data-lucide="${service.icon}"></i></div>
-            <div class="plan-card__headings">
-              <h3 class="plan-card__title">${service.title}</h3>
-              ${service.subtitle ? `<p class="plan-card__subtitle">${service.subtitle}</p>` : ''}
+        <article class="catalog-card" data-animate="rise" data-tone="${service.tone ?? 'mint'}">
+          <header class="catalog-card__header">
+            <div class="catalog-card__identity">
+              <div class="catalog-card__icon" data-plan-icon><i data-lucide="${service.icon}"></i></div>
+              <div class="catalog-card__heading">
+                <h3 class="catalog-card__title">${service.title}</h3>
+                ${service.subtitle ? `<p class="catalog-card__subtitle">${service.subtitle}</p>` : ''}
+              </div>
+            </div>
+            <div class="catalog-card__pricing">
+              <p class="catalog-card__eyebrow">${primaryPlan?.label ?? 'Consulta en Discord'}</p>
+              <span class="catalog-card__price-mx">${primaryLabels.mx}</span>
+              <span class="catalog-card__price-usd">${primaryLabels.usd}</span>
             </div>
           </header>
-          <p class="plan-card__description">${service.description}</p>
-          ${priceList}
-          ${notes}
+          <div class="catalog-card__body">
+            <p class="catalog-card__description">${service.description}</p>
+            ${priceList}
+            ${notes}
+          </div>
         </article>
       `);
       node.style.setProperty('--reveal-delay', `${index * 0.08}s`);
@@ -653,20 +676,31 @@ const renderDiscordOffers = (rate) => {
   if (!container) return;
   container.innerHTML = '';
   DISCORD_OFFERS.forEach((offer, index) => {
+    const primaryPlan = Array.isArray(offer.plans) && offer.plans.length > 0 ? offer.plans[0] : null;
+    const primaryLabels = primaryPlan ? formatPriceLabels(primaryPlan, rate) : { mx: 'Consulta en Discord', usd: 'Confirma en ticket' };
     const priceList = createPriceListMarkup(offer.plans, rate);
     const notes = createNotesList(offer.notes);
     const node = createElement(`
-      <article class="plan-card" data-animate="rise" data-tone="${offer.tone ?? 'mint'}">
-        <header class="plan-card__header">
-          <div class="plan-card__icon" data-plan-icon><i data-lucide="${offer.icon}"></i></div>
-          <div class="plan-card__headings">
-            <h3 class="plan-card__title">${offer.title}</h3>
-            ${offer.subtitle ? `<p class="plan-card__subtitle">${offer.subtitle}</p>` : ''}
+      <article class="catalog-card" data-animate="rise" data-tone="${offer.tone ?? 'mint'}">
+        <header class="catalog-card__header">
+          <div class="catalog-card__identity">
+            <div class="catalog-card__icon" data-plan-icon><i data-lucide="${offer.icon}"></i></div>
+            <div class="catalog-card__heading">
+              <h3 class="catalog-card__title">${offer.title}</h3>
+              ${offer.subtitle ? `<p class="catalog-card__subtitle">${offer.subtitle}</p>` : ''}
+            </div>
+          </div>
+          <div class="catalog-card__pricing">
+            <p class="catalog-card__eyebrow">${primaryPlan?.label ?? 'Consulta en Discord'}</p>
+            <span class="catalog-card__price-mx">${primaryLabels.mx}</span>
+            <span class="catalog-card__price-usd">${primaryLabels.usd}</span>
           </div>
         </header>
-        <p class="plan-card__description">${offer.description}</p>
-        ${priceList}
-        ${notes}
+        <div class="catalog-card__body">
+          <p class="catalog-card__description">${offer.description}</p>
+          ${priceList}
+          ${notes}
+        </div>
       </article>
     `);
     node.style.setProperty('--reveal-delay', `${index * 0.08}s`);
