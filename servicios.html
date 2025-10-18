@@ -92,8 +92,12 @@
         </div>
         <div class="grid-cards" data-digital-services></div>
         <div class="card card--notice" data-animate="fade">
-          <p class="card__body" data-exchange-notice>Obteniendo tipo de cambio…</p>
-          <p class="card__body">Verificamos MXN → USD con Open&nbsp;ER&nbsp;API. Los valores pueden variar ligeramente hasta que confirmes en tu ticket.</p>
+          <div class="chip-stack" role="presentation">
+            <span class="chip" data-tone="mint"><i data-lucide="refresh-cw" aria-hidden="true"></i> Tipo de cambio vivo</span>
+            <span class="chip" data-tone="cyan"><i data-lucide="shield-check" aria-hidden="true"></i> Confirma en ticket</span>
+          </div>
+          <p class="card__body" data-exchange-notice>Calculando tipo de cambio…</p>
+          <p class="card__body">Verificamos MXN → USD con Open&nbsp;ER&nbsp;API. El monto definitivo se confirma dentro del ticket antes de pagar.</p>
         </div>
       </div>
     </section>

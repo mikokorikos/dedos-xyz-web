@@ -4,9 +4,10 @@ import { mountStars } from './fx-stars.js';
 const doc = document;
 const win = window;
 const body = doc.body;
-const page = body.dataset.page || 'home';
-const discordInvite = body.dataset.discordInvite || 'dedos';
-const robloxUrl = body.dataset.robloxUrl || 'https://www.roblox.com/es/communities/12082479/unnamed#!/about';
+const page = body.dataset.page ?? 'home';
+const discordInvite = body.dataset.discordInvite ?? 'dedos';
+const robloxUrl = body.dataset.robloxUrl ?? 'https://www.roblox.com/es/communities/12082479/unnamed#!/about';
+const exchangeEndpoint = body.dataset.exchangeEndpoint ?? 'https://open.er-api.com/v6/latest/MXN';
 
 const createElement = (markup) => {
   const template = doc.createElement('template');
@@ -22,71 +23,70 @@ const applyIcons = () => {
 
 let revealObserver;
 
-const isElementInViewport = (element) => {
+const isInViewport = (element) => {
   const rect = element.getBoundingClientRect();
   const viewHeight = win.innerHeight || doc.documentElement.clientHeight;
   return rect.top <= viewHeight && rect.bottom >= 0;
 };
 
+const markVisible = (element) => {
+  element.classList.add('is-visible');
+};
+
 const updateRevealVisibility = () => {
   doc.querySelectorAll('[data-animate]').forEach((el) => {
-    if (!el.classList.contains('is-visible') && isElementInViewport(el)) {
-      el.classList.add('is-visible');
+    if (!el.classList.contains('is-visible') && isInViewport(el)) {
+      markVisible(el);
     }
   });
 };
 
-const ensureRevealLoop = () => {
-  if (!body.classList.contains('reveal-ready')) return;
-  updateRevealVisibility();
-  if (doc.querySelector('[data-animate]:not(.is-visible)')) {
-    win.requestAnimationFrame(ensureRevealLoop);
-  }
-};
-
-const observeReveal = () => {
-  const targets = doc.querySelectorAll('[data-animate]:not([data-reveal-bound])');
-  targets.forEach((el) => {
+const observeReveal = (root = doc) => {
+  root.querySelectorAll('[data-animate]:not([data-reveal-bound])').forEach((el) => {
     el.dataset.revealBound = 'true';
-    if (!revealObserver) {
-      el.classList.add('is-visible');
-      return;
-    }
-    revealObserver.observe(el);
-    if (isElementInViewport(el)) {
-      el.classList.add('is-visible');
+    if (revealObserver) {
+      revealObserver.observe(el);
+      if (isInViewport(el)) {
+        markVisible(el);
+      }
+    } else {
+      markVisible(el);
     }
   });
-  updateRevealVisibility();
 };
 
 const setupReveal = () => {
+  body.classList.add('reveal-ready');
+
   if (!('IntersectionObserver' in win)) {
     revealObserver = null;
     observeReveal();
     win.addEventListener('scroll', updateRevealVisibility, { passive: true });
     win.addEventListener('resize', updateRevealVisibility, { passive: true });
-    ensureRevealLoop();
+    updateRevealVisibility();
     return;
   }
-  revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        revealObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.2, rootMargin: '0px 0px -10%' });
+
+  revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          markVisible(entry.target);
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.2, rootMargin: '0px 0px -10%' }
+  );
+
   observeReveal();
   updateRevealVisibility();
   win.addEventListener('scroll', updateRevealVisibility, { passive: true });
   win.addEventListener('resize', updateRevealVisibility, { passive: true });
-  ensureRevealLoop();
 };
 
 const setupCurrentYear = () => {
-  const spans = doc.querySelectorAll('[data-current-year], #year');
-  spans.forEach((span) => {
+  doc.querySelectorAll('[data-current-year], #year').forEach((span) => {
     span.textContent = String(new Date().getFullYear());
   });
 };
@@ -141,9 +141,8 @@ const setupNav = () => {
 };
 
 const setupSectionLinks = () => {
-  const links = doc.querySelectorAll('[data-section-link]');
   const base = page === 'home' ? '' : 'index.html';
-  links.forEach((link) => {
+  doc.querySelectorAll('[data-section-link]').forEach((link) => {
     const target = link.getAttribute('data-section-link');
     if (!target) return;
     const hash = `#${target}`;
@@ -258,66 +257,45 @@ const setupLinkHandlers = () => {
   });
 };
 
+const DEFAULT_RATE = 0.05432;
+
 const fetchExchangeRate = async () => {
   try {
-    const response = await fetch(body.dataset.exchangeEndpoint || 'https://open.er-api.com/v6/latest/MXN', { cache: 'no-store' });
-    if (!response.ok) return { rate: null, updatedAt: null };
+    const response = await fetch(exchangeEndpoint, { cache: 'no-store' });
+    if (!response.ok) {
+      return { rate: DEFAULT_RATE, updatedAt: null, source: 'fallback' };
+    }
     const data = await response.json();
-    const usd = data?.rates?.USD;
+    const usd = typeof data?.rates?.USD === 'number' ? data.rates.USD : null;
     const updatedAt = data?.time_last_update_utc ?? null;
-    return {
-      rate: typeof usd === 'number' ? usd : null,
-      updatedAt
-    };
+    if (!usd) {
+      return { rate: DEFAULT_RATE, updatedAt: null, source: 'fallback' };
+    }
+    return { rate: usd, updatedAt, source: 'api' };
   } catch (error) {
     console.error('Failed to fetch MXN → USD rate', error);
-    return { rate: null, updatedAt: null };
+    return { rate: DEFAULT_RATE, updatedAt: null, source: 'fallback' };
   }
-};
-
-const MX_FORMATTER = new Intl.NumberFormat('es-MX', {
-  style: 'currency',
-  currency: 'MXN',
-  currencyDisplay: 'code'
-});
-const USD_FORMATTER = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
-  currencyDisplay: 'code'
-});
-
-const formatUsd = (amount) => {
-  if (amount === null) return 'Consulta en Discord';
-  return `≈ ${USD_FORMATTER.format(amount)}`;
-};
-
-const formatExchangeNotice = (rate, updatedAt) => {
-  if (!rate) {
-    return 'Tipo de cambio no disponible. Nuestro equipo confirmará el monto final en el ticket.';
-  }
-  const date = updatedAt ? new Date(updatedAt) : null;
-  const formatted = date
-    ? new Intl.DateTimeFormat('es-MX', { dateStyle: 'medium', timeStyle: 'short', timeZone: 'UTC' }).format(date)
-    : null;
-  return `Tipo de cambio: 1 MXN = ${rate.toFixed(4)} USD${formatted ? ` · Actualizado ${formatted} (UTC)` : ''}`;
 };
 
 const MX_FORMATTER = new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' });
 const USD_FORMATTER = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
 
-const formatPriceLabels = (plan, rate) => {
-  if (typeof plan?.priceMXN === 'number') {
-    const usdValue = typeof rate === 'number' ? plan.priceMXN * rate : null;
+const formatPriceLabels = (entry, rate) => {
+  const mxn = typeof entry?.priceMXN === 'number' ? entry.priceMXN : null;
+  const usd = typeof entry?.priceUSD === 'number' ? entry.priceUSD : null;
+  if (mxn !== null) {
+    const usdValue = typeof rate === 'number' && rate > 0 ? mxn * rate : null;
     return {
-      mx: MX_FORMATTER.format(plan.priceMXN),
-      usd: usdValue ? `≈ ${USD_FORMATTER.format(usdValue)}` : 'Confirmar en ticket'
+      mx: MX_FORMATTER.format(mxn),
+      usd: usdValue ? `≈ ${USD_FORMATTER.format(usdValue)}` : 'Confirma en ticket'
     };
   }
-  if (typeof plan?.priceUSD === 'number') {
-    const mxValue = typeof rate === 'number' && rate > 0 ? plan.priceUSD / rate : null;
+  if (usd !== null) {
+    const mxValue = typeof rate === 'number' && rate > 0 ? usd / rate : null;
     return {
-      mx: mxValue ? `≈ ${MX_FORMATTER.format(mxValue)}` : 'Confirmar en ticket',
-      usd: USD_FORMATTER.format(plan.priceUSD)
+      mx: mxValue ? `≈ ${MX_FORMATTER.format(mxValue)}` : 'Confirma en ticket',
+      usd: USD_FORMATTER.format(usd)
     };
   }
   return { mx: 'Consulta en Discord', usd: 'Consulta en Discord' };
@@ -351,34 +329,164 @@ const createNotesList = (notes) => {
   return `<ul class="note-list">${notes.map((note) => `<li>${note}</li>`).join('')}</ul>`;
 };
 
-const PLAN_ICON_SVGS = {
-  group: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8a4 4 0 1 1 8 0 4 4 0 0 1-8 0Zm-5 9a5 5 0 0 1 5-5h8a5 5 0 0 1 5 5v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1Z" fill="currentColor"></path></svg>',
-  gift: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4c-.8-1.4-2.4-2-3.8-1.4C6.7 3 6 4.2 6 5.5c0 .2 0 .3.1.5H5a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2v6a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3v-6a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-1c.1-.2.1-.3.1-.5 0-1.3-.7-2.5-2.2-3C14.4 2 12.8 2.6 12 4Zm2.3.9c.6.2.7.6.7.6 0 .3-.2.5-.4.5H12.7c.3-.6.6-1 .8-1.1.2-.2.4-.1.8 0ZM9 4.9c.4-.1.6-.2.8 0 .2.1.5.5.8 1.1H9.4c-.2 0-.4-.2-.4-.5 0 0 .1-.4.7-.6ZM5 9V8h6v2H5Zm8 9H9a1 1 0 0 1-1-1v-5h5v6Zm2 0v-6h5v5a1 1 0 0 1-1 1h-4ZM19 8v1h-6V8h6Z" fill="currentColor"></path></svg>',
-  pass: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7.2 4.1 2.3-2.3a2 2 0 0 1 2.8 0l1.7 1.7 1.2-1.2a2 2 0 0 1 2.8 2.8l-1.2 1.2 1.7 1.7a2 2 0 0 1 0 2.8l-2.3 2.3-9-9Zm-4.2 6a2 2 0 0 1 2.8 0l7 7a2 2 0 0 1 0 2.8l-2.3 2.3a2 2 0 0 1-2.8 0l-7-7a2 2 0 0 1 0-2.8l2.3-2.3Z" fill="currentColor"></path></svg>'
+const formatExchangeNotice = (info) => {
+  const { rate, updatedAt, source } = info ?? {};
+  if (!rate) {
+    return 'Tipo de cambio no disponible. Nuestro equipo confirmará el monto final en tu ticket.';
+  }
+  const base = `Tipo de cambio: 1 MXN = ${rate.toFixed(4)} USD`;
+  if (source === 'api') {
+    const date = updatedAt ? new Date(updatedAt) : null;
+    const formatted = date
+      ? new Intl.DateTimeFormat('es-MX', { dateStyle: 'medium', timeStyle: 'short', timeZone: 'UTC' }).format(date)
+      : null;
+    return `${base} · Fuente: Open ER API${formatted ? ` (${formatted} UTC)` : ''}`;
+  }
+  return `${base} · Fuente: referencia manual · Confirma en el ticket.`;
 };
+
+const updateExchangeNotices = (info) => {
+  doc.querySelectorAll('[data-exchange-notice]').forEach((notice) => {
+    notice.textContent = formatExchangeNotice(info);
+  });
+};
+
+const ROBUX_PLANS = [
+  {
+    id: 'group',
+    title: 'Compra por grupo',
+    tagline: 'Entrega instantánea en el grupo Dedos.xyz',
+    amountLabel: '1,000 Robux',
+    priceMXN: 125,
+    tone: 'violet',
+    icon: 'users',
+    highlight: { label: 'Recomendado · Popular', tone: 'mint' },
+    description:
+      'Pagas dentro de nuestro grupo oficial y recibes los Robux al instante una vez confirmado el depósito. Ideal si ya cumples los requisitos de Roblox.',
+    delivery: 'Validamos el pago, procesamos la compra y liberamos los fondos inmediatamente dentro del grupo.',
+    requirements: [
+      'Tu cuenta debe tener al menos 14 días de antigüedad para poder recibir pagos por grupo.',
+      'Comparte tu usuario de Roblox y confirma que estás en el grupo Dedos.xyz.',
+      'Graba evidencia en video del proceso para soporte y garantías.'
+    ],
+    extras: [
+      'Puedes volver a comprar cuando quieras después de cumplir la primera espera de 14 días.',
+      'Soporte del staff en vivo durante todo el proceso.'
+    ],
+    cta: {
+      label: 'Ir al grupo oficial',
+      href: robloxUrl
+    }
+  },
+  {
+    id: 'gift',
+    title: 'Regalo por juego',
+    tagline: 'Alternativa recomendada sin espera',
+    amountLabel: '1,000 Robux',
+    priceMXN: 126,
+    tone: 'mint',
+    icon: 'gift',
+    highlight: { label: 'Entrega directa', tone: 'cyan' },
+    description:
+      'Escoge el gamepass o ítem dentro de tu juego favorito (ejemplo: fruta permanente en Blox Fruits). Nosotros lo compramos y lo recibes en segundos.',
+    delivery: 'Compra inmediata dentro del juego elegido, con evidencia en video del regalo enviado.',
+    requirements: [
+      'Comparte el enlace directo al gamepass o producto que quieres recibir.',
+      'El juego debe permitir regalos o compras para terceros.',
+      'Mantén abierto tu ticket hasta confirmar que recibiste el ítem.'
+    ],
+    extras: [
+      'No necesitas esperar los 14 días del grupo.',
+      'Perfecto para aprovechar tendencias y eventos dentro de Roblox.'
+    ]
+  },
+  {
+    id: 'gamepass',
+    title: 'Compra de gamepass',
+    tagline: 'Opción menos recomendada',
+    amountLabel: '1,000 Robux',
+    priceMXN: 136.99,
+    tone: 'pink',
+    icon: 'shopping-bag',
+    description:
+      'Publica un gamepass con los montos requeridos (500, 100 y 29 Robux). Nosotros los adquirimos para liberar el saldo en tu cuenta.',
+    delivery: 'La compra se refleja al instante, pero Roblox tarda de 5 a 10 días en depositar los Robux pendientes.',
+    requirements: [
+      'Configura gamepasses sin precios regionales con montos de 500, 100 y 29 Robux.',
+      'Envía los enlaces directos de cada gamepass dentro del ticket.',
+      'Debes mantener los gamepasses publicados hasta que recibas el saldo.'
+    ],
+    extras: [
+      'Útil si manejas un catálogo propio y necesitas montos específicos.',
+      'Te avisamos cuando Roblox libere cada desembolso.'
+    ]
+  }
+];
+
+const ROBUX_VALUES = [
+  {
+    title: 'Seguimiento en vivo',
+    description: 'Te acompañamos por Discord durante toda la compra y grabamos evidencia de cada paso.',
+    icon: 'radar',
+    tone: 'mint'
+  },
+  {
+    title: 'Pagos flexibles',
+    description: 'Aceptamos PayPal, SPEI, depósitos OXXO y Litecoin. Siempre confirmamos disponibilidad en el ticket.',
+    icon: 'wallet',
+    tone: 'violet'
+  },
+  {
+    title: 'Transparencia total',
+    description: 'No somos socios de Roblox ni de las marcas mencionadas. Todo es servicio informal con reglas claras.',
+    icon: 'shield-off',
+    tone: 'pink'
+  }
+];
+
+const ROBUX_STEPS = [
+  {
+    title: 'Abre ticket y comparte tu pedido',
+    description: 'Entra al Discord, selecciona Robux y detalla el método que prefieres. Adjunta usuario y juego si aplica.',
+    icon: 'message-circle',
+    tone: 'mint'
+  },
+  {
+    title: 'Verificación de requisitos',
+    description: 'Confirmamos antigüedad de la cuenta, disponibilidad del juego y tipo de cambio antes de proceder.',
+    icon: 'check-circle',
+    tone: 'violet'
+  },
+  {
+    title: 'Pago y entrega con evidencia',
+    description: 'Pagas solo cuando apruebas el monto. Compartimos video de la entrega y cerramos el ticket contigo.',
+    icon: 'sparkles',
+    tone: 'pink'
+  }
+];
 
 const ROBUX_POLICIES = [
   {
     title: 'Métodos de pago disponibles',
-    description: 'Aceptamos PayPal, transferencia SPEI, depósitos OXXO y Litecoin. Confirma disponibilidad antes de enviar dinero.',
+    description: 'PayPal, transferencia SPEI, depósitos OXXO y Litecoin. Confirma disponibilidad antes de enviar dinero.',
     icon: 'wallet',
     tone: 'mint'
   },
   {
-    title: 'Reembolsos = cortesía',
-    description: 'Solo evaluamos reembolso o reentrega si presentas grabación completa, Transaction ID y reclamas dentro de 48 horas.',
+    title: 'Reembolsos como cortesía',
+    description: 'Solo evaluamos reembolso o reentrega con video completo, Transaction ID y reclamo dentro de 48 horas.',
     icon: 'shield-alert',
     tone: 'violet'
   },
   {
     title: 'Privacidad operativa',
-    description: 'No recabamos datos sensibles automáticamente. Si compartes información adicional en tu ticket, asumes su manejo y difusión.',
+    description: 'No recabamos datos sensibles automáticamente. Todo lo que compartas extra en el ticket es tu responsabilidad.',
     icon: 'lock',
     tone: 'cyan'
   },
   {
     title: 'Sin afiliación con Roblox',
-    description: 'Dedos.xyz no es socio ni representante oficial. Los nombres de marca solo identifican el producto que compras.',
+    description: 'Dedos.xyz no representa ni tiene relación oficial con Roblox. Los nombres se usan solo para describir el servicio.',
     icon: 'badge-alert',
     tone: 'pink'
   }
@@ -388,17 +496,17 @@ const DIGITAL_SERVICES = [
   {
     id: 'spotify-key',
     title: 'Spotify Premium — Key vitalicia',
-    subtitle: 'Upgrade.ac oficial',
-    description: 'Te enviamos una clave para redimir Spotify Premium de por vida. Ideal si administras varias cuentas.',
+    subtitle: 'upgrade.ac verificado',
+    description: 'Recibe una clave para activar Spotify Premium de por vida con guía paso a paso.',
     icon: 'music-4',
     tone: 'mint',
-    plans: [{ label: 'Clave vitalicia', priceMXN: 100, note: 'Clave upgrade.ac con instrucciones paso a paso.' }]
+    plans: [{ label: 'Clave vitalicia', priceMXN: 100, note: 'Entrega manual con instrucciones oficiales.' }]
   },
   {
     id: 'spotify-account',
     title: 'Spotify Premium en tu cuenta',
-    subtitle: 'Cuenta propia o proporcionada',
-    description: 'Elegimos la ruta que prefieras: te conseguimos una cuenta nueva o gestionamos tu cuenta actual.',
+    subtitle: 'Cuenta proporcionada o la tuya',
+    description: 'Elegimos la ruta que prefieras: credenciales nuevas o activación en tu usuario actual.',
     icon: 'headphones',
     tone: 'mint',
     plans: [
@@ -407,13 +515,13 @@ const DIGITAL_SERVICES = [
       { label: '6 meses', priceMXN: 339 },
       { label: '12 meses', priceMXN: 549 }
     ],
-    notes: ['Confirma si quieres cuenta nueva o tu usuario actual en el ticket.']
+    notes: ['Indica si quieres cuenta nueva o trabajar sobre la tuya en el ticket.']
   },
   {
     id: 'youtube-premium',
     title: 'YouTube Premium en tu cuenta',
-    subtitle: 'Membresía familiar administrada',
-    description: 'Nos encargamos de activarlo en tu cuenta principal o te proporcionamos una alternativa bajo stock.',
+    subtitle: 'Membresía administrada',
+    description: 'Activamos Premium en tu cuenta principal o te conseguimos una alternativa según stock.',
     icon: 'youtube',
     tone: 'pink',
     plans: [
@@ -421,13 +529,13 @@ const DIGITAL_SERVICES = [
       { label: '3 meses', priceMXN: 169 },
       { label: '12 meses', priceMXN: 549 }
     ],
-    notes: ['Necesitamos tu Transaction ID y video del proceso para soporte futuro.']
+    notes: ['Requerimos Transaction ID y video del proceso para soporte.']
   },
   {
     id: 'crunchyroll-provided',
     title: 'Crunchyroll Megafan — cuenta proporcionada',
     subtitle: 'Acceso inmediato',
-    description: 'Recibe credenciales listas para usar durante 1 mes completo con garantía de reposición por cortesía.',
+    description: 'Recibes una cuenta lista para usar durante un mes completo con reposición por cortesía.',
     icon: 'tv',
     tone: 'violet',
     plans: [{ label: '1 mes', priceMXN: 20 }],
@@ -437,7 +545,7 @@ const DIGITAL_SERVICES = [
     id: 'crunchyroll-account',
     title: 'Crunchyroll Megafan en tu cuenta',
     subtitle: 'Control total',
-    description: 'Activamos Megafan directamente en tu cuenta. Ideal si quieres mantener tu historial.',
+    description: 'Activamos Megafan directamente en tu cuenta para que mantengas historial y listas.',
     icon: 'clapperboard',
     tone: 'violet',
     plans: [
@@ -449,20 +557,20 @@ const DIGITAL_SERVICES = [
     id: 'chatgpt-plus',
     title: 'ChatGPT Plus',
     subtitle: 'Opciones flexibles',
-    description: 'Elige si prefieres una cuenta suministrada por Dedos.xyz o la activación directa en tu perfil.',
+    description: 'Elige una cuenta proporcionada por Dedos.xyz o la activación directa sobre tu perfil.',
     icon: 'bot',
     tone: 'cyan',
     plans: [
       { label: 'Cuenta proporcionada', priceMXN: 59 },
       { label: 'En tu cuenta', priceMXN: 69 }
     ],
-    notes: ['Necesitamos correo y contraseña temporales si trabajamos con tu cuenta.']
+    notes: ['Si trabajamos con tu cuenta necesitaremos correo y contraseña temporal.']
   },
   {
     id: 'vpn-nord',
     title: 'NordVPN — 6 meses',
     subtitle: 'Seguridad premium',
-    description: 'Protege tus dispositivos con 6 meses de NordVPN. Envío manual y asistencia en la activación.',
+    description: 'Protege tus dispositivos con licencia de 6 meses e instalación guiada.',
     icon: 'shield',
     tone: 'cyan',
     plans: [{ label: 'Licencia 6 meses', priceMXN: 79 }]
@@ -472,19 +580,19 @@ const DIGITAL_SERVICES = [
 const SERVICE_STEPS = [
   {
     title: 'Abre ticket y selecciona plan',
-    description: 'Entra a Discord, abre un ticket y define el servicio y duración. Nuestro staff confirma disponibilidad y tipo de cambio.',
+    description: 'Elige el servicio, duración y método de pago. Confirmamos disponibilidad en minutos.',
     icon: 'message-circle',
     tone: 'mint'
   },
   {
     title: 'Entrega evidencia y Transaction ID',
-    description: 'Comparte grabación en vivo, comprobante de pago y Transaction ID. Sin esos datos no hay soporte.',
+    description: 'Sin video y comprobante no hay soporte. Guarda todo hasta cerrar el ticket.',
     icon: 'camera',
     tone: 'violet'
   },
   {
     title: 'Recibe credenciales y seguimiento',
-    description: 'Te entregamos la cuenta, key o activación. Seguimos tu caso hasta confirmar que todo funcione.',
+    description: 'Te entregamos la cuenta, key o activación y verificamos que funcione antes de finalizar.',
     icon: 'handshake',
     tone: 'pink'
   }
@@ -493,258 +601,105 @@ const SERVICE_STEPS = [
 const DISCORD_OFFERS = [
   {
     title: 'Server Boost 1 mes',
-    subtitle: 'Automatizado e instantáneo',
-    description: 'Usamos el enlace de tu servidor para aplicar los boosts en minutos, sin códigos ni llaves.',
+    subtitle: 'Sistema totalmente automatizado',
+    description: 'Usamos el enlace de tu servidor para aplicar los boosts en minutos, sin llaves ni códigos.',
     icon: 'zap',
     tone: 'violet',
     plans: [{ label: 'Boost x1 mes', priceMXN: 60 }],
-    notes: ['Entrega inmediata tras confirmar pago y enlace.']
+    notes: ['Entrega inmediata después de confirmar pago y enlace.']
   },
   {
     title: 'Discord Nitro mensual',
-    subtitle: 'Legal paid — vía gift o tarjeta',
-    description: 'Nitro clásico al mejor precio. El método (gift o tarjeta) depende del stock al momento de tu compra.',
-    icon: 'bolt',
+    subtitle: 'Legal paid, gift o tarjeta',
+    description: 'Nitro clásico al mejor precio. El método depende del stock disponible al momento.',
+    icon: 'rocket',
     tone: 'mint',
     plans: [{ label: '1 mes', priceMXN: 95 }],
-    notes: ['Confirma la región de tu cuenta para evitar rechazos.']
+    notes: ['Confirma región de tu cuenta para evitar rechazos.']
   },
   {
-    title: 'Decoraciones de perfil',
-    subtitle: 'Legal paid por regalo',
-    description: 'Selecciona la decoración oficial que quieras. Nosotros la enviamos como regalo con descuento.',
+    title: 'Paquete Nitro + Boost',
+    subtitle: 'Listo para servidores nuevos',
+    description: 'Incluye Nitro mensual y boost aplicado a tu servidor para lanzar tu comunidad con todo.',
     icon: 'sparkles',
     tone: 'pink',
-    plans: [{ label: 'Desde', priceUSD: 3.1 }],
-    notes: ['Consulta la tabla para ver cada nivel frente al precio oficial.']
+    plans: [
+      { label: 'Nitro + 2 boosts', priceMXN: 150, note: 'Incluye evidencia del proceso y ajustes básicos.' }
+    ],
+    notes: ['Coordina horario con el staff para aplicar los boosts en vivo.']
   }
 ];
 
 const DECORATION_MATRIX = [
-  { officialUSD: 4.99, ourUSD: 3.1 },
-  { officialUSD: 5.99, ourUSD: 3.3 },
-  { officialUSD: 6.99, ourUSD: 3.6 },
-  { officialUSD: 7.99, ourUSD: 3.9 },
-  { officialUSD: 8.49, ourUSD: 4.05 },
-  { officialUSD: 9.99, ourUSD: 5 },
-  { officialUSD: 11.99, ourUSD: 5.5 }
+  { label: 'Decoración $4.99', officialUSD: 4.99, ourUSD: 3.1 },
+  { label: 'Decoración $5.99', officialUSD: 5.99, ourUSD: 3.3 },
+  { label: 'Decoración $6.99', officialUSD: 6.99, ourUSD: 3.6 },
+  { label: 'Decoración $7.99', officialUSD: 7.99, ourUSD: 3.9 },
+  { label: 'Decoración $8.49', officialUSD: 8.49, ourUSD: 4.05 },
+  { label: 'Decoración $9.99', officialUSD: 9.99, ourUSD: 5.0 },
+  { label: 'Decoración $11.99', officialUSD: 11.99, ourUSD: 5.5 }
 ];
 
 const DISCORD_POLICIES = [
   {
-    title: 'Pagos aceptados',
-    description: 'PayPal, transferencia SPEI, depósitos OXXO y Litecoin. Confirma método antes de mandar comprobante.',
-    icon: 'wallet',
+    title: 'Pagos confirmados en ticket',
+    description: 'Solo iniciamos entrega cuando apruebas el tipo de cambio y compartes Transaction ID.',
+    icon: 'clipboard-check',
     tone: 'mint'
   },
   {
-    title: 'Reembolsos como cortesía',
-    description: 'Solo aplican si cumples con la grabación requerida y reportas dentro de 48 horas desde la entrega.',
-    icon: 'alert-triangle',
+    title: 'Garantía con evidencia',
+    description: 'Cualquier aclaración requiere video completo y capturas del ticket. Sin pruebas no hay soporte.',
+    icon: 'file-warning',
     tone: 'violet'
   },
   {
-    title: 'Privacidad del ticket',
-    description: 'No almacenamos datos sensibles por defecto. Si compartes información personal, hazlo bajo tu responsabilidad y de forma controlada.',
-    icon: 'lock-keyhole',
-    tone: 'cyan'
-  },
-  {
-    title: 'No afiliados a Discord',
-    description: 'No representamos a Discord ni a otras marcas. Los nombres se usan para identificar los productos que vendemos.',
-    icon: 'shield-off',
+    title: 'Marcas independientes',
+    description: 'No tenemos relación con Discord ni otras marcas. Todos los nombres son descriptivos del servicio ofrecido.',
+    icon: 'badge-alert',
     tone: 'pink'
   }
 ];
 
-const ROBUX_PLANS = [
-  {
-    id: 'group',
-    title: 'Recarga por grupo oficial',
-    tagline: 'Ideal para compras recurrentes',
-    tone: 'pink',
-    priceMXN: 125,
-    icon: 'group',
-    highlight: { label: 'Recomendado', tone: 'mint' },
-    amountLabel: '1,000 Robux',
-    description: 'Compra tus Robux directamente desde nuestro grupo oficial. Perfecto si recargas seguido y quieres la comisión más baja.',
-    requirements: [
-      'Unirte al grupo oficial de Dedos.xyz en Roblox.',
-      'Esperar 14 días después de haber ingresado al grupo (política Roblox).'
-    ],
-    delivery: 'Liberamos el pago y recibes los Robux en cuanto Roblox procesa la venta tras el periodo inicial.',
-    extras: ['Seguimiento en vivo dentro del ticket.', 'Comisiones mínimas garantizadas.'],
-    cta: { label: 'Ir al grupo de Roblox', href: robloxUrl }
-  },
-  {
-    id: 'gift',
-    title: 'Regalo por juego',
-    tagline: 'Selecciona tu juego favorito',
-    tone: 'cyan',
-    priceMXN: 126,
-    icon: 'gift',
-    highlight: { label: 'Alternativa popular', tone: 'violet' },
-    amountLabel: '1,000 Robux',
-    description: 'Compramos el gamepass o artículo que elijas para que recibas el valor en Robux al instante. Ideal si no quieres esperar 14 días.',
-    requirements: [
-      'Contar con un juego o experiencia donde se puedan regalar artículos.',
-      'Enviar el enlace directo al producto en tu ticket de Discord.'
-    ],
-    delivery: 'Recibes el artículo seleccionado y Roblox acredita los Robux inmediatamente.',
-    extras: ['No requiere antigüedad en grupos.', 'Funciona con Blox Fruits, Pet Simulator, Adopt Me!']
-  },
-  {
-    id: 'pass',
-    title: 'Compra directa de gamepass',
-    tagline: 'Opción clásica',
-    tone: 'violet',
-    priceMXN: 136.99,
-    icon: 'pass',
-    amountLabel: '1,000 Robux',
-    description: 'Publica un gamepass con el monto que necesitas y nosotros lo adquirimos. Perfecto si ya tienes un catálogo configurado.',
-    requirements: [
-      'Gamepasses publicados por 500, 100 o 29 Robux sin precios regionales.',
-      'Compartir el enlace al gamepass en el ticket.'
-    ],
-    delivery: 'La compra se registra de inmediato y Roblox libera los fondos en 5-10 días hábiles.',
-    extras: ['Excelente para creadores con catálogo propio.', 'Ideal cuando buscas montos específicos.']
-  }
-];
-
-const renderPlanCard = (plan, priceLabels, delay) => {
-  const highlight = plan.highlight
-    ? `<span class="plan-card__badge" data-tone="${plan.highlight.tone}">${plan.highlight.label}</span>`
-    : '';
-  const extras = plan.extras?.length
-    ? `<section class="plan-card__section"><h4>Extras</h4><ul>${plan.extras.map((extra) => `<li>${extra}</li>`).join('')}</ul></section>`
-    : '';
-  const node = createElement(`
-    <article class="plan-card" data-animate="rise" data-tone="${plan.tone}">
-      ${highlight}
-      <header class="plan-card__header">
-        <span class="plan-card__icon" aria-hidden="true">${PLAN_ICON_SVGS[plan.icon] || ''}</span>
-        <div>
-          <h3 class="plan-card__title">${plan.title}</h3>
-          <p class="plan-card__subtitle">${plan.tagline}</p>
-        </div>
-      </header>
-      <div class="plan-card__pricing">
-        <span class="plan-card__label">Total estimado</span>
-        <strong class="plan-card__price">${priceLabels.mx}</strong>
-        <span class="plan-card__meta">${priceLabels.usd}</span>
-      </div>
-      <span class="plan-card__chip">${plan.amountLabel}</span>
-      <p class="plan-card__description">${plan.description}</p>
-      <section class="plan-card__section">
-        <h4>Entrega</h4>
-        <p>${plan.delivery}</p>
-      </section>
-      <section class="plan-card__section">
-        <h4>Requisitos</h4>
-        <ul>${plan.requirements.map((req) => `<li>${req}</li>`).join('')}</ul>
-      </section>
-      ${extras}
-      ${plan.cta ? `<a class="btn btn--primary plan-card__cta" href="${plan.cta.href}" target="_blank" rel="noopener" data-roblox-link>${plan.cta.label}</a>` : ''}
-    </article>
-  `);
-  node.style.setProperty('--reveal-delay', `${delay}s`);
-  return node;
-};
-
-const renderRobuxPage = async () => {
-  const planContainer = doc.querySelector('[data-robux-plans]');
-  const notice = doc.querySelector('[data-exchange-notice]');
-  let rateInfo = { rate: null, updatedAt: null };
-
-  try {
-    rateInfo = await fetchExchangeRate();
-  } catch (error) {
-    console.error('Exchange fetch failed', error);
-  }
-
-  if (planContainer) {
-    planContainer.innerHTML = '';
-    ROBUX_PLANS.forEach((plan, index) => {
-      const usd = rateInfo.rate ? plan.priceMXN * rateInfo.rate : null;
-      const priceLabels = {
-        mx: MX_FORMATTER.format(plan.priceMXN),
-        usd: formatUsd(usd)
-      };
-      const node = renderPlanCard(plan, priceLabels, index * 0.08);
-      planContainer.appendChild(node);
-    });
-  }
-
-  if (notice) {
-    notice.textContent = formatExchangeNotice(rateInfo.rate, rateInfo.updatedAt);
-  }
-
-  applyIcons();
-  observeReveal();
-};
-
-const renderDigitalServicesPage = async () => {
-  const servicesContainer = doc.querySelector('[data-digital-services]');
-  const notice = doc.querySelector('[data-exchange-notice]');
-  let rateInfo = { rate: null, updatedAt: null };
-
-  try {
-    rateInfo = await fetchExchangeRate();
-  } catch (error) {
-    console.error('Exchange fetch failed', error);
-  }
-
-  if (servicesContainer) {
-    servicesContainer.innerHTML = '';
-    DIGITAL_SERVICES.forEach((service, index) => {
-      const priceList = createPriceListMarkup(service.plans, rateInfo.rate);
-      const notes = createNotesList(service.notes);
-      const node = createElement(`
-        <article class="plan-card" data-animate="rise" data-tone="${service.tone ?? 'mint'}">
-          <header class="plan-card__header">
-            <div class="plan-card__icon" data-plan-icon><i data-lucide="${service.icon}"></i></div>
-            <div class="plan-card__headings">
-              <h3 class="plan-card__title">${service.title}</h3>
-              ${service.subtitle ? `<p class="plan-card__subtitle">${service.subtitle}</p>` : ''}
-            </div>
-          </header>
-          <p class="plan-card__description">${service.description}</p>
-          ${priceList}
-          ${notes}
-        </article>
-      `);
-      node.style.setProperty('--reveal-delay', `${index * 0.08}s`);
-      servicesContainer.appendChild(node);
-    });
-  }
-
-  if (notice) {
-    notice.textContent = formatExchangeNotice(rateInfo.rate, rateInfo.updatedAt);
-  }
-
-  applyIcons();
-  observeReveal();
-};
-
-const renderDiscordOffers = (rate) => {
-  const container = doc.querySelector('[data-discord-offers]');
+const renderRobuxPlans = (rateInfo) => {
+  const container = doc.querySelector('[data-robux-plans]');
   if (!container) return;
   container.innerHTML = '';
-  DISCORD_OFFERS.forEach((offer, index) => {
-    const priceList = createPriceListMarkup(offer.plans, rate);
-    const notes = createNotesList(offer.notes);
+  ROBUX_PLANS.forEach((plan, index) => {
+    const labels = formatPriceLabels({ priceMXN: plan.priceMXN }, rateInfo.rate);
+    const highlight = plan.highlight
+      ? `<span class="plan-card__badge" data-tone="${plan.highlight.tone}">${plan.highlight.label}</span>`
+      : '';
+    const extras = Array.isArray(plan.extras) && plan.extras.length
+      ? `<section class="plan-card__section"><h4>Extras</h4><ul>${plan.extras.map((extra) => `<li>${extra}</li>`).join('')}</ul></section>`
+      : '';
     const node = createElement(`
-      <article class="plan-card" data-animate="rise" data-tone="${offer.tone ?? 'mint'}">
+      <article class="plan-card" data-animate="rise" data-tone="${plan.tone}">
+        ${highlight}
         <header class="plan-card__header">
-          <div class="plan-card__icon" data-plan-icon><i data-lucide="${offer.icon}"></i></div>
+          <div class="plan-card__icon" data-plan-icon><i data-lucide="${plan.icon}"></i></div>
           <div class="plan-card__headings">
-            <h3 class="plan-card__title">${offer.title}</h3>
-            ${offer.subtitle ? `<p class="plan-card__subtitle">${offer.subtitle}</p>` : ''}
+            <h3 class="plan-card__title">${plan.title}</h3>
+            <p class="plan-card__subtitle">${plan.tagline}</p>
           </div>
         </header>
-        <p class="plan-card__description">${offer.description}</p>
-        ${priceList}
-        ${notes}
+        <div class="plan-card__pricing">
+          <span class="plan-card__label">Total estimado</span>
+          <strong class="plan-card__price">${labels.mx}</strong>
+          <span class="plan-card__meta">${labels.usd}</span>
+        </div>
+        <span class="plan-card__chip">${plan.amountLabel}</span>
+        <p class="plan-card__description">${plan.description}</p>
+        <section class="plan-card__section">
+          <h4>Entrega</h4>
+          <p>${plan.delivery}</p>
+        </section>
+        <section class="plan-card__section">
+          <h4>Requisitos</h4>
+          <ul>${plan.requirements.map((req) => `<li>${req}</li>`).join('')}</ul>
+        </section>
+        ${extras}
+        ${plan.cta ? `<a class="btn btn--primary plan-card__cta" href="${plan.cta.href}" data-roblox-link>${plan.cta.label}</a>` : ''}
       </article>
     `);
     node.style.setProperty('--reveal-delay', `${index * 0.08}s`);
@@ -752,32 +707,42 @@ const renderDiscordOffers = (rate) => {
   });
 };
 
-const renderDecorationMatrix = (rate) => {
-  const container = doc.querySelector('[data-decoration-matrix]');
+const renderRobuxValues = () => {
+  const container = doc.querySelector('[data-robux-values]');
   if (!container) return;
   container.innerHTML = '';
-  DECORATION_MATRIX.forEach((tier, index) => {
-    const officialUsd = USD_FORMATTER.format(tier.officialUSD);
-    const ourUsd = USD_FORMATTER.format(tier.ourUSD);
-    const ourMx = typeof rate === 'number' && rate > 0 ? `≈ ${MX_FORMATTER.format(tier.ourUSD / rate)}` : 'Confirma MXN en ticket';
-    const row = createElement(`
-      <div class="matrix__row" data-animate="rise">
-        <div class="matrix__cell">
-          <span class="matrix__eyebrow">Precio oficial</span>
-          <strong>${officialUsd}</strong>
-          <span class="matrix__note">Referencia Discord</span>
+  ROBUX_VALUES.forEach((value, index) => {
+    const node = createElement(`
+      <article class="card tone--${value.tone}" data-animate="rise">
+        <div class="card__header">
+          <span class="card__icon" aria-hidden="true"><i data-lucide="${value.icon}"></i></span>
+          <div><h3 class="card__title">${value.title}</h3></div>
         </div>
-        <div class="matrix__cell matrix__cell--accent">
-          <span class="matrix__eyebrow">Dedos.xyz</span>
-          <strong>${ourUsd}</strong>
-          <span class="matrix__note">${ourMx}</span>
-        </div>
-      </div>
+        <p class="card__body">${value.description}</p>
+      </article>
     `);
-    row.style.setProperty('--reveal-delay', `${index * 0.06}s`);
-    container.appendChild(row);
+    node.style.setProperty('--reveal-delay', `${index * 0.08}s`);
+    container.appendChild(node);
   });
-  observeReveal();
+};
+
+const renderRobuxSteps = () => {
+  const container = doc.querySelector('[data-robux-steps]');
+  if (!container) return;
+  container.innerHTML = '';
+  ROBUX_STEPS.forEach((step, index) => {
+    const node = createElement(`
+      <article class="card card--step tone--${step.tone}" data-animate="rise">
+        <div class="card__header">
+          <span class="card__icon" aria-hidden="true"><i data-lucide="${step.icon}"></i></span>
+          <div><h3 class="card__title">${step.title}</h3></div>
+        </div>
+        <p class="card__body">${step.description}</p>
+      </article>
+    `);
+    node.style.setProperty('--reveal-delay', `${index * 0.08}s`);
+    container.appendChild(node);
+  });
 };
 
 const renderRobuxPolicies = () => {
@@ -786,12 +751,10 @@ const renderRobuxPolicies = () => {
   container.innerHTML = '';
   ROBUX_POLICIES.forEach((policy, index) => {
     const node = createElement(`
-      <article class="card tone--${policy.tone ?? 'mint'}" data-animate="rise">
+      <article class="card tone--${policy.tone}" data-animate="rise">
         <div class="card__header">
           <span class="card__icon" aria-hidden="true"><i data-lucide="${policy.icon}"></i></span>
-          <div>
-            <h3 class="card__title">${policy.title}</h3>
-          </div>
+          <div><h3 class="card__title">${policy.title}</h3></div>
         </div>
         <p class="card__body">${policy.description}</p>
       </article>
@@ -799,8 +762,32 @@ const renderRobuxPolicies = () => {
     node.style.setProperty('--reveal-delay', `${index * 0.08}s`);
     container.appendChild(node);
   });
-  applyIcons();
-  observeReveal();
+};
+
+const renderDigitalServices = (rateInfo) => {
+  const container = doc.querySelector('[data-digital-services]');
+  if (!container) return;
+  container.innerHTML = '';
+  DIGITAL_SERVICES.forEach((service, index) => {
+    const priceList = createPriceListMarkup(service.plans, rateInfo.rate);
+    const notes = createNotesList(service.notes);
+    const node = createElement(`
+      <article class="plan-card" data-animate="rise" data-tone="${service.tone}">
+        <header class="plan-card__header">
+          <div class="plan-card__icon" data-plan-icon><i data-lucide="${service.icon}"></i></div>
+          <div class="plan-card__headings">
+            <h3 class="plan-card__title">${service.title}</h3>
+            ${service.subtitle ? `<p class="plan-card__subtitle">${service.subtitle}</p>` : ''}
+          </div>
+        </header>
+        <p class="plan-card__description">${service.description}</p>
+        ${priceList}
+        ${notes}
+      </article>
+    `);
+    node.style.setProperty('--reveal-delay', `${index * 0.08}s`);
+    container.appendChild(node);
+  });
 };
 
 const renderServiceSteps = () => {
@@ -809,12 +796,10 @@ const renderServiceSteps = () => {
   container.innerHTML = '';
   SERVICE_STEPS.forEach((step, index) => {
     const node = createElement(`
-      <article class="card card--step tone--${step.tone ?? 'mint'}" data-animate="rise">
+      <article class="card card--step tone--${step.tone}" data-animate="rise">
         <div class="card__header">
           <span class="card__icon" aria-hidden="true"><i data-lucide="${step.icon}"></i></span>
-          <div>
-            <h3 class="card__title">${step.title}</h3>
-          </div>
+          <div><h3 class="card__title">${step.title}</h3></div>
         </div>
         <p class="card__body">${step.description}</p>
       </article>
@@ -822,88 +807,17 @@ const renderServiceSteps = () => {
     node.style.setProperty('--reveal-delay', `${index * 0.08}s`);
     container.appendChild(node);
   });
-  applyIcons();
-  observeReveal();
 };
 
-const renderRobuxPage = async () => {
-  const planContainer = doc.querySelector('[data-robux-plans]');
-  const notice = doc.querySelector('[data-exchange-notice]');
-  let rateInfo = { rate: null, updatedAt: null };
-
-  try {
-    rateInfo = await fetchExchangeRate();
-  } catch (error) {
-    console.error('Exchange fetch failed', error);
-  }
-
-  renderDiscordOffers(rateInfo.rate);
-  renderDecorationMatrix(rateInfo.rate);
-
-  if (notice) {
-    notice.textContent = formatExchangeNotice(rateInfo.rate, rateInfo.updatedAt);
-  }
-
-  renderValueHighlights();
-  renderPurchaseSteps();
-  renderRobuxPolicies();
-  applyIcons();
-  observeReveal();
-};
-
-const renderDigitalServicesPage = async () => {
-  const servicesContainer = doc.querySelector('[data-digital-services]');
-  const notice = doc.querySelector('[data-exchange-notice]');
-  let rateInfo = { rate: null, updatedAt: null };
-
-  try {
-    rateInfo = await fetchExchangeRate();
-  } catch (error) {
-    console.error('Exchange fetch failed', error);
-  }
-
-  if (servicesContainer) {
-    servicesContainer.innerHTML = '';
-    DIGITAL_SERVICES.forEach((service, index) => {
-      const priceList = createPriceListMarkup(service.plans, rateInfo.rate);
-      const notes = createNotesList(service.notes);
-      const node = createElement(`
-        <article class="plan-card" data-animate="rise" data-tone="${service.tone ?? 'mint'}">
-          <header class="plan-card__header">
-            <div class="plan-card__icon" data-plan-icon><i data-lucide="${service.icon}"></i></div>
-            <div class="plan-card__headings">
-              <h3 class="plan-card__title">${service.title}</h3>
-              ${service.subtitle ? `<p class="plan-card__subtitle">${service.subtitle}</p>` : ''}
-            </div>
-          </header>
-          <p class="plan-card__description">${service.description}</p>
-          ${priceList}
-          ${notes}
-        </article>
-      `);
-      node.style.setProperty('--reveal-delay', `${index * 0.08}s`);
-      servicesContainer.appendChild(node);
-    });
-  }
-
-  if (notice) {
-    notice.textContent = formatExchangeNotice(rateInfo.rate, rateInfo.updatedAt);
-  }
-
-  renderServiceSteps();
-  applyIcons();
-  observeReveal();
-};
-
-const renderDiscordOffers = (rate) => {
+const renderDiscordOffers = (rateInfo) => {
   const container = doc.querySelector('[data-discord-offers]');
   if (!container) return;
   container.innerHTML = '';
   DISCORD_OFFERS.forEach((offer, index) => {
-    const priceList = createPriceListMarkup(offer.plans, rate);
+    const priceList = createPriceListMarkup(offer.plans, rateInfo.rate);
     const notes = createNotesList(offer.notes);
     const node = createElement(`
-      <article class="plan-card" data-animate="rise" data-tone="${offer.tone ?? 'mint'}">
+      <article class="plan-card" data-animate="rise" data-tone="${offer.tone}">
         <header class="plan-card__header">
           <div class="plan-card__icon" data-plan-icon><i data-lucide="${offer.icon}"></i></div>
           <div class="plan-card__headings">
@@ -921,32 +835,31 @@ const renderDiscordOffers = (rate) => {
   });
 };
 
-const renderDecorationMatrix = (rate) => {
+const renderDecorationMatrix = (rateInfo) => {
   const container = doc.querySelector('[data-decoration-matrix]');
   if (!container) return;
   container.innerHTML = '';
   DECORATION_MATRIX.forEach((tier, index) => {
     const officialUsd = USD_FORMATTER.format(tier.officialUSD);
     const ourUsd = USD_FORMATTER.format(tier.ourUSD);
-    const ourMx = typeof rate === 'number' && rate > 0 ? `≈ ${MX_FORMATTER.format(tier.ourUSD / rate)}` : 'Confirma MXN en ticket';
-    const row = createElement(`
+    const mxn = typeof rateInfo.rate === 'number' && rateInfo.rate > 0 ? `≈ ${MX_FORMATTER.format(tier.ourUSD / rateInfo.rate)}` : 'Confirma en ticket';
+    const node = createElement(`
       <div class="matrix__row" data-animate="rise">
         <div class="matrix__cell">
           <span class="matrix__eyebrow">Precio oficial</span>
           <strong>${officialUsd}</strong>
-          <span class="matrix__note">Referencia Discord</span>
+          <span class="matrix__note">${tier.label}</span>
         </div>
         <div class="matrix__cell matrix__cell--accent">
           <span class="matrix__eyebrow">Dedos.xyz</span>
           <strong>${ourUsd}</strong>
-          <span class="matrix__note">${ourMx}</span>
+          <span class="matrix__note">${mxn}</span>
         </div>
       </div>
     `);
-    row.style.setProperty('--reveal-delay', `${index * 0.06}s`);
-    container.appendChild(row);
+    node.style.setProperty('--reveal-delay', `${index * 0.06}s`);
+    container.appendChild(node);
   });
-  observeReveal();
 };
 
 const renderDiscordPolicies = () => {
@@ -955,12 +868,10 @@ const renderDiscordPolicies = () => {
   container.innerHTML = '';
   DISCORD_POLICIES.forEach((policy, index) => {
     const node = createElement(`
-      <article class="card tone--${policy.tone ?? 'mint'}" data-animate="rise">
+      <article class="card tone--${policy.tone}" data-animate="rise">
         <div class="card__header">
           <span class="card__icon" aria-hidden="true"><i data-lucide="${policy.icon}"></i></span>
-          <div>
-            <h3 class="card__title">${policy.title}</h3>
-          </div>
+          <div><h3 class="card__title">${policy.title}</h3></div>
         </div>
         <p class="card__body">${policy.description}</p>
       </article>
@@ -968,28 +879,34 @@ const renderDiscordPolicies = () => {
     node.style.setProperty('--reveal-delay', `${index * 0.08}s`);
     container.appendChild(node);
   });
+};
+
+const renderRobuxPage = async () => {
+  const rateInfo = await fetchExchangeRate();
+  renderRobuxPlans(rateInfo);
+  renderRobuxValues();
+  renderRobuxSteps();
+  renderRobuxPolicies();
+  updateExchangeNotices(rateInfo);
+  applyIcons();
+  observeReveal();
+};
+
+const renderDigitalServicesPage = async () => {
+  const rateInfo = await fetchExchangeRate();
+  renderDigitalServices(rateInfo);
+  renderServiceSteps();
+  updateExchangeNotices(rateInfo);
   applyIcons();
   observeReveal();
 };
 
 const renderDiscordServicesPage = async () => {
-  const notice = doc.querySelector('[data-exchange-notice]');
-  let rateInfo = { rate: null, updatedAt: null };
-
-  try {
-    rateInfo = await fetchExchangeRate();
-  } catch (error) {
-    console.error('Exchange fetch failed', error);
-  }
-
-  renderDiscordOffers(rateInfo.rate);
-  renderDecorationMatrix(rateInfo.rate);
+  const rateInfo = await fetchExchangeRate();
+  renderDiscordOffers(rateInfo);
+  renderDecorationMatrix(rateInfo);
   renderDiscordPolicies();
-
-  if (notice) {
-    notice.textContent = formatExchangeNotice(rateInfo.rate, rateInfo.updatedAt);
-  }
-
+  updateExchangeNotices(rateInfo);
   applyIcons();
   observeReveal();
 };
@@ -997,24 +914,22 @@ const renderDiscordServicesPage = async () => {
 const setupRedirectCountdown = () => {
   const target = body.dataset.redirectTarget;
   if (!target) return;
-
   const countdownEl = doc.querySelector('[data-countdown]');
   const fallbackMs = Number(body.dataset.redirectFallbackMs || '2400');
   let seconds = Math.ceil(fallbackMs / 1000);
-
   if (countdownEl) {
     countdownEl.textContent = String(seconds);
   }
-
   if (target === 'discord') {
     openDiscordInvite(discordInvite, fallbackMs);
   } else if (target === 'roblox') {
     openRobloxDestination(body.dataset.redirectUrl || robloxUrl, fallbackMs);
   }
-
   const interval = win.setInterval(() => {
     seconds = Math.max(0, seconds - 1);
-    if (countdownEl) countdownEl.textContent = String(seconds);
+    if (countdownEl) {
+      countdownEl.textContent = String(seconds);
+    }
     if (seconds <= 0) {
       win.clearInterval(interval);
     }
