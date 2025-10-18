@@ -51,20 +51,23 @@
       tone: 'violet'
     },
     {
-      title: 'Decoraciones',
-      subtitle: 'Banners, iconos, packs',
-      badges: [{ label: 'Estilo', icon: 'wand-2', tone: 'pink' }],
+      title: 'Decoraciones Discord',
+      subtitle: 'Banners, iconos y packs para servidores',
+      badges: [
+        { label: 'Estilo', icon: 'wand-2', tone: 'pink' },
+        { label: 'Discord', icon: 'discord', tone: 'violet' }
+      ],
       icon: 'palette',
       tone: 'pink'
     },
     {
-      title: 'Streaming',
-      subtitle: 'Crunchyroll, Netflix, Disney+',
+      title: 'Servicios',
+      subtitle: 'ChatGPT, Spotify, YouTube, Crunchyroll',
       badges: [
-        { label: '4K', icon: 'monitor', tone: 'mint' },
+        { label: 'Digital', icon: 'grid', tone: 'mint' },
         { label: 'Oferta', icon: 'badge-percent', tone: 'pink' }
       ],
-      icon: 'play-circle',
+      icon: 'grid',
       tone: 'mint'
     },
     {
@@ -112,20 +115,23 @@
     {
       title: 'Decoraciones Discord',
       copy: 'Banners, iconos y packs premium para tu comunidad.',
-      badges: [{ label: 'Estilo', icon: 'wand-2', tone: 'pink' }],
+      badges: [
+        { label: 'Estilo', icon: 'wand-2', tone: 'pink' },
+        { label: 'Discord', icon: 'discord', tone: 'violet' }
+      ],
       cta: 'Consultar',
       icon: 'palette',
       tone: 'pink'
     },
     {
-      title: 'Streaming',
-      copy: 'Crunchyroll, Netflix, Disney+ y más en calidad 4K.',
+      title: 'Servicios',
+      copy: 'ChatGPT, Spotify, YouTube, Crunchyroll y más en un solo lugar.',
       badges: [
-        { label: '4K', icon: 'monitor', tone: 'mint' },
+        { label: 'Digital', icon: 'grid', tone: 'mint' },
         { label: 'Oferta', icon: 'badge-percent', tone: 'pink' }
       ],
       cta: 'Consultar',
-      icon: 'tv',
+      icon: 'grid',
       tone: 'mint'
     },
     {
