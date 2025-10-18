@@ -1,14 +1,242 @@
-import { mountOrbs } from './fx-orbs.js';
-import { mountStars } from './fx-stars.js';
+(function () {
+  'use strict';
 
-const doc = document;
-const win = window;
-const body = doc.body;
-const page = body.dataset.page || 'home';
-const discordInvite = body.dataset.discordInvite || 'dedos';
-const robloxUrl = body.dataset.robloxUrl || 'https://www.roblox.com/es/communities/12082479/unnamed#!/about';
+  function mountOrbs(canvas) {
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return () => {};
 
-const createElement = (markup) => {
+    let width = 0;
+    let height = 0;
+    let time = 0;
+    let pointerX = null;
+    let pointerY = null;
+    let orbs = [];
+    const DPR = Math.min(2, window.devicePixelRatio || 1);
+
+    const rand = (a = 0, b = 1) => a + Math.random() * (b - a);
+
+    function seed() {
+      const count = Math.floor(rand(7, 12));
+      orbs = Array.from({ length: count }, () => ({
+        x: rand(0, width),
+        y: rand(0, height),
+        radius: rand(140 * DPR, 280 * DPR),
+        hue: rand(0, 360),
+        speed: rand(0.0008, 0.0018),
+        offset: rand(0, Math.PI * 2),
+        amplitude: rand(20 * DPR, 60 * DPR)
+      }));
+    }
+
+    function resize() {
+      width = canvas.width = Math.floor(window.innerWidth * DPR);
+      height = canvas.height = Math.floor(window.innerHeight * DPR);
+      canvas.style.width = `${window.innerWidth}px`;
+      canvas.style.height = `${window.innerHeight}px`;
+      seed();
+    }
+
+    function draw() {
+      time += 1;
+      ctx.clearRect(0, 0, width, height);
+      ctx.globalCompositeOperation = 'screen';
+
+      orbs.forEach((orb, index) => {
+        const dx = Math.cos(time * orb.speed + orb.offset + index) * orb.amplitude;
+        const dy = Math.sin(time * orb.speed * 0.9 + orb.offset - index) * orb.amplitude;
+        let x = orb.x + dx;
+        let y = orb.y + dy;
+
+        if (pointerX !== null && pointerY !== null) {
+          x += (pointerX * DPR - x) * 0.002;
+          y += (pointerY * DPR - y) * 0.002;
+        }
+
+        const gradient = ctx.createRadialGradient(x, y, 0, x, y, orb.radius);
+        gradient.addColorStop(0, `hsla(${(orb.hue + time * 0.05) % 360}, 80%, 60%, 0.10)`);
+        gradient.addColorStop(1, 'rgba(0,0,0,0)');
+
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.arc(x, y, orb.radius, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      requestAnimationFrame(draw);
+    }
+
+    const handleMouseMove = (event) => {
+      pointerX = event.clientX;
+      pointerY = event.clientY;
+    };
+
+    const handleKeyDown = (event) => {
+      if (event.key.toLowerCase() === 'r') {
+        seed();
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('resize', resize, { passive: true });
+
+    resize();
+    draw();
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('resize', resize);
+    };
+  }
+
+  function mountStars(canvas) {
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return () => {};
+
+    let width = 0;
+    let height = 0;
+    let stars = [];
+    let meteors = [];
+    const DPR = Math.min(2, window.devicePixelRatio || 1);
+
+    function resize() {
+      width = canvas.width = Math.floor(window.innerWidth * DPR);
+      height = canvas.height = Math.floor(window.innerHeight * DPR);
+      canvas.style.width = `${window.innerWidth}px`;
+      canvas.style.height = `${window.innerHeight}px`;
+      generateStars();
+    }
+
+    function generateStars() {
+      const count = Math.min(320, Math.floor((width * height) / (15000 * DPR)));
+      stars = Array.from({ length: count }, () => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        radius: (Math.random() * 1.4 + 0.2) * DPR,
+        baseAlpha: Math.random() * 0.6 + 0.25,
+        hue: Math.floor(Math.random() * 360),
+        twinkle: Math.random() * Math.PI * 2,
+        twinkleSpeed: 0.02 + Math.random() * 0.03
+      }));
+    }
+
+    function spawnMeteor() {
+      const side = Math.floor(Math.random() * 4);
+      const speed = (6 + Math.random() * 5) * DPR;
+      let x;
+      let y;
+      let vx;
+      let vy;
+
+      if (side === 0) {
+        x = Math.random() * width;
+        y = -20;
+        vx = (Math.random() - 0.5) * speed;
+        vy = speed;
+      } else if (side === 1) {
+        x = width + 20;
+        y = Math.random() * height;
+        vx = -speed;
+        vy = (Math.random() - 0.5) * speed;
+      } else if (side === 2) {
+        x = Math.random() * width;
+        y = height + 20;
+        vx = (Math.random() - 0.5) * speed;
+        vy = -speed;
+      } else {
+        x = -20;
+        y = Math.random() * height;
+        vx = speed;
+        vy = (Math.random() - 0.5) * speed;
+      }
+
+      meteors.push({ x, y, vx, vy, life: 0, maxLife: 120 + Math.random() * 80 });
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, width, height);
+
+      stars.forEach((star) => {
+        star.twinkle += star.twinkleSpeed;
+        const alpha = star.baseAlpha * (0.7 + 0.3 * Math.sin(star.twinkle));
+        star.hue = (star.hue + 0.03) % 360;
+        ctx.globalAlpha = alpha;
+        ctx.fillStyle = `hsl(${star.hue} 80% 90%)`;
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      ctx.globalAlpha = 1;
+      meteors = meteors.filter((meteor) => meteor.life < meteor.maxLife);
+
+      meteors.forEach((meteor) => {
+        meteor.x += meteor.vx;
+        meteor.y += meteor.vy;
+        meteor.life += 1;
+        const trail = 60;
+        const gradient = ctx.createLinearGradient(
+          meteor.x,
+          meteor.y,
+          meteor.x - meteor.vx * trail,
+          meteor.y - meteor.vy * trail
+        );
+        gradient.addColorStop(0, 'rgba(255,255,255,.95)');
+        gradient.addColorStop(0.5, 'rgba(167,139,250,.5)');
+        gradient.addColorStop(1, 'rgba(103,232,249,0)');
+        ctx.strokeStyle = gradient;
+        ctx.lineWidth = 2 * DPR;
+        ctx.beginPath();
+        ctx.moveTo(meteor.x - meteor.vx * trail, meteor.y - meteor.vy * trail);
+        ctx.lineTo(meteor.x, meteor.y);
+        ctx.stroke();
+      });
+    }
+
+    let tick = 0;
+    let lastSpawn = 0;
+
+    function loop() {
+      tick += 1;
+      if (tick - lastSpawn > 120 + Math.random() * 160) {
+        spawnMeteor();
+        lastSpawn = tick;
+      }
+      draw();
+      requestAnimationFrame(loop);
+    }
+
+    let lastScrollY = 0;
+    let parallax = 0;
+
+    const handleScroll = () => {
+      const currentY = window.scrollY || window.pageYOffset;
+      parallax += (currentY - lastScrollY) * -0.03;
+      lastScrollY = currentY;
+      canvas.style.transform = `translateY(${parallax}px)`;
+    };
+
+    window.addEventListener('resize', resize, { passive: true });
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    resize();
+    loop();
+
+    return () => {
+      window.removeEventListener('resize', resize);
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }
+
+  const doc = document;
+  const win = window;
+  const body = doc.body;
+  const page = body.dataset.page || 'home';
+  const discordInvite = body.dataset.discordInvite || 'dedos';
+  const robloxUrl = body.dataset.robloxUrl || 'https://www.roblox.com/es/communities/12082479/unnamed#!/about';
+
+  const createElement = (markup) => {
   const template = doc.createElement('template');
   template.innerHTML = markup.trim();
   return template.content.firstElementChild;
@@ -258,21 +486,15 @@ const setupLinkHandlers = () => {
   });
 };
 
-const fetchExchangeRate = async () => {
-  try {
-    const response = await fetch(body.dataset.exchangeEndpoint || 'https://open.er-api.com/v6/latest/MXN', { cache: 'no-store' });
-    if (!response.ok) return { rate: null, updatedAt: null };
-    const data = await response.json();
-    const usd = data?.rates?.USD;
-    const updatedAt = data?.time_last_update_utc ?? null;
-    return {
-      rate: typeof usd === 'number' ? usd : null,
-      updatedAt
-    };
-  } catch (error) {
-    console.error('Failed to fetch MXN → USD rate', error);
-    return { rate: null, updatedAt: null };
-  }
+const getExchangeInfo = () => {
+  const rateAttr = body.dataset.exchangeRate;
+  const updatedAttr = body.dataset.exchangeUpdated;
+  const parsed = rateAttr ? Number.parseFloat(rateAttr) : Number.NaN;
+  const rate = Number.isFinite(parsed) && parsed > 0 ? parsed : null;
+  return {
+    rate,
+    updatedAt: updatedAttr || null
+  };
 };
 
 const MX_FORMATTER = new Intl.NumberFormat('es-MX', {
@@ -585,16 +807,10 @@ const renderPlanCard = (plan, priceLabels, delay) => {
   return node;
 };
 
-const renderRobuxPage = async () => {
+const renderRobuxPage = () => {
   const planContainer = doc.querySelector('[data-robux-plans]');
   const notice = doc.querySelector('[data-exchange-notice]');
-  let rateInfo = { rate: null, updatedAt: null };
-
-  try {
-    rateInfo = await fetchExchangeRate();
-  } catch (error) {
-    console.error('Exchange fetch failed', error);
-  }
+  const rateInfo = getExchangeInfo();
 
   if (planContainer) {
     planContainer.innerHTML = '';
@@ -617,16 +833,10 @@ const renderRobuxPage = async () => {
   observeReveal();
 };
 
-const renderDigitalServicesPage = async () => {
+const renderDigitalServicesPage = () => {
   const servicesContainer = doc.querySelector('[data-digital-services]');
   const notice = doc.querySelector('[data-exchange-notice]');
-  let rateInfo = { rate: null, updatedAt: null };
-
-  try {
-    rateInfo = await fetchExchangeRate();
-  } catch (error) {
-    console.error('Exchange fetch failed', error);
-  }
+  const rateInfo = getExchangeInfo();
 
   if (servicesContainer) {
     servicesContainer.innerHTML = '';
@@ -736,15 +946,9 @@ const renderDecorationMatrix = (rate) => {
   observeReveal();
 };
 
-const renderDiscordServicesPage = async () => {
+const renderDiscordServicesPage = () => {
   const notice = doc.querySelector('[data-exchange-notice]');
-  let rateInfo = { rate: null, updatedAt: null };
-
-  try {
-    rateInfo = await fetchExchangeRate();
-  } catch (error) {
-    console.error('Exchange fetch failed', error);
-  }
+  const rateInfo = getExchangeInfo();
 
   renderDiscordOffers(rateInfo.rate);
   renderDecorationMatrix(rateInfo.rate);
@@ -833,3 +1037,4 @@ const init = () => {
 };
 
 doc.addEventListener('DOMContentLoaded', init);
+})();
