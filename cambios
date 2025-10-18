@@ -1,0 +1,3396 @@
+ (cd "$(git rev-parse --show-toplevel)" && git apply --3way <<'EOF' 
+diff --git a/assets/css/app.css b/assets/css/app.css
+index 20cb73f668a46bd0879b5527cbba8dc8afee020d..23180214db66521fdaffca98961e9265024e7401 100644
+--- a/assets/css/app.css
++++ b/assets/css/app.css
+@@ -486,50 +486,109 @@ body.nav-open .mobile-drawer {
+   flex-wrap: wrap;
+   gap: var(--space-3);
+   align-items: center;
+ }
+ 
+ .tag {
+   display: inline-flex;
+   align-items: center;
+   gap: 0.4rem;
+   padding: 0.45rem 0.9rem;
+   border-radius: 999px;
+   border: 1px solid rgba(255, 255, 255, 0.12);
+   font-size: 0.8rem;
+   font-weight: 600;
+   letter-spacing: 0.05em;
+   text-transform: uppercase;
+   background: rgba(255, 255, 255, 0.05);
+   color: rgba(226, 232, 240, 0.9);
+ }
+ 
+ .tag[data-tone="pink"] { background: rgba(255, 113, 206, 0.12); border-color: rgba(255, 113, 206, 0.32); color: #ffd9f2; }
+ .tag[data-tone="violet"] { background: rgba(185, 103, 255, 0.12); border-color: rgba(185, 103, 255, 0.32); color: #efe1ff; }
+ .tag[data-tone="cyan"] { background: rgba(0, 229, 255, 0.12); border-color: rgba(0, 229, 255, 0.32); color: #ddfbff; }
+ .tag[data-tone="mint"] { background: rgba(125, 249, 230, 0.12); border-color: rgba(125, 249, 230, 0.32); color: #e6fffb; }
+ 
++.chip-stack {
++  display: flex;
++  flex-wrap: wrap;
++  gap: 0.6rem;
++  align-items: center;
++}
++
++.chip {
++  display: inline-flex;
++  align-items: center;
++  gap: 0.45rem;
++  padding: 0.5rem 1rem;
++  border-radius: 999px;
++  border: 1px solid rgba(255, 255, 255, 0.14);
++  background: rgba(255, 255, 255, 0.06);
++  color: rgba(226, 232, 240, 0.92);
++  font-weight: 600;
++  font-size: 0.85rem;
++  letter-spacing: 0.04em;
++  text-transform: uppercase;
++  backdrop-filter: blur(10px);
++  transition: transform 0.3s var(--transition-soft), border-color 0.3s ease, background 0.3s ease;
++}
++
++.chip i {
++  font-size: 1rem;
++  opacity: 0.9;
++}
++
++.chip:hover {
++  transform: translateY(-2px);
++  border-color: rgba(255, 255, 255, 0.28);
++  background: rgba(255, 255, 255, 0.1);
++}
++
++.chip[data-tone="violet"] {
++  background: rgba(185, 103, 255, 0.14);
++  border-color: rgba(185, 103, 255, 0.32);
++  color: #efe1ff;
++}
++
++.chip[data-tone="mint"] {
++  background: rgba(125, 249, 230, 0.14);
++  border-color: rgba(125, 249, 230, 0.32);
++  color: #e6fffb;
++}
++
++.chip[data-tone="cyan"] {
++  background: rgba(0, 229, 255, 0.14);
++  border-color: rgba(0, 229, 255, 0.32);
++  color: #ddfbff;
++}
++
++.chip[data-tone="pink"] {
++  background: rgba(255, 113, 206, 0.14);
++  border-color: rgba(255, 113, 206, 0.32);
++  color: #ffd9f2;
++}
++
+ .tone--violet {
+   --tone: rgba(185, 103, 255, 0.32);
+   --tone-soft: rgba(185, 103, 255, 0.18);
+   --tone-bright: #efe1ff;
+ }
+ 
+ .tone--cyan {
+   --tone: rgba(0, 229, 255, 0.32);
+   --tone-soft: rgba(0, 229, 255, 0.18);
+   --tone-bright: #ddfbff;
+ }
+ 
+ .tone--pink {
+   --tone: rgba(255, 113, 206, 0.32);
+   --tone-soft: rgba(255, 113, 206, 0.18);
+   --tone-bright: #ffd9f2;
+ }
+ 
+ .tone--mint {
+   --tone: rgba(125, 249, 230, 0.28);
+   --tone-soft: rgba(125, 249, 230, 0.16);
+   --tone-bright: #e6fffb;
+ }
+ 
+ .hero__stats {
+@@ -1025,60 +1084,69 @@ body.nav-open .mobile-drawer {
+   display: inline-flex;
+   align-items: center;
+   gap: 0.4rem;
+   padding: 0.4rem 0.85rem;
+   border-radius: 999px;
+   border: 1px solid rgba(255, 255, 255, 0.18);
+   font-size: 0.72rem;
+   text-transform: uppercase;
+   letter-spacing: 0.16em;
+   background: rgba(255, 255, 255, 0.08);
+   color: var(--color-text-primary);
+   backdrop-filter: blur(8px);
+ }
+ 
+ .plan-card__badge[data-tone="mint"] { background: rgba(125, 249, 230, 0.16); border-color: rgba(125, 249, 230, 0.35); color: #e6fffb; }
+ .plan-card__badge[data-tone="violet"] { background: rgba(185, 103, 255, 0.16); border-color: rgba(185, 103, 255, 0.35); color: #efe1ff; }
+ .plan-card__badge[data-tone="cyan"] { background: rgba(0, 229, 255, 0.16); border-color: rgba(0, 229, 255, 0.35); color: #ddfbff; }
+ .plan-card__badge[data-tone="pink"] { background: rgba(255, 113, 206, 0.16); border-color: rgba(255, 113, 206, 0.35); color: #ffd9f2; }
+ 
+ .plan-card__header {
+   display: flex;
+   align-items: flex-start;
+   gap: 1rem;
+ }
+ 
++.plan-card__headings {
++  display: grid;
++  gap: 0.3rem;
++}
++
+ .plan-card__icon {
+   display: grid;
+   place-items: center;
+   width: 3.6rem;
+   height: 3.6rem;
+   border-radius: 1.2rem;
+   background: rgba(255, 255, 255, 0.08);
+   box-shadow: var(--shadow-inset);
+ }
+ 
++.plan-card__icon i {
++  font-size: 1.6rem;
++}
++
+ .plan-card__title {
+   font-size: 1.45rem;
+   font-weight: 700;
+   color: var(--color-text-primary);
+   margin: 0;
+ }
+ 
+ .plan-card__subtitle {
+   color: var(--color-text-muted);
+   margin: 0.25rem 0 0;
+ }
+ 
+ .plan-card__pricing {
+   display: grid;
+   gap: 0.35rem;
+   align-items: flex-start;
+ }
+ 
+ .plan-card__label {
+   font-size: 0.75rem;
+   letter-spacing: 0.16em;
+   text-transform: uppercase;
+   color: rgba(226, 232, 240, 0.7);
+ }
+ 
+@@ -1090,136 +1158,295 @@ body.nav-open .mobile-drawer {
+ 
+ .plan-card__meta {
+   font-size: 0.9rem;
+   color: var(--color-text-muted);
+ }
+ 
+ .plan-card__chip {
+   display: inline-flex;
+   align-items: center;
+   padding: 0.4rem 0.85rem;
+   border-radius: 999px;
+   border: 1px solid rgba(255, 255, 255, 0.18);
+   font-size: 0.78rem;
+   letter-spacing: 0.12em;
+   text-transform: uppercase;
+   background: rgba(255, 255, 255, 0.06);
+   color: rgba(226, 232, 240, 0.85);
+   width: fit-content;
+ }
+ 
+ .plan-card__description {
+   color: var(--color-text-muted);
+   line-height: 1.6;
+ }
+ 
++.price-list {
++  margin: 1.25rem 0 0;
++  padding: 0;
++  list-style: none;
++  display: grid;
++  gap: 0.75rem;
++}
++
++.price-list__item {
++  display: flex;
++  align-items: flex-start;
++  justify-content: space-between;
++  gap: 1.25rem;
++  padding: 1rem 1.1rem;
++  border-radius: var(--radius-md);
++  border: 1px solid rgba(255, 255, 255, 0.12);
++  background: rgba(255, 255, 255, 0.04);
++  transition: border-color 0.3s ease, transform 0.3s var(--transition-soft);
++}
++
++.price-list__item:hover {
++  border-color: rgba(255, 255, 255, 0.24);
++  transform: translateY(-2px);
++}
++
++.price-list__label {
++  display: grid;
++  gap: 0.35rem;
++  font-weight: 700;
++  color: var(--color-text-primary);
++}
++
++.price-list__note {
++  font-size: 0.85rem;
++  font-weight: 500;
++  color: var(--color-text-muted);
++}
++
++.price-list__prices {
++  display: flex;
++  flex-direction: column;
++  align-items: flex-end;
++  gap: 0.25rem;
++  text-align: right;
++}
++
++.price-list__mx {
++  font-weight: 700;
++  font-size: 1rem;
++  color: var(--color-text-primary);
++}
++
++.price-list__usd {
++  font-size: 0.9rem;
++  color: var(--color-text-muted);
++}
++
++.note-list {
++  margin: 1rem 0 0;
++  padding-left: 1.1rem;
++  color: var(--color-text-muted);
++  display: grid;
++  gap: 0.4rem;
++  line-height: 1.5;
++  list-style: disc;
++}
++
++@media (max-width: 600px) {
++  .price-list__item {
++    flex-direction: column;
++    align-items: stretch;
++    text-align: left;
++  }
++
++  .price-list__prices {
++    align-items: flex-start;
++    text-align: left;
++  }
++}
++
+ .plan-card__section {
+   border-radius: var(--radius-sm);
+   border: 1px solid rgba(255, 255, 255, 0.12);
+   background: rgba(255, 255, 255, 0.05);
+   padding: 1.1rem;
+   display: grid;
+   gap: 0.65rem;
+   transition: border-color 0.3s ease, background 0.3s ease;
+ }
+ 
+ .plan-card__section h4 {
+   margin: 0;
+   font-size: 0.78rem;
+   text-transform: uppercase;
+   letter-spacing: 0.16em;
+   color: rgba(226, 232, 240, 0.7);
+ }
+ 
+ .plan-card__section p,
+ .plan-card__section ul {
+   margin: 0;
+   color: var(--color-text-muted);
+   line-height: 1.6;
+ }
+ 
+ .plan-card__section ul {
+   padding-left: 1.1rem;
+   display: grid;
+   gap: 0.45rem;
+ }
+ 
+ .plan-card__cta {
+   margin-top: auto;
+   width: 100%;
+   justify-content: center;
+ }
+ 
+ .plan-card[data-tone="pink"] .plan-card__icon { background: linear-gradient(135deg, rgba(255,113,206,0.22), rgba(255,113,206,0.08)); color: #ffd9f2; }
+ .plan-card[data-tone="cyan"] .plan-card__icon { background: linear-gradient(135deg, rgba(0,229,255,0.22), rgba(0,229,255,0.08)); color: #ddfbff; }
+ .plan-card[data-tone="violet"] .plan-card__icon { background: linear-gradient(135deg, rgba(185,103,255,0.22), rgba(185,103,255,0.08)); color: #efe1ff; }
+ 
+ .plan-card[data-tone="pink"] .plan-card__chip { border-color: rgba(255,113,206,0.35); }
+ .plan-card[data-tone="cyan"] .plan-card__chip { border-color: rgba(0,229,255,0.35); }
+ .plan-card[data-tone="violet"] .plan-card__chip { border-color: rgba(185,103,255,0.35); }
+ 
+ .callout {
+   position: relative;
+   border-radius: var(--radius-xl);
+   border: 1px solid rgba(255, 255, 255, 0.16);
+-  background: rgba(5, 5, 18, 0.7);
+-  backdrop-filter: blur(20px);
++  background: linear-gradient(140deg, rgba(6, 6, 20, 0.86), rgba(12, 12, 30, 0.72));
++  backdrop-filter: blur(22px);
+   padding: clamp(2rem, 4vw, 3rem);
+   display: flex;
+   flex-direction: column;
+   gap: var(--space-4);
+   box-shadow: var(--shadow-lg);
+   overflow: hidden;
+ }
+ 
+-.callout::before {
++.callout::before,
++.callout::after {
+   content: "";
+   position: absolute;
+-  inset: -30% 10% 40% -20%;
+-  background: linear-gradient(120deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0));
+-  opacity: 0.35;
+-  transform: translateX(-10%);
++  pointer-events: none;
++}
++
++.callout::before {
++  inset: -45% 20% 30% -30%;
++  background: radial-gradient(circle at top left, rgba(255, 113, 206, 0.35), transparent 68%);
++  filter: blur(6px);
++  opacity: 0.65;
++}
++
++.callout::after {
++  inset: 0;
++  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0));
++  opacity: 0.3;
+ }
+ 
+ .callout__title {
+   font-size: clamp(2rem, 4vw, 2.6rem);
+   color: var(--color-text-primary);
+   font-weight: 800;
+ }
+ 
+ .callout__body {
+   color: var(--color-text-muted);
+   line-height: 1.6;
+ }
+ 
+ .callout__actions {
+   display: flex;
+   flex-wrap: wrap;
+   gap: var(--space-3);
+   align-items: center;
+ }
+ 
++.callout__list {
++  margin: 0;
++  padding-left: 1.2rem;
++  color: var(--color-text-muted);
++  display: grid;
++  gap: 0.45rem;
++  line-height: 1.55;
++  list-style: disc;
++}
++
++.matrix {
++  display: grid;
++  gap: 1rem;
++}
++
++.matrix__row {
++  display: grid;
++  gap: 0.9rem;
++  padding: 1.25rem;
++  border-radius: var(--radius-lg);
++  border: 1px solid rgba(255, 255, 255, 0.12);
++  background: rgba(8, 8, 18, 0.72);
++  box-shadow: var(--shadow-sm);
++  transition: transform 0.3s var(--transition-soft), border-color 0.3s ease;
++}
++
++.matrix__row:hover {
++  transform: translateY(-4px);
++  border-color: rgba(0, 229, 255, 0.35);
++}
++
++.matrix__cell {
++  display: grid;
++  gap: 0.4rem;
++}
++
++.matrix__cell--accent {
++  border-radius: var(--radius-md);
++  border: 1px solid rgba(0, 229, 255, 0.28);
++  background: rgba(0, 229, 255, 0.08);
++  padding: 1rem;
++}
++
++.matrix__eyebrow {
++  font-size: 0.75rem;
++  letter-spacing: 0.16em;
++  text-transform: uppercase;
++  color: rgba(226, 232, 240, 0.65);
++}
++
++.matrix__cell strong {
++  font-size: clamp(1.1rem, 2.6vw, 1.4rem);
++  color: var(--color-text-primary);
++  font-weight: 800;
++}
++
++.matrix__note {
++  font-size: 0.9rem;
++  color: var(--color-text-muted);
++}
++
++@media (min-width: 720px) {
++  .matrix__row {
++    grid-template-columns: repeat(2, minmax(0, 1fr));
++    align-items: stretch;
++  }
++}
++
+ .accordion {
+   border-radius: var(--radius-lg);
+   border: 1px solid rgba(255, 255, 255, 0.14);
+   background: rgba(6, 6, 18, 0.68);
+   overflow: hidden;
+   box-shadow: var(--shadow-md);
+ }
+ 
+ .accordion__item + .accordion__item {
+   border-top: 1px solid rgba(255, 255, 255, 0.08);
+ }
+ 
+ .accordion__trigger {
+   width: 100%;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   gap: 1.25rem;
+   padding: 1.25rem 1.5rem;
+   background: transparent;
+   border: 0;
+   color: var(--color-text-primary);
+   font-weight: 700;
+   font-size: 1rem;
+   text-align: left;
+@@ -1251,153 +1478,723 @@ body.nav-open .mobile-drawer {
+   padding: 0 1.5rem 1.4rem;
+   color: var(--color-text-muted);
+   line-height: 1.6;
+   display: none;
+ }
+ 
+ .accordion__item[open] .accordion__content {
+   display: block;
+ }
+ 
+ .accordion__item[open] .accordion__icon {
+   transform: rotate(90deg);
+   color: var(--accent-cyan);
+ }
+ 
+ .tos-card {
+   border-radius: var(--radius-lg);
+   border: 1px solid rgba(255, 255, 255, 0.14);
+   background: rgba(8, 8, 18, 0.72);
+   padding: clamp(1.75rem, 4vw, 2.6rem);
+   box-shadow: var(--shadow-md);
+   line-height: 1.65;
+   color: var(--color-text-muted);
+ }
+ 
+-.page-footer {
+-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+-  padding-block: 3rem;
+-  font-size: 0.9rem;
+-}
+-
+-.page-footer__inner {
++.doc-hero {
++  position: relative;
++  border-radius: var(--radius-xl);
++  border: 1px solid rgba(255, 255, 255, 0.16);
++  background: linear-gradient(160deg, rgba(12, 12, 26, 0.92), rgba(8, 8, 20, 0.68));
++  padding: clamp(2.5rem, 5vw, 3.75rem);
++  box-shadow: var(--shadow-lg);
+   display: flex;
+   flex-direction: column;
+-  gap: 1.5rem;
+-  align-items: center;
+-  text-align: center;
+-}
+-
+-.page-footer__links {
+-  display: flex;
+-  flex-wrap: wrap;
+-  gap: 1rem;
+-  justify-content: center;
+-  color: rgba(226, 232, 240, 0.75);
+-}
+-
+-.page-footer__links a {
+-  transition: color 0.25s ease;
++  gap: var(--space-5);
++  overflow: hidden;
+ }
+ 
+-.page-footer__links a:hover,
+-.page-footer__links a:focus-visible {
+-  color: var(--color-text-primary);
++.doc-hero::before {
++  content: "";
++  position: absolute;
++  inset: -40% 35% 10% -35%;
++  background: radial-gradient(circle at top left, rgba(0, 229, 255, 0.32), transparent 65%);
++  pointer-events: none;
++  opacity: 0.7;
+ }
+ 
+-.backdrop {
+-  position: fixed;
++.doc-hero::after {
++  content: "";
++  position: absolute;
+   inset: 0;
+-  z-index: -20;
++  background: radial-gradient(circle at right, rgba(185, 103, 255, 0.25), transparent 65%);
++  mix-blend-mode: screen;
+   pointer-events: none;
+ }
+ 
+-.backdrop canvas {
+-  position: fixed;
+-  inset: 0;
+-  width: 100%;
+-  height: 100%;
+-  filter: saturate(120%) blur(0.35px);
++.doc-hero > * {
++  position: relative;
++  z-index: 1;
+ }
+ 
+-.backdrop__veil {
+-  position: fixed;
+-  inset: -20vmax;
+-  background: radial-gradient(60vmin 60vmin at 30% 20%, rgba(168, 85, 247, 0.16), transparent 60%),
+-    radial-gradient(60vmin 60vmin at 70% 80%, rgba(6, 182, 212, 0.14), transparent 60%);
+-  filter: blur(42px);
+-  animation: float 24s ease-in-out infinite;
+-  opacity: 0.8;
++.doc-hero__top {
++  display: flex;
++  flex-wrap: wrap;
++  align-items: center;
++  gap: var(--space-3);
+ }
+ 
+-.backdrop__blob {
+-  position: absolute;
++.doc-chip {
++  display: inline-flex;
++  align-items: center;
++  gap: 0.4rem;
++  font-size: 0.82rem;
++  letter-spacing: 0.04em;
++  text-transform: uppercase;
++  padding: 0.35rem 0.75rem;
+   border-radius: 999px;
+-  filter: blur(90px);
+-  opacity: 0.35;
+-  mix-blend-mode: screen;
++  border: 1px solid rgba(255, 255, 255, 0.22);
++  color: var(--color-text-primary);
++  background: rgba(255, 255, 255, 0.08);
++  position: relative;
++  overflow: hidden;
+ }
+ 
+-.backdrop__blob--one {
+-  width: 60vmin;
+-  height: 60vmin;
+-  left: -12vmin;
+-  top: -16vmin;
+-  background: radial-gradient(closest-side, #f472b6, transparent 70%);
+-  animation: orbit 32s linear infinite;
++.doc-chip svg {
++  width: 0.9rem;
++  height: 0.9rem;
++  flex-shrink: 0;
++  opacity: 0.85;
+ }
+ 
+-.backdrop__blob--two {
+-  width: 70vmin;
+-  height: 70vmin;
+-  right: -18vmin;
+-  bottom: -20vmin;
+-  background: radial-gradient(closest-side, #60a5fa, transparent 70%);
+-  animation: orbit 36s linear infinite reverse;
++.doc-chip[data-animate="pulse"] {
++  background: rgba(125, 249, 230, 0.16);
++  border-color: rgba(125, 249, 230, 0.45);
++  box-shadow: 0 0 0 0 rgba(125, 249, 230, 0.18);
++  animation: chipGlow 6s var(--transition-soft) infinite;
+ }
+ 
+-.backdrop__blob--three {
+-  width: 48vmin;
+-  height: 48vmin;
+-  left: 22vmin;
+-  top: 36vmin;
+-  background: radial-gradient(closest-side, #34d399, transparent 70%);
+-  opacity: 0.28;
+-  animation: pulse 9s ease-in-out infinite;
++.doc-chip[data-tone="info"] {
++  border-color: rgba(0, 229, 255, 0.35);
++  background: rgba(0, 229, 255, 0.1);
++  color: #9bf5ff;
+ }
+ 
+-.blob {
+-  position: absolute;
+-  border-radius: 999px;
+-  filter: blur(90px);
+-  opacity: 0.35;
+-  mix-blend-mode: screen;
+-  animation: blobHue 26s ease-in-out infinite;
++.doc-chip[data-tone="accent"] {
++  border-color: rgba(0, 229, 255, 0.55);
++  background: rgba(0, 229, 255, 0.14);
++  color: #7df9ff;
+ }
+ 
+-.blob--one {
+-  width: 32rem;
++.doc-chip[data-tone="warning"] {
++  border-color: rgba(255, 113, 206, 0.45);
++  background: rgba(255, 113, 206, 0.12);
++  color: #ffb3eb;
++}
++
++.doc-chip-list {
++  list-style: none;
++  margin: 0;
++  padding: 0;
++  display: flex;
++  flex-wrap: wrap;
++  gap: 0.5rem;
++}
++
++.doc-chip-list li {
++  display: contents;
++}
++
++.doc-meta {
++  display: flex;
++  flex-wrap: wrap;
++  gap: var(--space-3);
++  color: var(--color-text-subtle);
++  font-size: 0.95rem;
++}
++
++.doc-meta time {
++  color: var(--color-text-muted);
++  font-weight: 600;
++}
++
++.doc-intro {
++  display: grid;
++  gap: var(--space-4);
++}
++
++.doc-intro__meta {
++  display: flex;
++  flex-wrap: wrap;
++  gap: var(--space-4);
++  align-items: center;
++}
++
++.doc-intro__meta > * {
++  flex: 1 1 180px;
++}
++
++.doc-hero__stats {
++  display: flex;
++  flex-wrap: wrap;
++  gap: clamp(1rem, 3vw, 1.75rem);
++}
++
++.doc-stat {
++  min-width: 160px;
++  border-radius: var(--radius-lg);
++  border: 1px solid rgba(255, 255, 255, 0.16);
++  background: rgba(255, 255, 255, 0.05);
++  padding: 1rem 1.25rem;
++  box-shadow: var(--shadow-sm);
++  display: grid;
++  gap: 0.35rem;
++}
++
++.doc-stat__value {
++  font-size: 1.55rem;
++  font-weight: 700;
++  color: var(--color-text-primary);
++  letter-spacing: -0.02em;
++}
++
++.doc-stat__label {
++  font-size: 0.85rem;
++  color: var(--color-text-subtle);
++  text-transform: uppercase;
++  letter-spacing: 0.08em;
++}
++
++.doc-badges {
++  display: grid;
++  gap: var(--space-3);
++  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
++}
++
++.doc-badge {
++  display: grid;
++  grid-template-columns: auto 1fr;
++  gap: 0.85rem;
++  align-items: start;
++  padding: 1.1rem 1.35rem;
++  border-radius: var(--radius-lg);
++  border: 1px solid rgba(255, 255, 255, 0.16);
++  background: rgba(8, 8, 22, 0.78);
++  box-shadow: var(--shadow-sm);
++  position: relative;
++  overflow: hidden;
++}
++
++.doc-badge::after {
++  content: "";
++  position: absolute;
++  inset: 0;
++  background: linear-gradient(120deg, rgba(255, 255, 255, 0.08), transparent 65%);
++  opacity: 0;
++  transition: opacity 0.4s var(--transition-soft);
++}
++
++.doc-badge:hover::after {
++  opacity: 1;
++}
++
++.doc-badge__icon {
++  width: 2.4rem;
++  height: 2.4rem;
++  border-radius: 0.85rem;
++  display: grid;
++  place-items: center;
++  background: rgba(0, 229, 255, 0.12);
++  border: 1px solid rgba(0, 229, 255, 0.32);
++  color: #8bf5ff;
++  box-shadow: 0 12px 24px rgba(0, 229, 255, 0.16);
++}
++
++.doc-badge[data-tone="warning"] .doc-badge__icon {
++  background: rgba(255, 113, 206, 0.14);
++  border-color: rgba(255, 113, 206, 0.35);
++  color: #ffd6f5;
++  box-shadow: 0 12px 24px rgba(255, 113, 206, 0.16);
++}
++
++.doc-badge[data-tone="neutral"] .doc-badge__icon {
++  background: rgba(255, 255, 255, 0.08);
++  border-color: rgba(255, 255, 255, 0.2);
++  color: rgba(226, 232, 240, 0.85);
++  box-shadow: 0 12px 24px rgba(12, 12, 22, 0.45);
++}
++
++.doc-badge__title {
++  font-size: 1rem;
++  font-weight: 600;
++  color: var(--color-text-primary);
++  margin: 0;
++}
++
++.doc-badge__body {
++  display: grid;
++  gap: 0.4rem;
++  color: var(--color-text-muted);
++  font-size: 0.95rem;
++}
++
++.doc-badge__body strong {
++  color: var(--color-text-primary);
++}
++
++.doc-intro__heading {
++  font-size: clamp(2.2rem, 4vw, 3rem);
++  font-weight: 800;
++  color: var(--color-text-primary);
++  letter-spacing: -0.01em;
++}
++
++.doc-intro__lede {
++  font-size: clamp(1.05rem, 2vw, 1.25rem);
++  line-height: 1.7;
++  color: var(--color-text-muted);
++  max-width: 60ch;
++}
++
++.doc-layout {
++  display: grid;
++  gap: clamp(2.5rem, 6vw, 4rem);
++  grid-template-columns: minmax(0, 260px) minmax(0, 1fr);
++  align-items: start;
++}
++
++.doc-nav {
++  position: sticky;
++  top: clamp(5rem, 12vw, 6.5rem);
++  border-radius: var(--radius-lg);
++  border: 1px solid rgba(255, 255, 255, 0.14);
++  background: rgba(8, 8, 22, 0.76);
++  padding: clamp(1.5rem, 3vw, 2rem);
++  box-shadow: var(--shadow-sm);
++}
++
++.doc-nav__title {
++  font-size: 0.95rem;
++  text-transform: uppercase;
++  letter-spacing: 0.12em;
++  color: var(--color-text-subtle);
++  margin-bottom: var(--space-3);
++}
++
++.doc-nav__list {
++  list-style: none;
++  margin: 0;
++  padding: 0;
++  display: grid;
++  gap: 0.6rem;
++}
++
++.doc-nav__link {
++  display: flex;
++  align-items: center;
++  gap: 0.55rem;
++  padding: 0.55rem 0.65rem;
++  border-radius: 0.85rem;
++  color: var(--color-text-muted);
++  font-size: 0.95rem;
++  transition: color 0.2s var(--transition-soft), background 0.2s var(--transition-soft);
++}
++
++.doc-nav__link::before {
++  content: "•";
++  color: rgba(125, 249, 230, 0.8);
++  font-size: 1.25em;
++  line-height: 1;
++}
++
++.doc-nav__link:hover,
++.doc-nav__link:focus-visible {
++  background: rgba(255, 255, 255, 0.08);
++  color: var(--color-text-primary);
++}
++
++.doc-content {
++  display: grid;
++  gap: clamp(2.5rem, 5vw, 3.5rem);
++}
++
++.doc-section {
++  display: grid;
++  gap: var(--space-4);
++  padding: clamp(1.75rem, 4vw, 2.5rem);
++  border-radius: var(--radius-lg);
++  border: 1px solid rgba(255, 255, 255, 0.14);
++  background: rgba(6, 6, 20, 0.68);
++  box-shadow: var(--shadow-sm);
++}
++
++.doc-section__title {
++  font-size: clamp(1.35rem, 3vw, 1.75rem);
++  font-weight: 700;
++  color: var(--color-text-primary);
++  margin: 0;
++}
++
++.doc-section__description {
++  margin: 0;
++  color: var(--color-text-muted);
++  line-height: 1.65;
++}
++
++.doc-grid {
++  display: grid;
++  gap: var(--space-3);
++  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
++}
++
++.doc-card {
++  border-radius: var(--radius-md);
++  border: 1px solid rgba(255, 255, 255, 0.12);
++  background: rgba(10, 10, 24, 0.72);
++  padding: clamp(1.2rem, 3vw, 1.75rem);
++  display: grid;
++  gap: 0.75rem;
++  line-height: 1.6;
++  color: var(--color-text-muted);
++}
++
++.doc-card__title {
++  font-size: 1.05rem;
++  font-weight: 600;
++  color: var(--color-text-primary);
++}
++
++.doc-list {
++  margin: 0;
++  padding-left: 1.2rem;
++  display: grid;
++  gap: 0.65rem;
++  color: var(--color-text-muted);
++  list-style: disc;
++}
++
++.doc-list li::marker {
++  color: rgba(125, 249, 230, 0.65);
++  font-weight: 600;
++}
++
++ol.doc-list {
++  list-style: decimal;
++}
++
++.doc-list strong {
++  color: var(--color-text-primary);
++}
++
++.doc-steps {
++  counter-reset: step;
++  list-style: none;
++  margin: 0;
++  padding: 0;
++  display: grid;
++  gap: 0.85rem;
++}
++
++.doc-steps li {
++  counter-increment: step;
++  display: flex;
++  gap: 0.75rem;
++  align-items: flex-start;
++  color: var(--color-text-muted);
++}
++
++.doc-steps li::before {
++  content: counter(step, decimal-leading-zero);
++  font-weight: 700;
++  font-size: 0.82rem;
++  letter-spacing: 0.05em;
++  background: rgba(0, 229, 255, 0.12);
++  color: #7df9ff;
++  border-radius: 999px;
++  padding: 0.35rem 0.6rem;
++  border: 1px solid rgba(0, 229, 255, 0.3);
++  margin-top: 0.1rem;
++}
++
++.doc-emphasis {
++  border-radius: var(--radius-md);
++  border: 1px solid rgba(125, 249, 230, 0.32);
++  background: rgba(0, 229, 255, 0.08);
++  color: var(--color-text-muted);
++  padding: 1.35rem 1.5rem;
++  line-height: 1.65;
++}
++
++.doc-emphasis strong {
++  color: var(--color-text-primary);
++}
++
++.doc-alert {
++  border-radius: var(--radius-md);
++  border: 1px solid rgba(255, 113, 206, 0.35);
++  background: rgba(255, 113, 206, 0.08);
++  color: rgba(255, 207, 244, 0.92);
++  padding: 1.35rem 1.5rem;
++  line-height: 1.65;
++}
++
++.doc-alert strong {
++  color: #ffd8f7;
++}
++
++.doc-quote {
++  border-radius: var(--radius-md);
++  border: 1px solid rgba(255, 255, 255, 0.18);
++  background: rgba(255, 255, 255, 0.05);
++  padding: 1.2rem 1.4rem;
++  font-family: "JetBrains Mono", "Fira Code", "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
++  font-size: 0.95rem;
++  line-height: 1.7;
++  color: rgba(226, 232, 240, 0.9);
++}
++
++.doc-faq {
++  display: grid;
++  gap: var(--space-3);
++}
++
++.doc-faq__item {
++  border-radius: var(--radius-md);
++  border: 1px solid rgba(255, 255, 255, 0.12);
++  background: rgba(8, 8, 20, 0.72);
++  padding: clamp(1.2rem, 3vw, 1.75rem);
++  display: grid;
++  gap: 0.75rem;
++}
++
++.doc-faq__question {
++  font-size: 1.05rem;
++  font-weight: 600;
++  color: var(--color-text-primary);
++}
++
++.doc-footer-card {
++  display: grid;
++  gap: var(--space-3);
++  border-radius: var(--radius-lg);
++  border: 1px solid rgba(255, 255, 255, 0.16);
++  background: linear-gradient(150deg, rgba(5, 5, 20, 0.82), rgba(10, 10, 26, 0.68));
++  padding: clamp(1.75rem, 4vw, 2.5rem);
++}
++
++.doc-footer-card__title {
++  font-size: 1.35rem;
++  font-weight: 700;
++  color: var(--color-text-primary);
++}
++
++.doc-footer-card__actions {
++  display: flex;
++  flex-wrap: wrap;
++  gap: var(--space-3);
++}
++
++.doc-highlight-list {
++  list-style: none;
++  padding: 0;
++  margin: 0;
++  display: grid;
++  gap: 0.65rem;
++}
++
++.doc-highlight-list li {
++  display: flex;
++  gap: 0.75rem;
++  align-items: flex-start;
++  color: var(--color-text-muted);
++}
++
++.doc-highlight-list li::before {
++  content: "✔";
++  color: rgba(125, 249, 230, 0.95);
++  font-weight: 600;
++  margin-top: 0.1rem;
++}
++
++@media (max-width: 1080px) {
++  .doc-layout {
++    grid-template-columns: 1fr;
++  }
++
++  .doc-nav {
++    position: static;
++    order: 2;
++  }
++}
++
++@media (max-width: 720px) {
++  .doc-hero {
++    padding: clamp(2rem, 8vw, 2.5rem);
++  }
++
++  .doc-hero__top {
++    gap: var(--space-2);
++  }
++
++  .doc-hero__stats {
++    flex-direction: column;
++  }
++
++  .doc-stat {
++    width: 100%;
++  }
++
++  .doc-nav {
++    padding: clamp(1.1rem, 5vw, 1.5rem);
++  }
++
++  .doc-section {
++    padding: clamp(1.2rem, 6vw, 1.75rem);
++  }
++
++  .doc-badge {
++    grid-template-columns: 1fr;
++  }
++
++  .doc-badge__icon {
++    width: 2.1rem;
++    height: 2.1rem;
++  }
++
++  .doc-footer-card {
++    padding: clamp(1.2rem, 6vw, 1.75rem);
++  }
++
++  .doc-footer-card__actions {
++    flex-direction: column;
++    align-items: stretch;
++  }
++}
++
++.page-footer {
++  border-top: 1px solid rgba(255, 255, 255, 0.1);
++  padding-block: 3rem;
++  font-size: 0.9rem;
++}
++
++.page-footer__inner {
++  display: flex;
++  flex-direction: column;
++  gap: 1.5rem;
++  align-items: center;
++  text-align: center;
++}
++
++.page-footer__links {
++  display: flex;
++  flex-wrap: wrap;
++  gap: 1rem;
++  justify-content: center;
++  color: rgba(226, 232, 240, 0.75);
++}
++
++.page-footer__links a {
++  transition: color 0.25s ease;
++}
++
++.page-footer__links a:hover,
++.page-footer__links a:focus-visible {
++  color: var(--color-text-primary);
++}
++
++.backdrop {
++  position: fixed;
++  inset: 0;
++  z-index: -20;
++  pointer-events: none;
++}
++
++.backdrop canvas {
++  position: fixed;
++  inset: 0;
++  width: 100%;
++  height: 100%;
++  filter: saturate(120%) blur(0.35px);
++}
++
++.backdrop__veil {
++  position: fixed;
++  inset: -20vmax;
++  background: radial-gradient(60vmin 60vmin at 30% 20%, rgba(168, 85, 247, 0.16), transparent 60%),
++    radial-gradient(60vmin 60vmin at 70% 80%, rgba(6, 182, 212, 0.14), transparent 60%);
++  filter: blur(42px);
++  animation: float 24s ease-in-out infinite;
++  opacity: 0.8;
++}
++
++.backdrop__blob {
++  position: absolute;
++  border-radius: 999px;
++  filter: blur(90px);
++  opacity: 0.35;
++  mix-blend-mode: screen;
++}
++
++.backdrop__blob--one {
++  width: 60vmin;
++  height: 60vmin;
++  left: -12vmin;
++  top: -16vmin;
++  background: radial-gradient(closest-side, #f472b6, transparent 70%);
++  animation: orbit 32s linear infinite;
++}
++
++.backdrop__blob--two {
++  width: 70vmin;
++  height: 70vmin;
++  right: -18vmin;
++  bottom: -20vmin;
++  background: radial-gradient(closest-side, #60a5fa, transparent 70%);
++  animation: orbit 36s linear infinite reverse;
++}
++
++.backdrop__blob--three {
++  width: 48vmin;
++  height: 48vmin;
++  left: 22vmin;
++  top: 36vmin;
++  background: radial-gradient(closest-side, #34d399, transparent 70%);
++  opacity: 0.28;
++  animation: pulse 9s ease-in-out infinite;
++}
++
++.blob {
++  position: absolute;
++  border-radius: 999px;
++  filter: blur(90px);
++  opacity: 0.35;
++  mix-blend-mode: screen;
++  animation: blobHue 26s ease-in-out infinite;
++}
++
++.blob--one {
++  width: 32rem;
+   height: 32rem;
+   top: -10rem;
+   left: -8rem;
+   background: radial-gradient(closest-side, rgba(255, 113, 206, 0.48), transparent 70%);
+   animation-duration: 28s;
+ }
+ 
+ .blob--two {
+   width: 36rem;
+   height: 36rem;
+   bottom: -12rem;
+   right: -10rem;
+   background: radial-gradient(closest-side, rgba(0, 229, 255, 0.42), transparent 70%);
+   animation-duration: 34s;
+   animation-delay: -6s;
+ }
+ 
+ .blob--three {
+   width: 26rem;
+   height: 26rem;
+   top: 40%;
+   left: 58%;
+   background: radial-gradient(closest-side, rgba(185, 103, 255, 0.45), transparent 70%);
+   animation-duration: 30s;
+   animation-delay: -3s;
+@@ -1495,56 +2292,76 @@ body.nav-open .mobile-drawer {
+   0%,
+   100% {
+     transform: translate3d(0, 0, 0);
+   }
+   50% {
+     transform: translate3d(2%, -2%, 0);
+   }
+ }
+ 
+ @keyframes orbit {
+   to {
+     transform: rotate(360deg);
+   }
+ }
+ 
+ @keyframes pulse {
+   0%,
+   100% {
+     transform: scale(1);
+   }
+   50% {
+     transform: scale(1.06);
+   }
+ }
+ 
++@keyframes chipGlow {
++  0% {
++    box-shadow: 0 0 0 0 rgba(125, 249, 230, 0.18);
++    transform: translateY(0);
++  }
++  50% {
++    box-shadow: 0 0 0 6px rgba(125, 249, 230, 0);
++    transform: translateY(-1px);
++  }
++  100% {
++    box-shadow: 0 0 0 0 rgba(125, 249, 230, 0);
++    transform: translateY(0);
++  }
++}
++
+ @media (prefers-reduced-motion: reduce) {
+   body::before,
+   .blob {
+     animation-duration: 1ms !important;
+     animation-iteration-count: 1 !important;
+   }
++
++  .doc-chip[data-animate="pulse"] {
++    animation: none !important;
++    box-shadow: none !important;
++  }
+ }
+ 
+ @media (min-width: 768px) {
+   .site-nav {
+     display: block;
+   }
+ 
+   .nav-toggle {
+     display: none;
+   }
+ 
+   .hide-on-mobile {
+     display: inline-flex;
+   }
+ 
+   .mobile-drawer {
+     display: none !important;
+   }
+ 
+   .hero__grid {
+     grid-template-columns: 1.05fr 0.95fr;
+   }
+ 
+   .callout {
+     flex-direction: row;
+diff --git a/assets/js/app.js b/assets/js/app.js
+index b3a104f9f63399274eb5a2692b1603302240fccd..dd2f48e1c6bfb5020d7397827e71f12b5bfa17c9 100644
+--- a/assets/js/app.js
++++ b/assets/js/app.js
+@@ -29,125 +29,131 @@
+     }
+   ];
+ 
+   const HERO_FEATURED = [
+     {
+       title: 'Robux',
+       subtitle: 'Carga segura',
+       badges: [
+         { label: 'Gaming', icon: 'gamepad-2', tone: 'cyan' },
+         { label: 'Best seller', icon: 'flame', tone: 'pink' }
+       ],
+       icon: 'gamepad-2',
+       tone: 'cyan'
+     },
+     {
+       title: 'Discord Nitro',
+       subtitle: 'Mensual y anual',
+       badges: [
+         { label: 'Discord', icon: 'discord', tone: 'violet' },
+         { label: 'Popular', icon: 'sparkles', tone: 'pink' }
+       ],
+       icon: 'bolt',
+       tone: 'violet'
+     },
+     {
+-      title: 'Decoraciones',
+-      subtitle: 'Banners, iconos, packs',
+-      badges: [{ label: 'Estilo', icon: 'wand-2', tone: 'pink' }],
++      title: 'Decoraciones Discord',
++      subtitle: 'Banners, iconos y packs para servidores',
++      badges: [
++        { label: 'Estilo', icon: 'wand-2', tone: 'pink' },
++        { label: 'Discord', icon: 'discord', tone: 'violet' }
++      ],
+       icon: 'palette',
+       tone: 'pink'
+     },
+     {
+-      title: 'Streaming',
+-      subtitle: 'Crunchyroll, Netflix, Disney+',
++      title: 'Servicios',
++      subtitle: 'ChatGPT, Spotify, YouTube, Crunchyroll',
+       badges: [
+-        { label: '4K', icon: 'monitor', tone: 'mint' },
++        { label: 'Digital', icon: 'grid', tone: 'mint' },
+         { label: 'Oferta', icon: 'badge-percent', tone: 'pink' }
+       ],
+-      icon: 'play-circle',
++      icon: 'grid',
+       tone: 'mint'
+     },
+     {
+       title: 'VPNs',
+       subtitle: 'Top providers',
+       badges: [{ label: 'Privacidad', icon: 'shield-check', tone: 'cyan' }],
+       icon: 'shield',
+       tone: 'cyan'
+     },
+     {
+       title: 'Boosts',
+       subtitle: 'Niveles garantizados',
+       badges: [
+         { label: 'Discord', icon: 'discord', tone: 'violet' },
+         { label: 'Rápido', icon: 'zap', tone: 'cyan' }
+       ],
+       icon: 'zap',
+       tone: 'violet'
+     }
+   ];
+ 
+   const CATALOG = [
+     {
+       title: 'Robux',
+       copy: 'Carga segura con evidencia visual en vivo.',
+       badges: [
+         { label: 'Gaming', icon: 'gamepad-2', tone: 'cyan' },
+         { label: 'Best seller', icon: 'flame', tone: 'pink' }
+       ],
+       cta: 'Consultar',
+       icon: 'gamepad-2',
+       tone: 'cyan'
+     },
+     {
+       title: 'Discord Nitro',
+       copy: 'Planes mensual y anual con renovaciones garantizadas.',
+       badges: [
+         { label: 'Discord', icon: 'discord', tone: 'violet' },
+         { label: 'Popular', icon: 'sparkles', tone: 'pink' }
+       ],
+       cta: 'Consultar',
+       icon: 'bolt',
+       tone: 'violet'
+     },
+     {
+       title: 'Decoraciones Discord',
+       copy: 'Banners, iconos y packs premium para tu comunidad.',
+-      badges: [{ label: 'Estilo', icon: 'wand-2', tone: 'pink' }],
++      badges: [
++        { label: 'Estilo', icon: 'wand-2', tone: 'pink' },
++        { label: 'Discord', icon: 'discord', tone: 'violet' }
++      ],
+       cta: 'Consultar',
+       icon: 'palette',
+       tone: 'pink'
+     },
+     {
+-      title: 'Streaming',
+-      copy: 'Crunchyroll, Netflix, Disney+ y más en calidad 4K.',
++      title: 'Servicios',
++      copy: 'ChatGPT, Spotify, YouTube, Crunchyroll y más en un solo lugar.',
+       badges: [
+-        { label: '4K', icon: 'monitor', tone: 'mint' },
++        { label: 'Digital', icon: 'grid', tone: 'mint' },
+         { label: 'Oferta', icon: 'badge-percent', tone: 'pink' }
+       ],
+       cta: 'Consultar',
+-      icon: 'tv',
++      icon: 'grid',
+       tone: 'mint'
+     },
+     {
+       title: 'VPNs',
+       copy: 'Proveedores verificados para proteger tu identidad.',
+       badges: [{ label: 'Privacidad', icon: 'shield-check', tone: 'cyan' }],
+       cta: 'Consultar',
+       icon: 'shield-check',
+       tone: 'cyan'
+     },
+     {
+       title: 'Boosts',
+       copy: 'Sube tu servidor al instante con evidencia del proceso.',
+       badges: [
+         { label: 'Discord', icon: 'discord', tone: 'violet' },
+         { label: 'Rápido', icon: 'zap', tone: 'cyan' }
+       ],
+       cta: 'Consultar',
+       icon: 'rocket',
+       tone: 'violet'
+     }
+   ];
+ 
+   const SERVICES = [
+     { title: 'Middleman moderno', copy: 'Escrow transparente con verificación de ambas partes.', icon: 'handshake', tone: 'mint' },
+diff --git a/assets/js/main.js b/assets/js/main.js
+index 2a68242d3485cce272238d402008f4bd2ccd34dd..a127c3a4a18a2d8f078d8d27b1a3fab192d8cd8d 100644
+--- a/assets/js/main.js
++++ b/assets/js/main.js
+@@ -269,56 +269,305 @@ const fetchExchangeRate = async () => {
+       rate: typeof usd === 'number' ? usd : null,
+       updatedAt
+     };
+   } catch (error) {
+     console.error('Failed to fetch MXN → USD rate', error);
+     return { rate: null, updatedAt: null };
+   }
+ };
+ 
+ const formatUsd = (amount) => {
+   if (amount === null) return 'Consulta en Discord';
+   return `≈ ${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount)}`;
+ };
+ 
+ const formatExchangeNotice = (rate, updatedAt) => {
+   if (!rate) {
+     return 'Tipo de cambio no disponible. Nuestro equipo confirmará el monto final en el ticket.';
+   }
+   const date = updatedAt ? new Date(updatedAt) : null;
+   const formatted = date
+     ? new Intl.DateTimeFormat('es-MX', { dateStyle: 'medium', timeStyle: 'short', timeZone: 'UTC' }).format(date)
+     : null;
+   return `Tipo de cambio: 1 MXN = ${rate.toFixed(4)} USD${formatted ? ` · Actualizado ${formatted} (UTC)` : ''}`;
+ };
+ 
++const MX_FORMATTER = new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' });
++const USD_FORMATTER = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
++
++const formatPriceLabels = (plan, rate) => {
++  if (typeof plan?.priceMXN === 'number') {
++    const usdValue = typeof rate === 'number' ? plan.priceMXN * rate : null;
++    return {
++      mx: MX_FORMATTER.format(plan.priceMXN),
++      usd: usdValue ? `≈ ${USD_FORMATTER.format(usdValue)}` : 'Confirmar en ticket'
++    };
++  }
++  if (typeof plan?.priceUSD === 'number') {
++    const mxValue = typeof rate === 'number' && rate > 0 ? plan.priceUSD / rate : null;
++    return {
++      mx: mxValue ? `≈ ${MX_FORMATTER.format(mxValue)}` : 'Confirmar en ticket',
++      usd: USD_FORMATTER.format(plan.priceUSD)
++    };
++  }
++  return { mx: 'Consulta en Discord', usd: 'Consulta en Discord' };
++};
++
++const createPriceListMarkup = (plans, rate) => {
++  if (!Array.isArray(plans) || plans.length === 0) return '';
++  const items = plans
++    .map((plan) => {
++      const labels = formatPriceLabels(plan, rate);
++      const note = plan.note ? `<span class="price-list__note">${plan.note}</span>` : '';
++      return `
++        <li class="price-list__item">
++          <div class="price-list__label">
++            <span>${plan.label}</span>
++            ${note}
++          </div>
++          <div class="price-list__prices">
++            <span class="price-list__mx">${labels.mx}</span>
++            <span class="price-list__usd">${labels.usd}</span>
++          </div>
++        </li>
++      `;
++    })
++    .join('');
++  return `<ul class="price-list">${items}</ul>`;
++};
++
++const createNotesList = (notes) => {
++  if (!Array.isArray(notes) || notes.length === 0) return '';
++  return `<ul class="note-list">${notes.map((note) => `<li>${note}</li>`).join('')}</ul>`;
++};
++
+ const PLAN_ICON_SVGS = {
+   group: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8a4 4 0 1 1 8 0 4 4 0 0 1-8 0Zm-5 9a5 5 0 0 1 5-5h8a5 5 0 0 1 5 5v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1Z" fill="currentColor"></path></svg>',
+   gift: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4c-.8-1.4-2.4-2-3.8-1.4C6.7 3 6 4.2 6 5.5c0 .2 0 .3.1.5H5a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2v6a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3v-6a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-1c.1-.2.1-.3.1-.5 0-1.3-.7-2.5-2.2-3C14.4 2 12.8 2.6 12 4Zm2.3.9c.6.2.7.6.7.6 0 .3-.2.5-.4.5H12.7c.3-.6.6-1 .8-1.1.2-.2.4-.1.8 0ZM9 4.9c.4-.1.6-.2.8 0 .2.1.5.5.8 1.1H9.4c-.2 0-.4-.2-.4-.5 0 0 .1-.4.7-.6ZM5 9V8h6v2H5Zm8 9H9a1 1 0 0 1-1-1v-5h5v6Zm2 0v-6h5v5a1 1 0 0 1-1 1h-4ZM19 8v1h-6V8h6Z" fill="currentColor"></path></svg>',
+   pass: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7.2 4.1 2.3-2.3a2 2 0 0 1 2.8 0l1.7 1.7 1.2-1.2a2 2 0 0 1 2.8 2.8l-1.2 1.2 1.7 1.7a2 2 0 0 1 0 2.8l-2.3 2.3-9-9Zm-4.2 6a2 2 0 0 1 2.8 0l7 7a2 2 0 0 1 0 2.8l-2.3 2.3a2 2 0 0 1-2.8 0l-7-7a2 2 0 0 1 0-2.8l2.3-2.3Z" fill="currentColor"></path></svg>'
+ };
+ 
++const ROBUX_POLICIES = [
++  {
++    title: 'Métodos de pago disponibles',
++    description: 'Aceptamos PayPal, transferencia SPEI, depósitos OXXO y Litecoin. Confirma disponibilidad antes de enviar dinero.',
++    icon: 'wallet',
++    tone: 'mint'
++  },
++  {
++    title: 'Reembolsos = cortesía',
++    description: 'Solo evaluamos reembolso o reentrega si presentas grabación completa, Transaction ID y reclamas dentro de 48 horas.',
++    icon: 'shield-alert',
++    tone: 'violet'
++  },
++  {
++    title: 'Privacidad operativa',
++    description: 'No recabamos datos sensibles automáticamente. Si compartes información adicional en tu ticket, asumes su manejo y difusión.',
++    icon: 'lock',
++    tone: 'cyan'
++  },
++  {
++    title: 'Sin afiliación con Roblox',
++    description: 'Dedos.xyz no es socio ni representante oficial. Los nombres de marca solo identifican el producto que compras.',
++    icon: 'badge-alert',
++    tone: 'pink'
++  }
++];
++
++const DIGITAL_SERVICES = [
++  {
++    id: 'spotify-key',
++    title: 'Spotify Premium — Key vitalicia',
++    subtitle: 'Upgrade.ac oficial',
++    description: 'Te enviamos una clave para redimir Spotify Premium de por vida. Ideal si administras varias cuentas.',
++    icon: 'music-4',
++    tone: 'mint',
++    plans: [{ label: 'Clave vitalicia', priceMXN: 100, note: 'Clave upgrade.ac con instrucciones paso a paso.' }]
++  },
++  {
++    id: 'spotify-account',
++    title: 'Spotify Premium en tu cuenta',
++    subtitle: 'Cuenta propia o proporcionada',
++    description: 'Elegimos la ruta que prefieras: te conseguimos una cuenta nueva o gestionamos tu cuenta actual.',
++    icon: 'headphones',
++    tone: 'mint',
++    plans: [
++      { label: '1 mes', priceMXN: 59 },
++      { label: '3 meses', priceMXN: 169 },
++      { label: '6 meses', priceMXN: 339 },
++      { label: '12 meses', priceMXN: 549 }
++    ],
++    notes: ['Confirma si quieres cuenta nueva o tu usuario actual en el ticket.']
++  },
++  {
++    id: 'youtube-premium',
++    title: 'YouTube Premium en tu cuenta',
++    subtitle: 'Membresía familiar administrada',
++    description: 'Nos encargamos de activarlo en tu cuenta principal o te proporcionamos una alternativa bajo stock.',
++    icon: 'youtube',
++    tone: 'pink',
++    plans: [
++      { label: '1 mes', priceMXN: 59 },
++      { label: '3 meses', priceMXN: 169 },
++      { label: '12 meses', priceMXN: 549 }
++    ],
++    notes: ['Necesitamos tu Transaction ID y video del proceso para soporte futuro.']
++  },
++  {
++    id: 'crunchyroll-provided',
++    title: 'Crunchyroll Megafan — cuenta proporcionada',
++    subtitle: 'Acceso inmediato',
++    description: 'Recibe credenciales listas para usar durante 1 mes completo con garantía de reposición por cortesía.',
++    icon: 'tv',
++    tone: 'violet',
++    plans: [{ label: '1 mes', priceMXN: 20 }],
++    notes: ['Cambiar la contraseña invalida la garantía.']
++  },
++  {
++    id: 'crunchyroll-account',
++    title: 'Crunchyroll Megafan en tu cuenta',
++    subtitle: 'Control total',
++    description: 'Activamos Megafan directamente en tu cuenta. Ideal si quieres mantener tu historial.',
++    icon: 'clapperboard',
++    tone: 'violet',
++    plans: [
++      { label: '1 mes', priceMXN: 59 },
++      { label: '12 meses', priceMXN: 499 }
++    ]
++  },
++  {
++    id: 'chatgpt-plus',
++    title: 'ChatGPT Plus',
++    subtitle: 'Opciones flexibles',
++    description: 'Elige si prefieres una cuenta suministrada por Dedos.xyz o la activación directa en tu perfil.',
++    icon: 'bot',
++    tone: 'cyan',
++    plans: [
++      { label: 'Cuenta proporcionada', priceMXN: 59 },
++      { label: 'En tu cuenta', priceMXN: 69 }
++    ],
++    notes: ['Necesitamos correo y contraseña temporales si trabajamos con tu cuenta.']
++  },
++  {
++    id: 'vpn-nord',
++    title: 'NordVPN — 6 meses',
++    subtitle: 'Seguridad premium',
++    description: 'Protege tus dispositivos con 6 meses de NordVPN. Envío manual y asistencia en la activación.',
++    icon: 'shield',
++    tone: 'cyan',
++    plans: [{ label: 'Licencia 6 meses', priceMXN: 79 }]
++  }
++];
++
++const SERVICE_STEPS = [
++  {
++    title: 'Abre ticket y selecciona plan',
++    description: 'Entra a Discord, abre un ticket y define el servicio y duración. Nuestro staff confirma disponibilidad y tipo de cambio.',
++    icon: 'message-circle',
++    tone: 'mint'
++  },
++  {
++    title: 'Entrega evidencia y Transaction ID',
++    description: 'Comparte grabación en vivo, comprobante de pago y Transaction ID. Sin esos datos no hay soporte.',
++    icon: 'camera',
++    tone: 'violet'
++  },
++  {
++    title: 'Recibe credenciales y seguimiento',
++    description: 'Te entregamos la cuenta, key o activación. Seguimos tu caso hasta confirmar que todo funcione.',
++    icon: 'handshake',
++    tone: 'pink'
++  }
++];
++
++const DISCORD_OFFERS = [
++  {
++    title: 'Server Boost 1 mes',
++    subtitle: 'Automatizado e instantáneo',
++    description: 'Usamos el enlace de tu servidor para aplicar los boosts en minutos, sin códigos ni llaves.',
++    icon: 'zap',
++    tone: 'violet',
++    plans: [{ label: 'Boost x1 mes', priceMXN: 60 }],
++    notes: ['Entrega inmediata tras confirmar pago y enlace.']
++  },
++  {
++    title: 'Discord Nitro mensual',
++    subtitle: 'Legal paid — vía gift o tarjeta',
++    description: 'Nitro clásico al mejor precio. El método (gift o tarjeta) depende del stock al momento de tu compra.',
++    icon: 'bolt',
++    tone: 'mint',
++    plans: [{ label: '1 mes', priceMXN: 95 }],
++    notes: ['Confirma la región de tu cuenta para evitar rechazos.']
++  },
++  {
++    title: 'Decoraciones de perfil',
++    subtitle: 'Legal paid por regalo',
++    description: 'Selecciona la decoración oficial que quieras. Nosotros la enviamos como regalo con descuento.',
++    icon: 'sparkles',
++    tone: 'pink',
++    plans: [{ label: 'Desde', priceUSD: 3.1 }],
++    notes: ['Consulta la tabla para ver cada nivel frente al precio oficial.']
++  }
++];
++
++const DECORATION_MATRIX = [
++  { officialUSD: 4.99, ourUSD: 3.1 },
++  { officialUSD: 5.99, ourUSD: 3.3 },
++  { officialUSD: 6.99, ourUSD: 3.6 },
++  { officialUSD: 7.99, ourUSD: 3.9 },
++  { officialUSD: 8.49, ourUSD: 4.05 },
++  { officialUSD: 9.99, ourUSD: 5 },
++  { officialUSD: 11.99, ourUSD: 5.5 }
++];
++
++const DISCORD_POLICIES = [
++  {
++    title: 'Pagos aceptados',
++    description: 'PayPal, transferencia SPEI, depósitos OXXO y Litecoin. Confirma método antes de mandar comprobante.',
++    icon: 'wallet',
++    tone: 'mint'
++  },
++  {
++    title: 'Reembolsos como cortesía',
++    description: 'Solo aplican si cumples con la grabación requerida y reportas dentro de 48 horas desde la entrega.',
++    icon: 'alert-triangle',
++    tone: 'violet'
++  },
++  {
++    title: 'Privacidad del ticket',
++    description: 'No almacenamos datos sensibles por defecto. Si compartes información personal, hazlo bajo tu responsabilidad y de forma controlada.',
++    icon: 'lock-keyhole',
++    tone: 'cyan'
++  },
++  {
++    title: 'No afiliados a Discord',
++    description: 'No representamos a Discord ni a otras marcas. Los nombres se usan para identificar los productos que vendemos.',
++    icon: 'shield-off',
++    tone: 'pink'
++  }
++];
++
+ const ROBUX_PLANS = [
+   {
+     id: 'group',
+     title: 'Recarga por grupo oficial',
+     tagline: 'Ideal para compras recurrentes',
+     tone: 'pink',
+     priceMXN: 125,
+     icon: 'group',
+     highlight: { label: 'Recomendado', tone: 'mint' },
+     amountLabel: '1,000 Robux',
+     description: 'Compra tus Robux directamente desde nuestro grupo oficial. Perfecto si recargas seguido y quieres la comisión más baja.',
+     requirements: [
+       'Unirte al grupo oficial de Dedos.xyz en Roblox.',
+       'Esperar 14 días después de haber ingresado al grupo (política Roblox).'
+     ],
+     delivery: 'Liberamos el pago y recibes los Robux en cuanto Roblox procesa la venta tras el periodo inicial.',
+     extras: ['Seguimiento en vivo dentro del ticket.', 'Comisiones mínimas garantizadas.'],
+     cta: { label: 'Ir al grupo de Roblox', href: robloxUrl }
+   },
+   {
+     id: 'gift',
+     title: 'Regalo por juego',
+     tagline: 'Selecciona tu juego favorito',
+     tone: 'cyan',
+     priceMXN: 126,
+@@ -447,81 +696,271 @@ const renderValueHighlights = () => {
+   observeReveal();
+ };
+ 
+ const renderPurchaseSteps = () => {
+   const container = doc.querySelector('[data-robux-steps]');
+   if (!container) return;
+   container.innerHTML = '';
+   PURCHASE_STEPS.forEach((step, index) => {
+     const node = createElement(`
+       <article class="card card--step tone--cyan" data-animate="rise">
+         <div class="card__header">
+           <span class="card__icon" aria-hidden="true">${index + 1}</span>
+           <div>
+             <h3 class="card__title">${step.title}</h3>
+           </div>
+         </div>
+         <p class="card__body">${step.description}</p>
+       </article>
+     `);
+     node.style.setProperty('--reveal-delay', `${index * 0.08}s`);
+     container.appendChild(node);
+   });
+   observeReveal();
+ };
+ 
++const renderRobuxPolicies = () => {
++  const container = doc.querySelector('[data-robux-policies]');
++  if (!container) return;
++  container.innerHTML = '';
++  ROBUX_POLICIES.forEach((policy, index) => {
++    const node = createElement(`
++      <article class="card tone--${policy.tone ?? 'mint'}" data-animate="rise">
++        <div class="card__header">
++          <span class="card__icon" aria-hidden="true"><i data-lucide="${policy.icon}"></i></span>
++          <div>
++            <h3 class="card__title">${policy.title}</h3>
++          </div>
++        </div>
++        <p class="card__body">${policy.description}</p>
++      </article>
++    `);
++    node.style.setProperty('--reveal-delay', `${index * 0.08}s`);
++    container.appendChild(node);
++  });
++  applyIcons();
++  observeReveal();
++};
++
++const renderServiceSteps = () => {
++  const container = doc.querySelector('[data-service-steps]');
++  if (!container) return;
++  container.innerHTML = '';
++  SERVICE_STEPS.forEach((step, index) => {
++    const node = createElement(`
++      <article class="card card--step tone--${step.tone ?? 'mint'}" data-animate="rise">
++        <div class="card__header">
++          <span class="card__icon" aria-hidden="true"><i data-lucide="${step.icon}"></i></span>
++          <div>
++            <h3 class="card__title">${step.title}</h3>
++          </div>
++        </div>
++        <p class="card__body">${step.description}</p>
++      </article>
++    `);
++    node.style.setProperty('--reveal-delay', `${index * 0.08}s`);
++    container.appendChild(node);
++  });
++  applyIcons();
++  observeReveal();
++};
++
+ const renderRobuxPage = async () => {
+   const planContainer = doc.querySelector('[data-robux-plans]');
+   const notice = doc.querySelector('[data-exchange-notice]');
+   const formatterMx = new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' });
+   let rateInfo = { rate: null, updatedAt: null };
+ 
+   try {
+     rateInfo = await fetchExchangeRate();
+   } catch (error) {
+     console.error('Exchange fetch failed', error);
+   }
+ 
+   if (planContainer) {
+     planContainer.innerHTML = '';
+     ROBUX_PLANS.forEach((plan, index) => {
+       const usd = rateInfo.rate ? plan.priceMXN * rateInfo.rate : null;
+       const priceLabels = {
+         mx: formatterMx.format(plan.priceMXN),
+         usd: formatUsd(usd)
+       };
+       const node = renderPlanCard(plan, priceLabels, index * 0.08);
+       planContainer.appendChild(node);
+     });
+   }
+ 
+   if (notice) {
+     notice.textContent = formatExchangeNotice(rateInfo.rate, rateInfo.updatedAt);
+   }
+ 
+   renderValueHighlights();
+   renderPurchaseSteps();
++  renderRobuxPolicies();
++  applyIcons();
++  observeReveal();
++};
++
++const renderDigitalServicesPage = async () => {
++  const servicesContainer = doc.querySelector('[data-digital-services]');
++  const notice = doc.querySelector('[data-exchange-notice]');
++  let rateInfo = { rate: null, updatedAt: null };
++
++  try {
++    rateInfo = await fetchExchangeRate();
++  } catch (error) {
++    console.error('Exchange fetch failed', error);
++  }
++
++  if (servicesContainer) {
++    servicesContainer.innerHTML = '';
++    DIGITAL_SERVICES.forEach((service, index) => {
++      const priceList = createPriceListMarkup(service.plans, rateInfo.rate);
++      const notes = createNotesList(service.notes);
++      const node = createElement(`
++        <article class="plan-card" data-animate="rise" data-tone="${service.tone ?? 'mint'}">
++          <header class="plan-card__header">
++            <div class="plan-card__icon" data-plan-icon><i data-lucide="${service.icon}"></i></div>
++            <div class="plan-card__headings">
++              <h3 class="plan-card__title">${service.title}</h3>
++              ${service.subtitle ? `<p class="plan-card__subtitle">${service.subtitle}</p>` : ''}
++            </div>
++          </header>
++          <p class="plan-card__description">${service.description}</p>
++          ${priceList}
++          ${notes}
++        </article>
++      `);
++      node.style.setProperty('--reveal-delay', `${index * 0.08}s`);
++      servicesContainer.appendChild(node);
++    });
++  }
++
++  if (notice) {
++    notice.textContent = formatExchangeNotice(rateInfo.rate, rateInfo.updatedAt);
++  }
++
++  renderServiceSteps();
++  applyIcons();
++  observeReveal();
++};
++
++const renderDiscordOffers = (rate) => {
++  const container = doc.querySelector('[data-discord-offers]');
++  if (!container) return;
++  container.innerHTML = '';
++  DISCORD_OFFERS.forEach((offer, index) => {
++    const priceList = createPriceListMarkup(offer.plans, rate);
++    const notes = createNotesList(offer.notes);
++    const node = createElement(`
++      <article class="plan-card" data-animate="rise" data-tone="${offer.tone ?? 'mint'}">
++        <header class="plan-card__header">
++          <div class="plan-card__icon" data-plan-icon><i data-lucide="${offer.icon}"></i></div>
++          <div class="plan-card__headings">
++            <h3 class="plan-card__title">${offer.title}</h3>
++            ${offer.subtitle ? `<p class="plan-card__subtitle">${offer.subtitle}</p>` : ''}
++          </div>
++        </header>
++        <p class="plan-card__description">${offer.description}</p>
++        ${priceList}
++        ${notes}
++      </article>
++    `);
++    node.style.setProperty('--reveal-delay', `${index * 0.08}s`);
++    container.appendChild(node);
++  });
++};
++
++const renderDecorationMatrix = (rate) => {
++  const container = doc.querySelector('[data-decoration-matrix]');
++  if (!container) return;
++  container.innerHTML = '';
++  DECORATION_MATRIX.forEach((tier, index) => {
++    const officialUsd = USD_FORMATTER.format(tier.officialUSD);
++    const ourUsd = USD_FORMATTER.format(tier.ourUSD);
++    const ourMx = typeof rate === 'number' && rate > 0 ? `≈ ${MX_FORMATTER.format(tier.ourUSD / rate)}` : 'Confirma MXN en ticket';
++    const row = createElement(`
++      <div class="matrix__row" data-animate="rise">
++        <div class="matrix__cell">
++          <span class="matrix__eyebrow">Precio oficial</span>
++          <strong>${officialUsd}</strong>
++          <span class="matrix__note">Referencia Discord</span>
++        </div>
++        <div class="matrix__cell matrix__cell--accent">
++          <span class="matrix__eyebrow">Dedos.xyz</span>
++          <strong>${ourUsd}</strong>
++          <span class="matrix__note">${ourMx}</span>
++        </div>
++      </div>
++    `);
++    row.style.setProperty('--reveal-delay', `${index * 0.06}s`);
++    container.appendChild(row);
++  });
++  observeReveal();
++};
++
++const renderDiscordPolicies = () => {
++  const container = doc.querySelector('[data-discord-policies]');
++  if (!container) return;
++  container.innerHTML = '';
++  DISCORD_POLICIES.forEach((policy, index) => {
++    const node = createElement(`
++      <article class="card tone--${policy.tone ?? 'mint'}" data-animate="rise">
++        <div class="card__header">
++          <span class="card__icon" aria-hidden="true"><i data-lucide="${policy.icon}"></i></span>
++          <div>
++            <h3 class="card__title">${policy.title}</h3>
++          </div>
++        </div>
++        <p class="card__body">${policy.description}</p>
++      </article>
++    `);
++    node.style.setProperty('--reveal-delay', `${index * 0.08}s`);
++    container.appendChild(node);
++  });
++  applyIcons();
++  observeReveal();
++};
++
++const renderDiscordServicesPage = async () => {
++  const notice = doc.querySelector('[data-exchange-notice]');
++  let rateInfo = { rate: null, updatedAt: null };
++
++  try {
++    rateInfo = await fetchExchangeRate();
++  } catch (error) {
++    console.error('Exchange fetch failed', error);
++  }
++
++  renderDiscordOffers(rateInfo.rate);
++  renderDecorationMatrix(rateInfo.rate);
++  renderDiscordPolicies();
++
++  if (notice) {
++    notice.textContent = formatExchangeNotice(rateInfo.rate, rateInfo.updatedAt);
++  }
++
+   applyIcons();
+   observeReveal();
+ };
+ 
+ const setupRedirectCountdown = () => {
+   const target = body.dataset.redirectTarget;
+   if (!target) return;
+ 
+   const countdownEl = doc.querySelector('[data-countdown]');
+   const fallbackMs = Number(body.dataset.redirectFallbackMs || '2400');
+   let seconds = Math.ceil(fallbackMs / 1000);
+ 
+   if (countdownEl) {
+     countdownEl.textContent = String(seconds);
+   }
+ 
+   if (target === 'discord') {
+     openDiscordInvite(discordInvite, fallbackMs);
+   } else if (target === 'roblox') {
+     openRobloxDestination(body.dataset.redirectUrl || robloxUrl, fallbackMs);
+   }
+ 
+   const interval = win.setInterval(() => {
+     seconds = Math.max(0, seconds - 1);
+     if (countdownEl) countdownEl.textContent = String(seconds);
+@@ -541,34 +980,42 @@ const setupBackdrop = () => {
+   if (starsCanvas) disposers.push(mountStars(starsCanvas));
+   win.addEventListener('beforeunload', () => {
+     disposers.forEach((dispose) => {
+       try {
+         dispose?.();
+       } catch (error) {
+         console.error('Failed to dispose backdrop effect', error);
+       }
+     });
+   });
+ };
+ 
+ const init = () => {
+   setupReveal();
+   setupCurrentYear();
+   setupHeaderShadow();
+   setupNav();
+   setupSectionLinks();
+   setupLinkHandlers();
+   setupBackdrop();
+ 
+   if (page === 'robux') {
+     renderRobuxPage();
+   }
+ 
++  if (page === 'services') {
++    renderDigitalServicesPage();
++  }
++
++  if (page === 'discord-services') {
++    renderDiscordServicesPage();
++  }
++
+   if (page === 'discord' || page === 'roblox') {
+     setupRedirectCountdown();
+   }
+ 
+   applyIcons();
+   observeReveal();
+ };
+ 
+ doc.addEventListener('DOMContentLoaded', init);
+diff --git a/discord.html b/discord.html
+index 4a4fba2151a18abc9d5d85776f4db021005b0f59..14c8101bfc9ab4ae049e09f6d13a0feb66eacfc4 100644
+--- a/discord.html
++++ b/discord.html
+@@ -1,89 +1,157 @@
+ <!DOCTYPE html>
+ <html lang="es">
+ <head>
+   <meta charset="utf-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1" />
+-  <title>Abrir Discord — Dedos.xyz</title>
+-  <meta name="description" content="Te redirigimos a nuestro servidor de Discord. Si no se abre la app, úsalo en el navegador." />
++  <title>Paquetes Discord — Dedos.xyz</title>
++  <meta name="description" content="Server boosts, Nitro y decoraciones para tu comunidad. Entregas guiadas por Discord y evidencias en video para cada pedido." />
+   <link rel="preconnect" href="https://fonts.googleapis.com" />
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+   <link rel="stylesheet" href="assets/css/app.css" />
++  <script defer src="https://unpkg.com/lucide@latest"></script>
+ </head>
+-<body data-page="discord" data-discord-invite="dedos" data-redirect-target="discord" data-redirect-fallback-ms="2400">
++<body data-page="discord-services" data-discord-invite="dedos" data-exchange-endpoint="https://open.er-api.com/v6/latest/MXN">
+   <div class="backdrop" data-fx-backdrop>
+     <canvas class="backdrop__canvas" data-fx-orbs aria-hidden="true"></canvas>
+     <canvas class="backdrop__canvas" data-fx-stars aria-hidden="true"></canvas>
+     <div class="backdrop__veil" aria-hidden="true"></div>
+     <div class="backdrop__blob backdrop__blob--one"></div>
+     <div class="backdrop__blob backdrop__blob--two"></div>
+     <div class="backdrop__blob backdrop__blob--three"></div>
+   </div>
+ 
+   <header class="site-header">
+     <div class="shell">
+       <div class="site-header__bar" data-animate="fade">
+         <a class="site-brand" href="index.html">
+           <span class="site-brand__pulse" aria-hidden="true"></span>
+           <span>Dedos <span class="text-soft">Store</span></span>
+         </a>
+         <nav class="site-nav" aria-label="Principal">
+           <ul class="site-nav__list">
+             <li><a class="site-nav__link" data-section-link="catalogo" href="index.html#catalogo">Catálogo</a></li>
+             <li><a class="site-nav__link" data-section-link="por-que" href="index.html#por-que">¿Por qué?</a></li>
+             <li><a class="site-nav__link" data-section-link="servicios" href="index.html#servicios">Servicios</a></li>
+             <li><a class="site-nav__link" data-section-link="faq" href="index.html#faq">FAQ</a></li>
+             <li><a class="site-nav__link" href="robux.html">Planes Robux</a></li>
++            <li><a class="site-nav__link" href="servicios.html">Servicios digitales</a></li>
++            <li><a class="site-nav__link" href="discord.html">Paquetes Discord</a></li>
+             <li><a class="site-nav__link" href="tos.html">TOS</a></li>
++            <li><a class="site-nav__link" href="roblox.html">Grupo de Roblox</a></li>
+           </ul>
+         </nav>
+         <div class="site-header__actions">
+           <a class="btn btn--primary hide-on-mobile" href="https://discord.gg/dedos" data-discord-link>Entrar a Discord</a>
+           <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="mobile-nav" aria-label="Abrir menú">☰</button>
+         </div>
+       </div>
+     </div>
+     <nav class="mobile-drawer" id="mobile-nav" hidden data-nav-panel>
+       <div class="mobile-drawer__content">
+         <a class="mobile-drawer__link" data-section-link="catalogo" href="index.html#catalogo">Catálogo</a>
+         <a class="mobile-drawer__link" data-section-link="por-que" href="index.html#por-que">¿Por qué?</a>
+         <a class="mobile-drawer__link" data-section-link="servicios" href="index.html#servicios">Servicios</a>
+         <a class="mobile-drawer__link" data-section-link="faq" href="index.html#faq">FAQ</a>
+         <a class="mobile-drawer__link" href="robux.html">Planes Robux</a>
++        <a class="mobile-drawer__link" href="servicios.html">Servicios digitales</a>
++        <a class="mobile-drawer__link" href="discord.html">Paquetes Discord</a>
+         <a class="mobile-drawer__link" href="tos.html">TOS</a>
++        <a class="mobile-drawer__link" href="roblox.html">Grupo de Roblox</a>
+         <a class="btn btn--primary" href="https://discord.gg/dedos" data-discord-link>Entrar a Discord →</a>
+       </div>
+     </nav>
+   </header>
+ 
+   <main>
+     <section class="section">
+       <div class="shell">
+         <div class="callout" data-animate="rise">
+           <div>
+-            <h1 class="callout__title">Abriendo Discord…</h1>
+-            <p class="callout__body">Si no se abre automáticamente, te redirigiremos al navegador en <span class="tag" data-tone="cyan" data-countdown>3</span> segundos.</p>
++            <div class="chip-stack" role="presentation">
++              <span class="chip" data-tone="violet"><i data-lucide="discord" aria-hidden="true"></i> Discord Ready</span>
++              <span class="chip" data-tone="mint"><i data-lucide="sparkles" aria-hidden="true"></i> Entrega guiada</span>
++              <span class="chip" data-tone="cyan"><i data-lucide="shield-check" aria-hidden="true"></i> Evidencia obligatoria</span>
++            </div>
++            <h1 class="callout__title">Paquetes Discord: boosts, Nitro y decoraciones</h1>
++            <p class="callout__body">Haz que tu servidor luzca profesional. Automatizamos la entrega de boosts, gestionamos Nitro y cuidamos cada decoración para que no pierdas tiempo en tickets eternos.</p>
+           </div>
+           <div class="callout__actions">
+-            <a class="btn btn--primary" href="https://discord.gg/dedos" data-discord-link>Abrir en el navegador</a>
++            <a class="btn btn--primary" href="https://discord.gg/dedos" data-discord-link><i data-lucide="rocket" aria-hidden="true"></i> Abrir ticket</a>
++            <a class="btn btn--ghost" href="#ayuda-discord"><i data-lucide="help-circle" aria-hidden="true"></i> ¿Problemas en Discord?</a>
++          </div>
++        </div>
++      </div>
++    </section>
++
++    <section class="section">
++      <div class="shell">
++        <div class="section__head" data-align="center" data-animate="fade">
++          <h2 class="section__title">Ofertas principales</h2>
++          <p class="section__lead">Precios expresados en MXN y USD calculado al momento. Todas las compras incluyen soporte 1:1 y comprobantes.</p>
++        </div>
++        <div class="grid-cards" data-discord-offers></div>
++        <div class="card card--notice" data-animate="fade">
++          <p class="card__body" data-exchange-notice>Obteniendo tipo de cambio…</p>
++          <p class="card__body">Usamos datos de Open&nbsp;ER&nbsp;API para convertir MXN → USD en tiempo real. Confirma el valor final en tu ticket antes de pagar.</p>
++        </div>
++      </div>
++    </section>
++
++    <section class="section" id="decoraciones">
++      <div class="shell">
++        <div class="section__head" data-align="center" data-animate="fade">
++          <h2 class="section__title">Decoraciones legales, precio reducido</h2>
++          <p class="section__lead">Comparativa directa contra el precio oficial de Discord. Nuestros valores en MXN se recalculan con el tipo de cambio del día.</p>
++        </div>
++        <div class="matrix" data-decoration-matrix></div>
++      </div>
++    </section>
++
++    <section class="section">
++      <div class="shell">
++        <div class="section__head" data-align="center" data-animate="fade">
++          <h2 class="section__title">Pagos y garantías</h2>
++          <p class="section__lead">Operamos de forma informal, pero cuidamos la experiencia con procesos claros.</p>
++        </div>
++        <div class="grid-cards" data-discord-policies></div>
++      </div>
++    </section>
++
++    <section class="section" id="ayuda-discord">
++      <div class="shell">
++        <div class="callout" data-animate="rise">
++          <div>
++            <span class="tag" data-tone="violet"><i data-lucide="info" aria-hidden="true"></i> Guía rápida</span>
++            <h2 class="callout__title">¿Problemas para entrar al servidor?</h2>
++            <p class="callout__body">Si el enlace no abre la app, utiliza la versión web o copia el código <strong>dedos</strong>. Asegúrate de tener desactivados los bloqueadores y de estar logueado en la cuenta correcta.</p>
++            <ul class="callout__list">
++              <li>Prueba desde navegador (Chrome/Edge) con sesión abierta.</li>
++              <li>En móvil, abre Discord y pega <strong>discord.gg/dedos</strong> en la barra de búsqueda.</li>
++              <li>Si persiste, envíanos captura del error junto a tu Transaction ID.</li>
++            </ul>
++          </div>
++          <div class="callout__actions">
++            <a class="btn btn--primary" href="https://discord.gg/dedos" data-discord-link>Reintentar invitación</a>
++            <a class="btn btn--secondary" href="mailto:soporte@dedos.xyz"><i data-lucide="mail" aria-hidden="true"></i> Escribir a soporte</a>
+           </div>
+         </div>
+       </div>
+     </section>
+   </main>
+ 
+   <footer class="page-footer">
+     <div class="shell">
+       <div class="page-footer__inner">
+         <div>© <span data-current-year></span> Dedos Store. Todos los derechos reservados.</div>
+         <div class="page-footer__links">
+           <a href="tos.html">Términos</a>
+           <a href="https://discord.gg/dedos" data-discord-link>Discord</a>
+         </div>
+       </div>
+     </div>
+   </footer>
+ 
+   <script type="module" src="assets/js/main.js"></script>
+ </body>
+ </html>
+diff --git a/index.html b/index.html
+index fffe723490127d5cd46c9cc60630f9064669eaf5..37fad0f1832bdf70297d54c6f678d6f3678a6cb7 100644
+--- a/index.html
++++ b/index.html
+@@ -14,66 +14,72 @@
+   <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+   <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+   <script defer src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.32/bundled/lenis.min.js"></script>
+ </head>
+ <body data-page="home" data-discord-invite="dedos" data-roblox-url="https://www.roblox.com/es/communities/12082479/unnamed#!/about">
+   <canvas id="fx-stars"></canvas>
+   <div class="fixed inset-0 -z-10 pointer-events-none">
+     <div class="blob blob--one" aria-hidden="true"></div>
+     <div class="blob blob--two" aria-hidden="true"></div>
+     <div class="blob blob--three" aria-hidden="true"></div>
+   </div>
+ 
+   <header class="site-header">
+     <div class="shell">
+       <div class="site-header__bar" data-animate="fade">
+         <a class="site-brand" href="index.html">
+           <span class="site-brand__pulse" aria-hidden="true"></span>
+           <span>Dedos <span class="text-soft">Store</span></span>
+         </a>
+         <nav class="site-nav" aria-label="Principal">
+           <ul class="site-nav__list">
+             <li><a class="site-nav__link" data-section-link="catalogo" href="#catalogo">Catálogo</a></li>
+             <li><a class="site-nav__link" data-section-link="por-que" href="#por-que">¿Por qué?</a></li>
+             <li><a class="site-nav__link" data-section-link="servicios" href="#servicios">Servicios</a></li>
+             <li><a class="site-nav__link" data-section-link="faq" href="#faq">FAQ</a></li>
++            <li><a class="site-nav__link" href="robux.html">Planes Robux</a></li>
++            <li><a class="site-nav__link" href="servicios.html">Servicios digitales</a></li>
++            <li><a class="site-nav__link" href="discord.html">Paquetes Discord</a></li>
+             <li><a class="site-nav__link" href="tos.html">TOS</a></li>
+             <li><a class="site-nav__link" href="roblox.html">Grupo de Roblox</a></li>
+           </ul>
+         </nav>
+         <div class="site-header__actions">
+           <a class="btn btn--primary hide-on-mobile" href="https://discord.gg/dedos" data-discord-link>Entrar a Discord</a>
+           <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="mobile-nav" aria-label="Abrir menú">☰</button>
+         </div>
+       </div>
+     </div>
+     <nav class="mobile-drawer" id="mobile-nav" hidden data-nav-panel>
+       <div class="mobile-drawer__content">
+         <a class="mobile-drawer__link" data-section-link="catalogo" href="#catalogo">Catálogo</a>
+         <a class="mobile-drawer__link" data-section-link="por-que" href="#por-que">¿Por qué?</a>
+         <a class="mobile-drawer__link" data-section-link="servicios" href="#servicios">Servicios</a>
+         <a class="mobile-drawer__link" data-section-link="faq" href="#faq">FAQ</a>
++        <a class="mobile-drawer__link" href="robux.html">Planes Robux</a>
++        <a class="mobile-drawer__link" href="servicios.html">Servicios digitales</a>
++        <a class="mobile-drawer__link" href="discord.html">Paquetes Discord</a>
+         <a class="mobile-drawer__link" href="tos.html">TOS</a>
+         <a class="mobile-drawer__link" href="roblox.html">Grupo de Roblox</a>
+         <a class="btn btn--primary" href="https://discord.gg/dedos" data-discord-link>Entrar a Discord →</a>
+       </div>
+     </nav>
+   </header>
+ 
+   <main>
+     <section class="hero section" id="inicio">
+       <div class="shell hero__grid">
+         <div class="hero__content" data-animate="rise">
+           <span class="hero__eyebrow">✨ Diseño espectacular + microinteracciones</span>
+           <h1 class="hero__title">Tu hub de <span class="hero__title-highlight">suscripciones y gaming</span></h1>
+           <p class="hero__body">Robux, Discord Nitro, boosts, decoraciones, streaming, VPNs y más. Un escaparate moderno con glassmorphism, gradientes y confianza instantánea.</p>
+           <div class="hero__actions">
+             <a class="btn btn--primary" href="https://discord.gg/dedos" data-discord-link><i data-lucide="rocket" aria-hidden="true"></i> Ir al servidor</a>
+             <a class="btn btn--secondary" data-section-link="catalogo" href="#catalogo"><i data-lucide="grid-3x3" aria-hidden="true"></i> Ver catálogo</a>
+             <span class="tag" data-tone="cyan"><i data-lucide="shield-check" aria-hidden="true"></i> Garantía &amp; soporte</span>
+             <span class="tag" data-tone="violet"><i data-lucide="handshake" aria-hidden="true"></i> Middleman moderno</span>
+             <span class="tag" data-tone="pink"><i data-lucide="clock" aria-hidden="true"></i> Trades 24/7</span>
+           </div>
+           <div class="hero__stats" id="hero-stats"></div>
+         </div>
+         <aside class="hero__panel" data-animate="zoom">
+           <div class="feature-grid" id="hero-featured"></div>
+diff --git a/roblox.html b/roblox.html
+index 1ce866baa0a6156b762491d4fdab683ec0b5d778..c79fd24271a670b6339ee7ebd0aa293c80bf2b86 100644
+--- a/roblox.html
++++ b/roblox.html
+@@ -12,66 +12,70 @@
+ </head>
+ <body data-page="roblox" data-discord-invite="dedos" data-redirect-target="roblox" data-redirect-fallback-ms="2600" data-redirect-url="https://www.roblox.com/es/communities/12082479/unnamed#!/about">
+   <div class="backdrop" data-fx-backdrop>
+     <canvas class="backdrop__canvas" data-fx-orbs aria-hidden="true"></canvas>
+     <canvas class="backdrop__canvas" data-fx-stars aria-hidden="true"></canvas>
+     <div class="backdrop__veil" aria-hidden="true"></div>
+     <div class="backdrop__blob backdrop__blob--one"></div>
+     <div class="backdrop__blob backdrop__blob--two"></div>
+     <div class="backdrop__blob backdrop__blob--three"></div>
+   </div>
+ 
+   <header class="site-header">
+     <div class="shell">
+       <div class="site-header__bar" data-animate="fade">
+         <a class="site-brand" href="index.html">
+           <span class="site-brand__pulse" aria-hidden="true"></span>
+           <span>Dedos <span class="text-soft">Store</span></span>
+         </a>
+         <nav class="site-nav" aria-label="Principal">
+           <ul class="site-nav__list">
+             <li><a class="site-nav__link" data-section-link="catalogo" href="index.html#catalogo">Catálogo</a></li>
+             <li><a class="site-nav__link" data-section-link="por-que" href="index.html#por-que">¿Por qué?</a></li>
+             <li><a class="site-nav__link" data-section-link="servicios" href="index.html#servicios">Servicios</a></li>
+             <li><a class="site-nav__link" data-section-link="faq" href="index.html#faq">FAQ</a></li>
+             <li><a class="site-nav__link" href="robux.html">Planes Robux</a></li>
++            <li><a class="site-nav__link" href="servicios.html">Servicios digitales</a></li>
++            <li><a class="site-nav__link" href="discord.html">Paquetes Discord</a></li>
+             <li><a class="site-nav__link" href="tos.html">TOS</a></li>
+           </ul>
+         </nav>
+         <div class="site-header__actions">
+           <a class="btn btn--primary hide-on-mobile" href="https://discord.gg/dedos" data-discord-link>Entrar a Discord</a>
+           <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="mobile-nav" aria-label="Abrir menú">☰</button>
+         </div>
+       </div>
+     </div>
+     <nav class="mobile-drawer" id="mobile-nav" hidden data-nav-panel>
+       <div class="mobile-drawer__content">
+         <a class="mobile-drawer__link" data-section-link="catalogo" href="index.html#catalogo">Catálogo</a>
+         <a class="mobile-drawer__link" data-section-link="por-que" href="index.html#por-que">¿Por qué?</a>
+         <a class="mobile-drawer__link" data-section-link="servicios" href="index.html#servicios">Servicios</a>
+         <a class="mobile-drawer__link" data-section-link="faq" href="index.html#faq">FAQ</a>
+         <a class="mobile-drawer__link" href="robux.html">Planes Robux</a>
++        <a class="mobile-drawer__link" href="servicios.html">Servicios digitales</a>
++        <a class="mobile-drawer__link" href="discord.html">Paquetes Discord</a>
+         <a class="mobile-drawer__link" href="tos.html">TOS</a>
+         <a class="btn btn--primary" href="https://discord.gg/dedos" data-discord-link>Entrar a Discord →</a>
+       </div>
+     </nav>
+   </header>
+ 
+   <main>
+     <section class="section">
+       <div class="shell">
+         <div class="callout" data-animate="rise">
+           <div>
+             <h1 class="callout__title">Abriendo Roblox…</h1>
+             <p class="callout__body">Si la app no se inicia, te llevamos al navegador en <span class="tag" data-tone="cyan" data-countdown>3</span> segundos.</p>
+           </div>
+           <div class="callout__actions">
+             <a class="btn btn--primary" href="https://www.roblox.com/es/communities/12082479/unnamed#!/about" data-roblox-link>Ir al navegador</a>
+           </div>
+         </div>
+       </div>
+     </section>
+   </main>
+ 
+   <footer class="page-footer">
+     <div class="shell">
+       <div class="page-footer__inner">
+diff --git a/robux.html b/robux.html
+index 1726166445dda3b115be9850aa6a5d31eb412af9..bdd872b7906851392e7089bcab6079514127fa52 100644
+--- a/robux.html
++++ b/robux.html
+@@ -12,124 +12,142 @@
+   <script defer src="https://unpkg.com/lucide@latest"></script>
+ </head>
+ <body data-page="robux" data-discord-invite="dedos" data-roblox-url="https://www.roblox.com/es/communities/12082479/unnamed#!/about" data-exchange-endpoint="https://open.er-api.com/v6/latest/MXN">
+   <div class="backdrop" data-fx-backdrop>
+     <canvas class="backdrop__canvas" data-fx-orbs aria-hidden="true"></canvas>
+     <canvas class="backdrop__canvas" data-fx-stars aria-hidden="true"></canvas>
+     <div class="backdrop__veil" aria-hidden="true"></div>
+     <div class="backdrop__blob backdrop__blob--one"></div>
+     <div class="backdrop__blob backdrop__blob--two"></div>
+     <div class="backdrop__blob backdrop__blob--three"></div>
+   </div>
+ 
+   <header class="site-header">
+     <div class="shell">
+       <div class="site-header__bar" data-animate="fade">
+         <a class="site-brand" href="index.html">
+           <span class="site-brand__pulse" aria-hidden="true"></span>
+           <span>Dedos <span class="text-soft">Store</span></span>
+         </a>
+         <nav class="site-nav" aria-label="Principal">
+           <ul class="site-nav__list">
+             <li><a class="site-nav__link" data-section-link="catalogo" href="index.html#catalogo">Catálogo</a></li>
+             <li><a class="site-nav__link" data-section-link="por-que" href="index.html#por-que">¿Por qué?</a></li>
+             <li><a class="site-nav__link" data-section-link="servicios" href="index.html#servicios">Servicios</a></li>
+             <li><a class="site-nav__link" data-section-link="faq" href="index.html#faq">FAQ</a></li>
++            <li><a class="site-nav__link" href="servicios.html">Servicios digitales</a></li>
++            <li><a class="site-nav__link" href="discord.html">Paquetes Discord</a></li>
+             <li><a class="site-nav__link" href="tos.html">TOS</a></li>
+             <li><a class="site-nav__link" href="roblox.html">Grupo de Roblox</a></li>
+           </ul>
+         </nav>
+         <div class="site-header__actions">
+           <a class="btn btn--primary hide-on-mobile" href="https://discord.gg/dedos" data-discord-link>Entrar a Discord</a>
+           <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="mobile-nav" aria-label="Abrir menú">☰</button>
+         </div>
+       </div>
+     </div>
+     <nav class="mobile-drawer" id="mobile-nav" hidden data-nav-panel>
+       <div class="mobile-drawer__content">
+         <a class="mobile-drawer__link" data-section-link="catalogo" href="index.html#catalogo">Catálogo</a>
+         <a class="mobile-drawer__link" data-section-link="por-que" href="index.html#por-que">¿Por qué?</a>
+         <a class="mobile-drawer__link" data-section-link="servicios" href="index.html#servicios">Servicios</a>
+         <a class="mobile-drawer__link" data-section-link="faq" href="index.html#faq">FAQ</a>
++        <a class="mobile-drawer__link" href="servicios.html">Servicios digitales</a>
++        <a class="mobile-drawer__link" href="discord.html">Paquetes Discord</a>
+         <a class="mobile-drawer__link" href="roblox.html">Grupo de Roblox</a>
+         <a class="mobile-drawer__link" href="tos.html">TOS</a>
+         <a class="btn btn--primary" href="https://discord.gg/dedos" data-discord-link>Entrar a Discord →</a>
+       </div>
+     </nav>
+   </header>
+ 
+   <main>
+     <section class="section">
+       <div class="shell">
+         <div class="callout" data-animate="rise">
+           <div>
+-            <span class="tag" data-tone="mint">Robux al mejor precio</span>
++            <div class="chip-stack" role="presentation">
++              <span class="chip" data-tone="mint"><i data-lucide="gamepad-2" aria-hidden="true"></i> Gaming Deals</span>
++              <span class="chip" data-tone="violet"><i data-lucide="badge-check" aria-hidden="true"></i> Evidencia obligatoria</span>
++              <span class="chip" data-tone="cyan"><i data-lucide="shield-check" aria-hidden="true"></i> Servicio informal</span>
++            </div>
+             <h1 class="callout__title">Planes Robux Dedos.xyz</h1>
+-            <p class="callout__body">Selecciona el método que se ajusta a tu forma de jugar. Todos los planes incluyen acompañamiento 1:1 en Discord y comprobantes de pago para que tengas total tranquilidad.</p>
++            <p class="callout__body">Elegimos métodos verificados para entregarte <strong>1,000 Robux</strong> al mejor precio posible. No somos socios de Roblox ni de sus marcas; operamos por cortesía, acompañamiento en vivo y soporte directo. No recabamos datos sensibles, así que comparte solo lo indispensable en tu ticket.</p>
+           </div>
+           <div class="callout__actions">
+-            <a class="btn btn--primary" href="https://discord.gg/dedos" data-discord-link>Entrar a Discord</a>
+-            <a class="btn btn--ghost" href="discord.html">¿Problemas para unirte?</a>
++            <a class="btn btn--primary" href="https://discord.gg/dedos" data-discord-link><i data-lucide="ticket" aria-hidden="true"></i> Abrir ticket</a>
++            <a class="btn btn--ghost" href="discord.html"><i data-lucide="help-circle" aria-hidden="true"></i> ¿Problemas para unirte?</a>
+           </div>
+         </div>
+       </div>
+     </section>
+ 
+     <section class="section">
+       <div class="shell">
+         <div class="section__head" data-align="center" data-animate="fade">
+           <h2 class="section__title">Tres formas seguras de conseguir tus Robux</h2>
+           <p class="section__lead">Elegimos los métodos que nos permiten garantizar transparencia en cada movimiento, con seguimiento en vivo y soporte inmediato.</p>
+         </div>
+         <div class="grid-cards" data-robux-plans></div>
+         <div class="card card--notice" data-animate="fade">
+           <p class="card__body" data-exchange-notice>Obteniendo tipo de cambio…</p>
+           <p class="card__body">Los precios en dólares se recalculan automáticamente con datos de Open&nbsp;ER&nbsp;API y pueden variar ligeramente al momento de pagar.</p>
+         </div>
+       </div>
+     </section>
+ 
+     <section class="section">
+       <div class="shell">
+         <div class="section__head" data-align="center" data-animate="fade">
+           <h2 class="section__title">Beneficios pensados para tu próxima compra</h2>
+           <p class="section__lead">No solo recargamos Robux: te acompañamos con procesos claros, soporte inmediato y transparencia en cada paso.</p>
+         </div>
+         <div class="grid-cards" data-robux-values></div>
+       </div>
+     </section>
+ 
+     <section class="section">
+       <div class="shell">
+         <div class="section__head" data-align="center" data-animate="fade">
+           <h2 class="section__title">Así aseguramos una entrega sin estrés</h2>
+           <p class="section__lead">Sigue estos pasos cuando abras tu ticket. Nuestro equipo confirma montos, valida datos y libera la compra con evidencia.</p>
+         </div>
+         <div class="grid-cards" data-robux-steps></div>
+       </div>
+     </section>
+ 
++    <section class="section">
++      <div class="shell">
++        <div class="section__head" data-align="center" data-animate="fade">
++          <h2 class="section__title">Pagos aceptados y recordatorios clave</h2>
++          <p class="section__lead">Pagas solo cuando confirmas el tipo de cambio. Reembolsos son cortesía, no obligación, siempre con evidencia completa.</p>
++        </div>
++        <div class="grid-cards" data-robux-policies></div>
++      </div>
++    </section>
++
+     <section class="section">
+       <div class="shell">
+         <div class="callout" data-animate="rise">
+           <div>
+             <span class="tag" data-tone="violet">Proceso guiado</span>
+             <h2 class="callout__title">Abre un ticket en nuestro Discord</h2>
+             <p class="callout__body">Ingresa al servidor, selecciona la categoría de Robux y comparte los datos de tu pedido. Nuestro staff confirmará el precio, te indicará los métodos de pago disponibles y te acompañará hasta la entrega.</p>
+           </div>
+           <div class="callout__actions">
+             <a class="btn btn--primary" href="https://discord.gg/dedos" data-discord-link>Entrar a Discord</a>
+             <a class="btn btn--secondary" href="https://www.roblox.com/es/communities/12082479/unnamed#!/about" data-roblox-link>Ir al grupo oficial</a>
+           </div>
+         </div>
+       </div>
+     </section>
+   </main>
+ 
+   <footer class="page-footer">
+     <div class="shell">
+       <div class="page-footer__inner">
+         <div>© <span data-current-year></span> Dedos Store. Todos los derechos reservados.</div>
+         <div class="page-footer__links">
+           <a href="tos.html">Términos</a>
+           <a href="https://discord.gg/dedos" data-discord-link>Discord</a>
+         </div>
+diff --git a/servicios.html b/servicios.html
+new file mode 100644
+index 0000000000000000000000000000000000000000..1fce43eb66cc4d6791ed28377911ea7260245ac9
+--- /dev/null
++++ b/servicios.html
+@@ -0,0 +1,142 @@
++<!DOCTYPE html>
++<html lang="es">
++<head>
++  <meta charset="utf-8" />
++  <meta name="viewport" content="width=device-width, initial-scale=1" />
++  <title>Servicios digitales — Dedos.xyz</title>
++  <meta name="description" content="Spotify, YouTube, Crunchyroll, ChatGPT Plus y más. Entrega guiada por ticket con precios en MXN y USD convertidos en vivo." />
++  <link rel="preconnect" href="https://fonts.googleapis.com" />
++  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
++  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
++  <link rel="stylesheet" href="assets/css/app.css" />
++  <script defer src="https://unpkg.com/lucide@latest"></script>
++</head>
++<body data-page="services" data-discord-invite="dedos" data-exchange-endpoint="https://open.er-api.com/v6/latest/MXN">
++  <div class="backdrop" data-fx-backdrop>
++    <canvas class="backdrop__canvas" data-fx-orbs aria-hidden="true"></canvas>
++    <canvas class="backdrop__canvas" data-fx-stars aria-hidden="true"></canvas>
++    <div class="backdrop__veil" aria-hidden="true"></div>
++    <div class="backdrop__blob backdrop__blob--one"></div>
++    <div class="backdrop__blob backdrop__blob--two"></div>
++    <div class="backdrop__blob backdrop__blob--three"></div>
++  </div>
++
++  <header class="site-header">
++    <div class="shell">
++      <div class="site-header__bar" data-animate="fade">
++        <a class="site-brand" href="index.html">
++          <span class="site-brand__pulse" aria-hidden="true"></span>
++          <span>Dedos <span class="text-soft">Store</span></span>
++        </a>
++        <nav class="site-nav" aria-label="Principal">
++          <ul class="site-nav__list">
++            <li><a class="site-nav__link" data-section-link="catalogo" href="index.html#catalogo">Catálogo</a></li>
++            <li><a class="site-nav__link" data-section-link="por-que" href="index.html#por-que">¿Por qué?</a></li>
++            <li><a class="site-nav__link" data-section-link="servicios" href="index.html#servicios">Servicios</a></li>
++            <li><a class="site-nav__link" data-section-link="faq" href="index.html#faq">FAQ</a></li>
++            <li><a class="site-nav__link" href="robux.html">Planes Robux</a></li>
++            <li><a class="site-nav__link" href="servicios.html">Servicios digitales</a></li>
++            <li><a class="site-nav__link" href="discord.html">Paquetes Discord</a></li>
++            <li><a class="site-nav__link" href="tos.html">TOS</a></li>
++            <li><a class="site-nav__link" href="roblox.html">Grupo de Roblox</a></li>
++          </ul>
++        </nav>
++        <div class="site-header__actions">
++          <a class="btn btn--primary hide-on-mobile" href="https://discord.gg/dedos" data-discord-link>Entrar a Discord</a>
++          <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="mobile-nav" aria-label="Abrir menú">☰</button>
++        </div>
++      </div>
++    </div>
++    <nav class="mobile-drawer" id="mobile-nav" hidden data-nav-panel>
++      <div class="mobile-drawer__content">
++        <a class="mobile-drawer__link" data-section-link="catalogo" href="index.html#catalogo">Catálogo</a>
++        <a class="mobile-drawer__link" data-section-link="por-que" href="index.html#por-que">¿Por qué?</a>
++        <a class="mobile-drawer__link" data-section-link="servicios" href="index.html#servicios">Servicios</a>
++        <a class="mobile-drawer__link" data-section-link="faq" href="index.html#faq">FAQ</a>
++        <a class="mobile-drawer__link" href="robux.html">Planes Robux</a>
++        <a class="mobile-drawer__link" href="servicios.html">Servicios digitales</a>
++        <a class="mobile-drawer__link" href="discord.html">Paquetes Discord</a>
++        <a class="mobile-drawer__link" href="tos.html">TOS</a>
++        <a class="mobile-drawer__link" href="roblox.html">Grupo de Roblox</a>
++        <a class="btn btn--primary" href="https://discord.gg/dedos" data-discord-link>Entrar a Discord →</a>
++      </div>
++    </nav>
++  </header>
++
++  <main>
++    <section class="section">
++      <div class="shell">
++        <div class="callout" data-animate="rise">
++          <div>
++            <div class="chip-stack" role="presentation">
++              <span class="chip" data-tone="mint"><i data-lucide="grid" aria-hidden="true"></i> Servicios digitales</span>
++              <span class="chip" data-tone="pink"><i data-lucide="badge-percent" aria-hidden="true"></i> MXN &amp; USD</span>
++              <span class="chip" data-tone="cyan"><i data-lucide="shield" aria-hidden="true"></i> Sin afiliación oficial</span>
++            </div>
++            <h1 class="callout__title">Suscripciones premium al precio justo</h1>
++            <p class="callout__body">Spotify, YouTube, Crunchyroll, ChatGPT Plus y VPNs. Todo se gestiona vía ticket, con pagos manuales (PayPal, SPEI, depósitos OXXO o Litecoin) y soporte humano. Reembolsos solo como cortesía, nunca obligación, y no recabamos datos personales: si compartes información extra es bajo tu responsabilidad.</p>
++          </div>
++          <div class="callout__actions">
++            <a class="btn btn--primary" href="https://discord.gg/dedos" data-discord-link><i data-lucide="message-circle" aria-hidden="true"></i> Abrir ticket</a>
++            <a class="btn btn--ghost" href="tos.html"><i data-lucide="file-text" aria-hidden="true"></i> Leer TOS</a>
++          </div>
++        </div>
++      </div>
++    </section>
++
++    <section class="section">
++      <div class="shell">
++        <div class="section__head" data-align="center" data-animate="fade">
++          <h2 class="section__title">Catálogo de servicios</h2>
++          <p class="section__lead">Consulta precios en MXN y equivalencia en USD calculada con el tipo de cambio del día. Cada plan requiere evidencia en video y Transaction ID.</p>
++        </div>
++        <div class="grid-cards" data-digital-services></div>
++        <div class="card card--notice" data-animate="fade">
++          <p class="card__body" data-exchange-notice>Obteniendo tipo de cambio…</p>
++          <p class="card__body">Verificamos MXN → USD con Open&nbsp;ER&nbsp;API. Los valores pueden variar ligeramente hasta que confirmes en tu ticket.</p>
++        </div>
++      </div>
++    </section>
++
++    <section class="section">
++      <div class="shell">
++        <div class="section__head" data-align="center" data-animate="fade">
++          <h2 class="section__title">Cómo funciona</h2>
++          <p class="section__lead">Siempre trabajamos con evidencias, tickets y comunicación clara. Mantén tu Transaction ID a la mano.</p>
++        </div>
++        <div class="grid-cards" data-service-steps></div>
++      </div>
++    </section>
++
++    <section class="section">
++      <div class="shell">
++        <div class="callout" data-animate="rise">
++          <div>
++            <span class="tag" data-tone="cyan"><i data-lucide="shield-off" aria-hidden="true"></i> No afiliados</span>
++            <h2 class="callout__title">Marcas independientes</h2>
++            <p class="callout__body">Dedos.xyz no es distribuidor autorizado de Spotify, YouTube, Crunchyroll, OpenAI, Roblox ni ninguna otra marca mencionada. Los nombres se usan solo para describir el servicio y todos los pagos se gestionan de forma informal.</p>
++          </div>
++          <div class="callout__actions">
++            <a class="btn btn--primary" href="https://discord.gg/dedos" data-discord-link>Hablar con el staff</a>
++            <a class="btn btn--secondary" href="mailto:soporte@dedos.xyz"><i data-lucide="mail" aria-hidden="true"></i> Escribir correo</a>
++          </div>
++        </div>
++      </div>
++    </section>
++  </main>
++
++  <footer class="page-footer">
++    <div class="shell">
++      <div class="page-footer__inner">
++        <div>© <span data-current-year></span> Dedos Store. Todos los derechos reservados.</div>
++        <div class="page-footer__links">
++          <a href="tos.html">Términos</a>
++          <a href="https://discord.gg/dedos" data-discord-link>Discord</a>
++        </div>
++      </div>
++    </div>
++  </footer>
++
++  <script type="module" src="assets/js/main.js"></script>
++</body>
++</html>
+diff --git a/tos.html b/tos.html
+index 29cec84a3fe8e1a942c4cbca7e77db0392e1d907..95ecdc13451fb63a7ddbd362d6df6fcf6f9d26d5 100644
+--- a/tos.html
++++ b/tos.html
+@@ -12,80 +12,619 @@
+ </head>
+ <body data-page="tos" data-discord-invite="dedos" data-roblox-url="https://www.roblox.com/es/communities/12082479/unnamed#!/about">
+   <div class="backdrop" data-fx-backdrop>
+     <canvas class="backdrop__canvas" data-fx-orbs aria-hidden="true"></canvas>
+     <canvas class="backdrop__canvas" data-fx-stars aria-hidden="true"></canvas>
+     <div class="backdrop__veil" aria-hidden="true"></div>
+     <div class="backdrop__blob backdrop__blob--one"></div>
+     <div class="backdrop__blob backdrop__blob--two"></div>
+     <div class="backdrop__blob backdrop__blob--three"></div>
+   </div>
+ 
+   <header class="site-header">
+     <div class="shell">
+       <div class="site-header__bar" data-animate="fade">
+         <a class="site-brand" href="index.html">
+           <span class="site-brand__pulse" aria-hidden="true"></span>
+           <span>Dedos <span class="text-soft">Store</span></span>
+         </a>
+         <nav class="site-nav" aria-label="Principal">
+           <ul class="site-nav__list">
+             <li><a class="site-nav__link" data-section-link="catalogo" href="index.html#catalogo">Catálogo</a></li>
+             <li><a class="site-nav__link" data-section-link="por-que" href="index.html#por-que">¿Por qué?</a></li>
+             <li><a class="site-nav__link" data-section-link="servicios" href="index.html#servicios">Servicios</a></li>
+             <li><a class="site-nav__link" data-section-link="faq" href="index.html#faq">FAQ</a></li>
+             <li><a class="site-nav__link" href="robux.html">Planes Robux</a></li>
++            <li><a class="site-nav__link" href="servicios.html">Servicios digitales</a></li>
++            <li><a class="site-nav__link" href="discord.html">Paquetes Discord</a></li>
+             <li><a class="site-nav__link" href="roblox.html">Grupo de Roblox</a></li>
+           </ul>
+         </nav>
+         <div class="site-header__actions">
+           <a class="btn btn--primary hide-on-mobile" href="https://discord.gg/dedos" data-discord-link>Entrar a Discord</a>
+           <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="mobile-nav" aria-label="Abrir menú">☰</button>
+         </div>
+       </div>
+     </div>
+     <nav class="mobile-drawer" id="mobile-nav" hidden data-nav-panel>
+       <div class="mobile-drawer__content">
+         <a class="mobile-drawer__link" data-section-link="catalogo" href="index.html#catalogo">Catálogo</a>
+         <a class="mobile-drawer__link" data-section-link="por-que" href="index.html#por-que">¿Por qué?</a>
+         <a class="mobile-drawer__link" data-section-link="servicios" href="index.html#servicios">Servicios</a>
+         <a class="mobile-drawer__link" data-section-link="faq" href="index.html#faq">FAQ</a>
+         <a class="mobile-drawer__link" href="robux.html">Planes Robux</a>
++        <a class="mobile-drawer__link" href="servicios.html">Servicios digitales</a>
++        <a class="mobile-drawer__link" href="discord.html">Paquetes Discord</a>
+         <a class="mobile-drawer__link" href="roblox.html">Grupo de Roblox</a>
+         <a class="btn btn--primary" href="https://discord.gg/dedos" data-discord-link>Entrar a Discord →</a>
+       </div>
+     </nav>
+   </header>
+ 
+   <main>
+     <section class="section">
+       <div class="shell">
+-        <div class="section__head" data-align="center" data-animate="fade">
+-          <h1 class="section__title">Términos de Servicio</h1>
+-          <p class="section__lead">Actualiza este texto con tus políticas reales: reembolsos, garantías, tiempos de entrega, restricciones y contacto de soporte.</p>
++        <div class="doc-hero" data-animate="rise">
++          <div class="doc-hero__top">
++            <span class="doc-chip" data-animate="pulse">
++              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
++                <path fill="currentColor" d="M12 2 4 6v6c0 5 3.6 9.4 8 10 4.4-.6 8-5 8-10V6l-8-4zm3.2 7.2-4 4a1 1 0 0 1-1.4 0l-2-2 1.4-1.4 1.3 1.29 2.6-2.6z" />
++              </svg>
++              Términos operativos Dedos XYZ
++            </span>
++            <span class="doc-chip" data-tone="warning">
++              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
++                <path fill="currentColor" d="M12 3 2 19h20L12 3zm0 5.4 1 6.1h-2l1-6.1zm0 8.2a1.4 1.4 0 1 0 0 2.8 1.4 1.4 0 0 0 0-2.8z" />
++              </svg>
++              Servicio 100% informal
++            </span>
++            <span class="doc-chip" data-tone="info">
++              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
++                <path fill="currentColor" d="M5 4h9a3 3 0 0 1 3 3v13H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm13 0h1a2 2 0 0 1 2 2v14l-3-1.2V4z" />
++              </svg>
++              Léelo antes de pagar
++            </span>
++            <span class="doc-chip" data-tone="accent">
++              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
++                <path fill="currentColor" d="M4 6h3l1.2-2.4h7.6L17 6h3a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2zm8 3.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z" />
++              </svg>
++              Evidencia en video obligatoria
++            </span>
++          </div>
++          <div class="doc-intro">
++            <h1 class="doc-intro__heading">Términos y avisos — Dedos XYZ</h1>
++            <p class="doc-intro__lede">Dedos XYZ es un servicio informal que vende productos y servicios digitales a precios reducidos. No somos empresa registrada ni distribuidor oficial de marcas. No emitimos facturas por defecto. No hacemos reembolsos automáticos; ofrecemos soluciones por cortesía solo si presentas la evidencia requerida (grabación hecha en el momento). Lee esto antes de comprar.</p>
++          </div>
++          <div class="doc-intro__meta">
++            <div class="doc-meta">
++              <span><strong>Nombre del servicio:</strong> Dedos XYZ</span>
++              <span><strong>Última actualización:</strong> <time datetime="2024-06-12">12 de junio de 2024</time></span>
++              <span><strong>Contacto directo:</strong> <a href="mailto:soporte@dedos.xyz">soporte@dedos.xyz</a></span>
++            </div>
++            <ul class="doc-chip-list" aria-label="Recordatorios inmediatos">
++              <li>
++                <span class="doc-chip" data-tone="warning">
++                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
++                    <path fill="currentColor" d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 5v6h-2V7zm-1 11.5a1.5 1.5 0 1 1 1.5-1.5A1.5 1.5 0 0 1 12 18.5z" />
++                  </svg>
++                  Reembolsos = cortesía, no obligación
++                </span>
++              </li>
++              <li>
++                <span class="doc-chip" data-tone="info">
++                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
++                    <path fill="currentColor" d="M5 4h14v2H5zm0 5h14v2H5zm0 5h9v2H5z" />
++                  </svg>
++                  Sin facturas por defecto
++                </span>
++              </li>
++              <li>
++                <span class="doc-chip" data-tone="accent">
++                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
++                    <path fill="currentColor" d="M12 4a5 5 0 0 1 5 5v1h2a2 2 0 0 1 2 2v7h-2v-7h-4v7H9v-7H5v7H3v-7a2 2 0 0 1 2-2h2V9a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v1h6V9a3 3 0 0 0-3-3z" />
++                  </svg>
++                  Transaction ID = llave de soporte
++                </span>
++              </li>
++            </ul>
++          </div>
++          <div class="doc-badges">
++            <article class="doc-badge" data-tone="warning">
++              <div class="doc-badge__icon" aria-hidden="true">
++                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" focusable="false">
++                  <path d="M12 2 1 21h22L12 2zm0 5 6.47 12H5.53zM11 10h2v4h-2zm0 5h2v2h-2z" />
++                </svg>
++              </div>
++              <div class="doc-badge__body">
++                <h3 class="doc-badge__title">Reembolsos solo por cortesía</h3>
++                <p>Brindamos soluciones alternativas únicamente cuando entregas evidencia completa dentro del plazo.</p>
++                <p><strong>No es una obligación legal, es una deferencia operativa.</strong></p>
++              </div>
++            </article>
++            <article class="doc-badge">
++              <div class="doc-badge__icon" aria-hidden="true">
++                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" focusable="false">
++                  <path d="M4 6h3l1.2-2.4h7.6L17 6h3a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2zm8 3.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z" />
++                </svg>
++              </div>
++              <div class="doc-badge__body">
++                <h3 class="doc-badge__title">Grabación obligatoria</h3>
++                <p>Sin video o audio+pantalla hecho en el momento no existe reclamación posible.</p>
++                <p><strong>Tu evidencia debe mostrar pago, ID y entrega.</strong></p>
++              </div>
++            </article>
++            <article class="doc-badge" data-tone="neutral">
++              <div class="doc-badge__icon" aria-hidden="true">
++                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" focusable="false">
++                  <path d="M12 2 4 5v6c0 5.18 3.58 9.94 8 11 4.42-1.06 8-5.82 8-11V5l-8-3zm0 4.18 5 1.87v3.92c0 3.7-2.32 7.52-5 8.54-2.68-1.02-5-4.84-5-8.54V8.05z" />
++                </svg>
++              </div>
++              <div class="doc-badge__body">
++                <h3 class="doc-badge__title">Privacidad con sentido común</h3>
++                <p>No recabamos datos sensibles automáticamente. Usa alias y comparte solo lo necesario para tu compra.</p>
++                <p><strong>Si entregas datos extra, asumes su manejo y difusión.</strong></p>
++              </div>
++            </article>
++          </div>
++          <div class="doc-hero__stats">
++            <div class="doc-stat">
++              <div class="doc-stat__value">48h</div>
++              <div class="doc-stat__label">Ventana máxima de reclamación</div>
++            </div>
++            <div class="doc-stat">
++              <div class="doc-stat__value">0</div>
++              <div class="doc-stat__label">Datos sensibles recabados automáticamente</div>
++            </div>
++            <div class="doc-stat">
++              <div class="doc-stat__value">100%</div>
++              <div class="doc-stat__label">Casos requieren Transaction ID + evidencia</div>
++            </div>
++          </div>
++          <div class="doc-emphasis">
++            <strong>Resumen corto:</strong> Dedos XYZ es un servicio informal que vende productos y servicios digitales a precios reducidos. No somos empresa registrada ni distribuidor oficial de marcas. No emitimos facturas por defecto. No hacemos reembolsos automáticos; las soluciones que ofrecemos son un gesto de cortesía condicionado a tu evidencia. No recabamos datos personales sensibles de manera automática; si compartes información adicional, es bajo tu responsabilidad.
++          </div>
++        </div>
++
++        <div class="doc-layout">
++          <nav class="doc-nav" aria-label="Índice de secciones" data-animate="fade">
++            <div class="doc-nav__title">Contenido</div>
++            <ul class="doc-nav__list">
++              <li><a class="doc-nav__link" href="#info-esencial">I. Información esencial</a></li>
++              <li><a class="doc-nav__link" href="#privacidad">II. Privacidad y protección de datos</a></li>
++              <li><a class="doc-nav__link" href="#operativa">III. Operativa de compra y pago</a></li>
++              <li><a class="doc-nav__link" href="#reembolsos">IV. Reembolsos y garantías</a></li>
++              <li><a class="doc-nav__link" href="#evidencia">V. Evidencia obligatoria</a></li>
++              <li><a class="doc-nav__link" href="#middlemen">VI. Middlemen y terceras partes</a></li>
++              <li><a class="doc-nav__link" href="#chargebacks">VII. Chargebacks y fraudes</a></li>
++              <li><a class="doc-nav__link" href="#entregas">VIII. Entregas y cancelaciones</a></li>
++              <li><a class="doc-nav__link" href="#soporte">IX. Comunicación y soporte</a></li>
++              <li><a class="doc-nav__link" href="#checkout">X. Texto para checkout</a></li>
++              <li><a class="doc-nav__link" href="#grabacion">XI. Texto para la grabación</a></li>
++              <li><a class="doc-nav__link" href="#faq">XII. FAQ rápida</a></li>
++              <li><a class="doc-nav__link" href="#notas">XIII. Notas finales</a></li>
++            </ul>
++          </nav>
++
++          <div class="doc-content">
++            <section class="doc-section" id="info-esencial" data-animate="rise">
++              <h2 class="doc-section__title">I. Información esencial (legal-lite)</h2>
++              <p class="doc-section__description">Lo básico para entender cómo operamos. Somos un servicio informal y transparente sobre nuestras limitaciones.</p>
++              <div class="doc-grid">
++                <article class="doc-card">
++                  <h3 class="doc-card__title">Naturaleza del servicio</h3>
++                  <p>Dedos XYZ opera de forma informal. No somos empresa registrada ni representantes autorizados de plataformas o marcas.</p>
++                </article>
++                <article class="doc-card">
++                  <h3 class="doc-card__title">No afiliación de marca</h3>
++                  <p>No estamos afiliados, avalados ni autorizados por las marcas o servicios que se mencionan en la web. Los nombres se usan solo para identificar el producto.</p>
++                </article>
++                <article class="doc-card">
++                  <h3 class="doc-card__title">Facturación</h3>
++                  <p>No emitimos facturas por defecto. Si necesitas comprobante fiscal, indícalo antes de la compra para evaluar opciones.</p>
++                </article>
++                <article class="doc-card">
++                  <h3 class="doc-card__title">Legalidad</h3>
++                  <p>No vendemos productos ilegales. Todos los productos y servicios ofrecidos deben ser legales. Si detectamos algo ilegal, lo denegamos y cancelamos la operación.</p>
++                </article>
++              </div>
++            </section>
++
++            <section class="doc-section" id="privacidad" data-animate="rise">
++              <h2 class="doc-section__title">II. Privacidad y protección de datos personales</h2>
++              <p class="doc-section__description">Nuestro enfoque es minimalista: no recopilamos datos sensibles de forma automática y todo lo que compartas de más queda bajo tu responsabilidad.</p>
++              <div class="doc-grid">
++                <article class="doc-card">
++                  <span class="doc-chip" data-tone="info">
++                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
++                      <path fill="currentColor" d="M12 2 4 5.5v6.7c0 4.68 3.4 9.2 8 10.3 4.6-1.1 8-5.62 8-10.3V5.5L12 2zm0 4.1 5 1.9v4.2c0 3.2-2.1 6.52-5 7.58-2.9-1.06-5-4.38-5-7.58V8z" />
++                    </svg>
++                    Sin recolección sensible
++                  </span>
++                  <h3 class="doc-card__title">No pedimos datos delicados</h3>
++                  <p>No solicitamos credenciales, identificaciones oficiales, direcciones físicas ni datos biométricos. Solo requerimos alias, correo de contacto y Transaction ID para operar.</p>
++                </article>
++                <article class="doc-card">
++                  <span class="doc-chip" data-tone="warning">
++                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
++                      <path fill="currentColor" d="M12 3a4 4 0 0 1 4 4v1h1a3 3 0 0 1 3 3v9h-2v-9a1 1 0 0 0-1-1h-1v3h-2V7a2 2 0 0 0-4 0v6H8V7a4 4 0 0 1 4-4zm-9 9h6v9H3zm2 2v5h2v-5z" />
++                    </svg>
++                    Lo que compartes es tuyo
++                  </span>
++                  <h3 class="doc-card__title">Datos entregados por el usuario</h3>
++                  <p>Si decides compartir información adicional (documentos, chats personales, nombres reales), entiendes que lo haces bajo tu propio riesgo. Nosotros no la solicitamos ni nos hacemos responsables si la replicas con terceros.</p>
++                </article>
++                <article class="doc-card">
++                  <span class="doc-chip" data-tone="accent">
++                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
++                      <path fill="currentColor" d="M12 4a8 8 0 1 1-8 8h2a6 6 0 1 0 6-6V4zm-1 2h2v6h-2zm0 8h2v2h-2z" />
++                    </svg>
++                    Retención mínima
++                  </span>
++                  <h3 class="doc-card__title">Solo guardamos lo necesario</h3>
++                  <p>Conservamos datos operativos (Transaction ID, historial de entrega y comprobantes) únicamente para soporte y auditoría interna. Puedes pedir depuración una vez cerrado tu caso.</p>
++                </article>
++              </div>
++              <div class="doc-alert">
++                <strong>No vendemos ni cedemos datos.</strong> Tampoco ejecutamos campañas de marketing con tu información. Si compartes datos personales en chats externos o con middlemen, el control y las consecuencias son tuyas.
++              </div>
++              <ul class="doc-highlight-list">
++                <li>Usa alias y correos operativos para mantener tu privacidad.</li>
++                <li>No envíes contraseñas ni códigos de verificación a nadie de nuestro equipo.</li>
++                <li>Solicita la eliminación de tu historial escribiendo a <a href="mailto:soporte@dedos.xyz">soporte@dedos.xyz</a> una vez concluido tu pedido.</li>
++              </ul>
++            </section>
++
++            <section class="doc-section" id="operativa" data-animate="rise">
++              <h2 class="doc-section__title">III. Operativa de compra y pago (lo que importa)</h2>
++              <p class="doc-section__description">Cómo fluye cada compra y qué necesitas tener a la mano para evitar retrasos.</p>
++              <div class="doc-card">
++                <h3 class="doc-card__title">Proceso básico</h3>
++                <ol class="doc-steps">
++                  <li>Eliges producto.</li>
++                  <li>Pagas con el método disponible.</li>
++                  <li>Recibes comprobante/Transaction ID.</li>
++                  <li>Esperamos confirmación/entrega según la página del producto.</li>
++                </ol>
++              </div>
++              <div class="doc-grid">
++                <article class="doc-card">
++                  <h3 class="doc-card__title">Medios de pago aceptados</h3>
++                  <p>Operamos en pesos mexicanos (MXN). Confirma el tipo de cambio si pagas desde otra plataforma.</p>
++                  <ul class="doc-chip-list" aria-label="Formas de pago soportadas">
++                    <li>
++                      <span class="doc-chip" data-tone="accent">
++                        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
++                          <path fill="currentColor" d="M3 6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm2 0v10h14V6zm2 3h4v2H7zm0 4h3v2H7z" />
++                        </svg>
++                        PayPal (pago seguro)
++                      </span>
++                    </li>
++                    <li>
++                      <span class="doc-chip" data-tone="info">
++                        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
++                          <path fill="currentColor" d="M12 3 3 8v2h18V8zm-8 9h2v7H4zm6 0h2v7h-2zm6 0h2v7h-2z" />
++                        </svg>
++                        Transferencia SPEI (MXN)
++                      </span>
++                    </li>
++                    <li>
++                      <span class="doc-chip" data-tone="warning">
++                        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
++                          <path fill="currentColor" d="M4 4h16l1 6H3zm-1 8h18v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
++                        </svg>
++                        Depósitos OXXO
++                      </span>
++                    </li>
++                    <li>
++                      <span class="doc-chip" data-tone="accent">
++                        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
++                          <path fill="currentColor" d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1.8 6-1.35 5H16v2h-4.28l-.42 1.6h-2.2l.42-1.6H8v-2h2.34l1.35-5z" />
++                        </svg>
++                        Cripto: Litecoin (LTC)
++                      </span>
++                    </li>
++                  </ul>
++                </article>
++                <article class="doc-card">
++                  <span class="doc-chip" data-tone="accent">
++                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
++                      <path fill="currentColor" d="M12 2a5 5 0 0 1 5 5v1h1.5A2.5 2.5 0 0 1 21 10.5v9A2.5 2.5 0 0 1 18.5 22h-13A2.5 2.5 0 0 1 3 19.5v-9A2.5 2.5 0 0 1 5.5 8H7V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v1h6V7a3 3 0 0 0-3-3z" />
++                    </svg>
++                    Llave única de soporte
++                  </span>
++                  <h3 class="doc-card__title">Transaction ID</h3>
++                  <p>Guarda siempre el Transaction ID. Sin ese código no podremos validar nada ni darte seguimiento.</p>
++                  <p><strong>Inclúyelo en tu grabación y en cada mensaje a soporte.</strong></p>
++                </article>
++                <article class="doc-card">
++                  <span class="doc-chip" data-tone="info">
++                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
++                      <path fill="currentColor" d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 5v4.59l3.3 3.3-1.42 1.42L11 12.41V7z" />
++                    </svg>
++                    Entregas verificadas
++                  </span>
++                  <h3 class="doc-card__title">Tiempos de entrega</h3>
++                  <p>Pueden ser instantáneos o requerir verificación adicional según el producto y el método de pago.</p>
++                  <p>Si hay validaciones extra, te avisamos por Discord o correo con la estimación actualizada.</p>
++                </article>
++              </div>
++            </section>
++
++            <section class="doc-section" id="reembolsos" data-animate="rise">
++              <h2 class="doc-section__title">IV. Política de reembolsos y garantías (cortesía operativa)</h2>
++              <p class="doc-section__description">Nuestra postura frente a reembolsos, plazos y soluciones alternativas.</p>
++              <ul class="doc-chip-list" aria-label="Lineamientos de cortesía">
++                <li>
++                  <span class="doc-chip" data-tone="warning">
++                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
++                      <path fill="currentColor" d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 5v6h-2V7zm0 8v2h-2v-2z" />
++                    </svg>
++                    No es obligación legal
++                  </span>
++                </li>
++                <li>
++                  <span class="doc-chip" data-tone="accent">
++                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
++                      <path fill="currentColor" d="M5 13.5 9.5 18 19 7l-1.5-1.5-8 8-3-3z" />
++                    </svg>
++                    Requiere evidencia completa
++                  </span>
++                </li>
++              </ul>
++              <div class="doc-grid">
++                <article class="doc-card">
++                  <h3 class="doc-card__title">Sin reembolsos automáticos</h3>
++                  <p>Compras completadas y entregadas según lo descrito no son reembolsables.</p>
++                </article>
++                <article class="doc-card">
++                  <h3 class="doc-card__title">Garantía por cortesía</h3>
++                  <p>Podemos ofrecer reembolso parcial/total o re-entrega si el comprador presenta evidencia válida y cumple todos los requisitos.</p>
++                </article>
++                <article class="doc-card">
++                  <h3 class="doc-card__title">Plazo para reclamar</h3>
++                  <p>48 horas naturales desde la entrega (o el plazo específico indicado en el producto). Reclamos fuera de plazo pueden ser denegados.</p>
++                </article>
++              </div>
++              <div class="doc-alert">
++                <strong>Las soluciones dependen de tu evidencia.</strong> Si falta la grabación, el comprobante de pago o el Transaction ID, no procederá ninguna cortesía. Documenta todo en una sola captura continua.
++              </div>
++              <div class="doc-emphasis">
++                <strong>Qué hacemos cuando aceptamos la reclamación:</strong> según el caso podemos realizar re-entrega, crédito en cuenta, reembolso parcial o total. La decisión final es a discreción del equipo de Dedos XYZ y no constituye obligación contractual.
++              </div>
++            </section>
++
++            <section class="doc-section" id="evidencia" data-animate="rise">
++              <h2 class="doc-section__title">V. Evidencia obligatoria: grabación y requisitos</h2>
++              <p class="doc-section__description">Sin evidencia completa no existe reclamación. Asegúrate de grabar todo en el momento.</p>
++              <ul class="doc-chip-list" aria-label="Claves de la evidencia">
++                <li>
++                  <span class="doc-chip" data-tone="accent">
++                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
++                      <path fill="currentColor" d="M4 6h3l1.2-2.4h7.6L17 6h3a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2zm8 3.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z" />
++                    </svg>
++                    Video continuo, sin cortes
++                  </span>
++                </li>
++                <li>
++                  <span class="doc-chip" data-tone="info">
++                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
++                      <path fill="currentColor" d="M6 2h9l5 5v15H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm8 1.5V8h4.5zM8 11h8v2H8zm0 4h6v2H8z" />
++                    </svg>
++                    Muestra pago, ID y entrega
++                  </span>
++                </li>
++                <li>
++                  <span class="doc-chip" data-tone="warning">
++                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
++                      <path fill="currentColor" d="M5 5h14v2H5zm2 4h10v2H7zm-2 4h14v2H5zm3 4h8v2H8z" />
++                    </svg>
++                    Audio claro y fecha visible
++                  </span>
++                </li>
++              </ul>
++              <div class="doc-alert">
++                <strong>Importante:</strong> Para que consideremos cualquier reclamación debes enviar una grabación (video o audio+pantalla) realizada en el momento de la compra y/o recepción.
++              </div>
++              <ul class="doc-list">
++                <li>Fecha y hora visibles o audibles.</li>
++                <li>Tu nombre completo y usuario/ID claramente identificables en la grabación.</li>
++                <li>Transaction ID visible o leído en voz alta.</li>
++                <li>Comprobante de pago mostrado en pantalla.</li>
++                <li>Evidencia clara del ítem recibido (chat, pantalla con el contenido, comprobante del servicio).</li>
++                <li>Texto hablado en la grabación (ver sección X).</li>
++                <li>Si hubo un middleman, incluir la conversación/interacción con ese middleman en la grabación.</li>
++              </ul>
++              <div class="doc-grid">
++                <article class="doc-card">
++                  <h3 class="doc-card__title">Formatos aceptados</h3>
++                  <p>MP4, MOV, MKV u otro estándar reproducible. La calidad debe ser legible. Si no se ve o se corta, la evidencia puede ser rechazada.</p>
++                </article>
++                <article class="doc-card">
++                  <h3 class="doc-card__title">Plazo y envío</h3>
++                  <p>Adjunta la grabación al ticket o correo dentro del plazo de 48 horas. Si no presentas la grabación con estos requisitos, la reclamación será denegada.</p>
++                </article>
++              </div>
++            </section>
++
++            <section class="doc-section" id="middlemen" data-animate="rise">
++              <h2 class="doc-section__title">VI. Middlemen y terceras partes</h2>
++              <p class="doc-section__description">Cómo procedemos cuando hay intermediarios.</p>
++              <div class="doc-card">
++                <span class="doc-chip" data-tone="warning">
++                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
++                    <path fill="currentColor" d="M12 2 2 7v2h20V7zm-8 9h2v9H4zm6 0h2v9h-2zm6 0h2v9h-2z" />
++                  </svg>
++                  Revisa al intermediario
++                </span>
++                <h3 class="doc-card__title">Responsabilidades</h3>
++                <p>Si la transacción fue a través de un middleman, la responsabilidad principal por su conducta recae entre comprador y dicho middleman. Dedos XYZ puede mediar por cortesía, pero no está obligada a reembolsar por estafas de middlemen externos salvo que exista prueba de responsabilidad directa de Dedos XYZ.</p>
++              </div>
++            </section>
++
++            <section class="doc-section" id="chargebacks" data-animate="rise">
++              <h2 class="doc-section__title">VII. Chargebacks y fraudes (operativo)</h2>
++              <p class="doc-section__description">Qué ocurre si abres un contracargo sin seguir el proceso correcto.</p>
++              <div class="doc-grid">
++                <article class="doc-card">
++                  <h3 class="doc-card__title">Proceso interno</h3>
++                  <p>Si abres un chargeback sin comunicar y seguir el proceso de reclamación, tu cuenta podrá ser bloqueada y negaremos asistencia.</p>
++                </article>
++                <article class="doc-card">
++                  <h3 class="doc-card__title">Investigación</h3>
++                  <p>Investigamos y documentamos irregularidades. En caso de chargeback injustificado, podemos negar la devolución y bloquear la cuenta.</p>
++                </article>
++              </div>
++            </section>
++
++            <section class="doc-section" id="entregas" data-animate="rise">
++              <h2 class="doc-section__title">VIII. Entregas fallidas, cancelaciones y datos incorrectos</h2>
++              <div class="doc-card">
++                <h3 class="doc-card__title">Datos correctos</h3>
++                <p>Si la entrega falla por datos incorrectos proporcionados por el comprador, no habrá reembolso.</p>
++              </div>
++              <div class="doc-card">
++                <h3 class="doc-card__title">Cancelaciones</h3>
++                <p>Solo son posibles antes de procesar la orden y a discreción de Dedos XYZ.</p>
++              </div>
++            </section>
++
++            <section class="doc-section" id="soporte" data-animate="rise">
++              <h2 class="doc-section__title">IX. Comunicación y soporte</h2>
++              <p class="doc-section__description">Cómo levantar un reclamo y qué datos necesitamos para ayudarte.</p>
++              <ul class="doc-chip-list" aria-label="Recordatorios de soporte">
++                <li>
++                  <span class="doc-chip" data-tone="warning">
++                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
++                      <path fill="currentColor" d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 5v5.59l3 3L14.59 17 11 13.41V7z" />
++                    </svg>
++                    Reclama dentro de 48 horas
++                  </span>
++                </li>
++                <li>
++                  <span class="doc-chip" data-tone="info">
++                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
++                      <path fill="currentColor" d="M4 4h16v2H4zm0 4h16v2H4zm0 4h10v2H4zm0 4h8v2H4z" />
++                    </svg>
++                    Junta evidencia en un solo ticket
++                  </span>
++                </li>
++                <li>
++                  <span class="doc-chip" data-tone="accent">
++                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
++                      <path fill="currentColor" d="M4 5h16v10H7l-3 3zm4 4v2h8V9z" />
++                    </svg>
++                    Respuesta por correo y Discord
++                  </span>
++                </li>
++              </ul>
++              <div class="doc-card">
++                <h3 class="doc-card__title">Reclamos</h3>
++                <p>Envía un correo a <a href="mailto:soporte@dedos.xyz">soporte@dedos.xyz</a> con asunto “RECLAMACIÓN [Transaction ID]”. Adjunta la grabación y toda la evidencia (capturas, chats, comprobantes).</p>
++              </div>
++              <div class="doc-card">
++                <h3 class="doc-card__title">Información necesaria</h3>
++                <ul class="doc-list">
++                  <li>Nombre completo.</li>
++                  <li>Usuario/ID.</li>
++                  <li>Transaction ID.</li>
++                  <li>Descripción breve y fecha/hora de lo ocurrido.</li>
++                </ul>
++              </div>
++            </section>
++
++            <section class="doc-section" id="checkout" data-animate="rise">
++              <h2 class="doc-section__title">X. Versión corta para el checkout</h2>
++              <p class="doc-section__description">Texto de aceptación obligatorio en el checkout.</p>
++              <div class="doc-quote">He leído y acepto las condiciones de Dedos XYZ: entiendo que Dedos XYZ es un servicio informal, no emite facturas por defecto, no ofrece reembolsos automáticos y que para cualquier reclamación debo presentar la grabación y evidencia requerida. Acepto los Términos.</div>
++            </section>
++
++            <section class="doc-section" id="grabacion" data-animate="rise">
++              <h2 class="doc-section__title">XI. Texto exacto para la grabación</h2>
++              <p class="doc-section__description">El cliente debe leerlo en voz alta durante la grabación.</p>
++              <div class="doc-quote">“Yo, [NOMBRE COMPLETO], con usuario [USUARIO/ID], confirmo que compré [NOMBRE DEL PRODUCTO] por [MONTO] con Transaction ID [ID]. He recibido [DESCRIBIR LO RECIBIDO]. Fecha y hora: [FECHA Y HORA]. Declaro que la información que proporciono es veraz.”</div>
++              <div class="doc-card">
++                <h3 class="doc-card__title">Qué mostrar en pantalla</h3>
++                <ul class="doc-list">
++                  <li>Comprobante de pago.</li>
++                  <li>Ventana o chat donde aparece el ítem.</li>
++                  <li>Tu perfil/ID si aplica.</li>
++                </ul>
++              </div>
++            </section>
++
++            <section class="doc-section" id="faq" data-animate="rise">
++              <h2 class="doc-section__title">XII. FAQ rápida</h2>
++              <div class="doc-faq">
++                <article class="doc-faq__item">
++                  <h3 class="doc-faq__question">¿Qué datos guardan?</h3>
++                  <p>Solo almacenamos información operativa: Transaction ID, alias/usuario y comprobantes asociados al pedido. No registramos datos sensibles y puedes solicitar la depuración cuando cierres tu caso.</p>
++                </article>
++                <article class="doc-faq__item">
++                  <h3 class="doc-faq__question">¿Emiten factura?</h3>
++                  <p>No por defecto. Si la necesitas, avísanos antes de comprar y lo evaluamos.</p>
++                </article>
++                <article class="doc-faq__item">
++                  <h3 class="doc-faq__question">¿Puedo pedir reembolso si me estafan?</h3>
++                  <p>Primero debes tener la grabación y evidencia; si cumples requisitos, evaluamos el caso y podemos ofrecer solución por cortesía.</p>
++                </article>
++                <article class="doc-faq__item">
++                  <h3 class="doc-faq__question">¿Qué pasa si el middleman me estafa?</h3>
++                  <p>Es responsabilidad entre tú y el middleman; podemos ayudar a mediar pero no estamos obligados a reembolsar.</p>
++                </article>
++                <article class="doc-faq__item">
++                  <h3 class="doc-faq__question">¿Puedo hacer chargeback?</h3>
++                  <p>Puedes, pero si no seguiste el proceso de reclamación y tu evidencia es insuficiente, tu cuenta podrá quedar bloqueada.</p>
++                </article>
++              </div>
++            </section>
++
++            <section class="doc-section" id="notas" data-animate="rise">
++              <h2 class="doc-section__title">XIII. Notas finales (operativas)</h2>
++              <div class="doc-card">
++                <p>Dedos XYZ es informal y operativo: priorizamos soluciones prácticas y rápidas, pero necesitamos pruebas.</p>
++              </div>
++              <div class="doc-card">
++                <ul class="doc-highlight-list">
++                  <li>Guarda siempre Transaction ID.</li>
++                  <li>Conserva capturas y chats relevantes.</li>
++                  <li>Protege tus datos personales y comparte solo lo indispensable.</li>
++                  <li>Haz la grabación en el momento de la compra y entrega.</li>
++                  <li>Sin pruebas no hay nada que hacer.</li>
++                </ul>
++              </div>
++            </section>
++          </div>
++        </div>
++
++        <div class="doc-footer-card" data-animate="fade">
++          <div class="doc-footer-card__title">Checklist express antes de comprar</div>
++          <ul class="doc-highlight-list">
++            <li>Confirma que el producto es legal y permitido.</li>
++            <li>Define el método de pago y prepara tu grabación.</li>
++            <li>Ten listo tu usuario, Transaction ID y correo de contacto.</li>
++            <li>Evita compartir datos sensibles en chats o tickets.</li>
++            <li>Lee y acepta el texto del checkout.</li>
++          </ul>
++          <div class="doc-footer-card__actions">
++            <a class="btn btn--primary" href="https://discord.gg/dedos" data-discord-link>Entrar a Discord</a>
++            <a class="btn btn--ghost" href="index.html#faq">Revisar preguntas frecuentes</a>
++          </div>
+         </div>
+-        <article class="tos-card" data-animate="rise">
+-          <p><strong class="text-white">Reembolsos:</strong> las solicitudes se revisan caso por caso. Comparte evidencia dentro del ticket para resolverlo en menos de 48 horas.</p>
+-          <p><strong class="text-white">Tiempos:</strong> la mayoría de pedidos se procesan el mismo día. Los servicios con espera (ej. Robux por grupo) pueden tardar según políticas de Roblox.</p>
+-          <p><strong class="text-white">Garantías:</strong> mantenemos registros de pago y entrega. Si algo falla, compensamos con saldo o reposición equivalente.</p>
+-          <p><strong class="text-white">Conducta:</strong> prohibido revender productos robados, compartir material ilegal o acosar al staff. Nos reservamos el derecho de negar servicio.</p>
+-          <p><strong class="text-white">Contacto:</strong> abre un ticket en Discord o escribe al correo soporte@dedos.xyz.</p>
+-        </article>
+       </div>
+     </section>
+   </main>
+ 
+   <footer class="page-footer">
+     <div class="shell">
+       <div class="page-footer__inner">
+         <div>© <span data-current-year></span> Dedos Store. Todos los derechos reservados.</div>
+         <div class="page-footer__links">
+           <a href="robux.html">Planes Robux</a>
+           <a href="https://discord.gg/dedos" data-discord-link>Discord</a>
+         </div>
+       </div>
+     </div>
+   </footer>
+ 
+   <script type="module" src="assets/js/main.js"></script>
+ </body>
+ </html>
+ 
+EOF
+)
