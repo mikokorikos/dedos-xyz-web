@@ -924,6 +924,12 @@ body.nav-open .mobile-drawer {
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
 }
 
+.plan-grid {
+  display: grid;
+  gap: clamp(1.8rem, 4vw, 2.6rem);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+}
+
 .card {
   position: relative;
   border-radius: var(--radius-md);
@@ -1071,28 +1077,36 @@ body.nav-open .mobile-drawer {
 .plan-card {
   position: relative;
   border-radius: var(--radius-lg);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: rgba(8, 8, 18, 0.72);
-  backdrop-filter: blur(18px);
-  padding: clamp(1.6rem, 3.5vw, 2.2rem);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: linear-gradient(180deg, rgba(10, 10, 24, 0.85), rgba(30, 30, 56, 0.62));
+  backdrop-filter: blur(20px);
+  padding: clamp(1.7rem, 3.6vw, 2.35rem);
   display: flex;
   flex-direction: column;
-  gap: 1.1rem;
-  box-shadow: var(--shadow-md);
+  gap: clamp(1.1rem, 2.5vw, 1.6rem);
+  box-shadow: 0 28px 68px rgba(5, 5, 16, 0.54);
   transition: transform 0.35s var(--transition-emphasized), border-color 0.3s ease, box-shadow 0.3s ease;
-  min-height: 620px;
+  min-height: 480px;
+  overflow: hidden;
+}
+
+.plan-card::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  pointer-events: none;
+  opacity: 0.75;
 }
 
 .plan-card:hover {
   transform: translateY(-6px);
-  border-color: rgba(255, 255, 255, 0.24);
-  box-shadow: 0 32px 74px rgba(6, 6, 20, 0.6);
+  border-color: rgba(255, 255, 255, 0.26);
+  box-shadow: 0 36px 84px rgba(5, 5, 16, 0.62);
 }
 
 .plan-card__badge {
-  position: absolute;
-  right: 1.8rem;
-  top: 1.8rem;
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
@@ -1105,6 +1119,7 @@ body.nav-open .mobile-drawer {
   background: rgba(255, 255, 255, 0.08);
   color: var(--color-text-primary);
   backdrop-filter: blur(8px);
+  align-self: flex-start;
 }
 
 .plan-card__badge[data-tone="mint"] { background: rgba(125, 249, 230, 0.16); border-color: rgba(125, 249, 230, 0.35); color: #e6fffb; }
@@ -1112,7 +1127,15 @@ body.nav-open .mobile-drawer {
 .plan-card__badge[data-tone="cyan"] { background: rgba(0, 229, 255, 0.16); border-color: rgba(0, 229, 255, 0.35); color: #ddfbff; }
 .plan-card__badge[data-tone="pink"] { background: rgba(255, 113, 206, 0.16); border-color: rgba(255, 113, 206, 0.35); color: #ffd9f2; }
 
+
 .plan-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: clamp(1rem, 3vw, 2rem);
+}
+
+.plan-card__identity {
   display: flex;
   align-items: flex-start;
   gap: 1rem;
@@ -1150,9 +1173,11 @@ body.nav-open .mobile-drawer {
 }
 
 .plan-card__pricing {
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
   gap: 0.35rem;
-  align-items: flex-start;
+  text-align: right;
 }
 
 .plan-card__label {
@@ -1171,20 +1196,6 @@ body.nav-open .mobile-drawer {
 .plan-card__meta {
   font-size: 0.9rem;
   color: var(--color-text-muted);
-}
-
-.plan-card__chip {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.4rem 0.85rem;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  font-size: 0.78rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  background: rgba(255, 255, 255, 0.06);
-  color: rgba(226, 232, 240, 0.85);
-  width: fit-content;
 }
 
 .plan-card__description {
@@ -1312,10 +1323,6 @@ body.nav-open .mobile-drawer {
 .plan-card[data-tone="pink"] .plan-card__icon { background: linear-gradient(135deg, rgba(255,113,206,0.22), rgba(255,113,206,0.08)); color: #ffd9f2; }
 .plan-card[data-tone="cyan"] .plan-card__icon { background: linear-gradient(135deg, rgba(0,229,255,0.22), rgba(0,229,255,0.08)); color: #ddfbff; }
 .plan-card[data-tone="violet"] .plan-card__icon { background: linear-gradient(135deg, rgba(185,103,255,0.22), rgba(185,103,255,0.08)); color: #efe1ff; }
-
-.plan-card[data-tone="pink"] .plan-card__chip { border-color: rgba(255,113,206,0.35); }
-.plan-card[data-tone="cyan"] .plan-card__chip { border-color: rgba(0,229,255,0.35); }
-.plan-card[data-tone="violet"] .plan-card__chip { border-color: rgba(185,103,255,0.35); }
 
 .callout {
   position: relative;
