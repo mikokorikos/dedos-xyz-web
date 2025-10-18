@@ -154,6 +154,10 @@ textarea {
   scroll-margin-top: clamp(4.5rem, 14vw, 6.25rem);
 }
 
+.section.section--compact {
+  padding-block: clamp(2.8rem, 6vw, 3.8rem);
+}
+
 .section__head {
   margin-bottom: clamp(2rem, 6vw, 3.75rem);
   max-width: 48rem;
@@ -1035,6 +1039,14 @@ body.nav-open .mobile-drawer {
   background: rgba(10, 10, 24, 0.65);
 }
 
+.grid-cards + .card--notice {
+  margin-top: clamp(1.6rem, 3vw, 2.6rem);
+}
+
+.card--notice .chip-stack {
+  margin-bottom: 0.25rem;
+}
+
 .card--notice .card__body {
   flex: initial;
   margin: 0;
@@ -1315,7 +1327,7 @@ body.nav-open .mobile-drawer {
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 28px 52px rgba(5, 10, 28, 0.45);
   overflow: hidden;
 }
 
