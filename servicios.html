@@ -87,24 +87,23 @@
     <section class="section">
       <div class="shell">
         <div class="section__head" data-align="center" data-animate="fade">
+          <div class="chip-stack" role="presentation">
+            <span class="chip" data-tone="violet"><i data-lucide="wallet" aria-hidden="true"></i> Pago manual</span>
+            <span class="chip" data-tone="mint"><i data-lucide="badge-check" aria-hidden="true"></i> Evidencia en ticket</span>
+            <span class="chip" data-tone="pink"><i data-lucide="clock" aria-hidden="true"></i> MXN ↔ USD vivo</span>
+          </div>
           <h2 class="section__title">Catálogo de servicios</h2>
           <p class="section__lead">Consulta precios en MXN y equivalencia en USD calculada con el tipo de cambio del día. Cada plan requiere evidencia en video y Transaction ID.</p>
         </div>
         <div class="grid-cards" data-digital-services></div>
         <div class="card card--notice" data-animate="fade">
+          <div class="chip-stack" role="presentation">
+            <span class="chip" data-tone="mint"><i data-lucide="refresh-cw" aria-hidden="true"></i> Tipo de cambio vivo</span>
+            <span class="chip" data-tone="cyan"><i data-lucide="shield-check" aria-hidden="true"></i> Confirma en ticket</span>
+          </div>
           <p class="card__body" data-exchange-notice>Obteniendo tipo de cambio…</p>
           <p class="card__body">Verificamos MXN → USD con Open&nbsp;ER&nbsp;API. Los valores pueden variar ligeramente hasta que confirmes en tu ticket.</p>
         </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="shell">
-        <div class="section__head" data-align="center" data-animate="fade">
-          <h2 class="section__title">Cómo funciona</h2>
-          <p class="section__lead">Siempre trabajamos con evidencias, tickets y comunicación clara. Mantén tu Transaction ID a la mano.</p>
-        </div>
-        <div class="grid-cards" data-service-steps></div>
       </div>
     </section>
 
@@ -120,6 +119,18 @@
             <a class="btn btn--primary" href="https://discord.gg/dedos" data-discord-link>Hablar con el staff</a>
             <a class="btn btn--secondary" href="mailto:soporte@dedos.xyz"><i data-lucide="mail" aria-hidden="true"></i> Escribir correo</a>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--compact">
+      <div class="shell">
+        <div class="consent-banner" data-animate="fade">
+          <div class="chip-stack" role="presentation">
+            <span class="chip" data-tone="pink"><i data-lucide="file-text" aria-hidden="true"></i> TOS Dedos.xyz</span>
+            <span class="chip" data-tone="violet"><i data-lucide="handshake" aria-hidden="true"></i> Compra informal</span>
+          </div>
+          <p class="consent-banner__text">Al comprar aceptas las <a href="tos.html">condiciones de Dedos.xyz</a>. Si tienes dudas revísalas antes de pagar.</p>
         </div>
       </div>
     </section>
