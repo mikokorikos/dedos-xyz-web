@@ -302,6 +302,9 @@ const formatExchangeNotice = (rate, updatedAt) => {
   return `Tipo de cambio: 1 MXN = ${rate.toFixed(4)} USD${formatted ? ` · Actualizado ${formatted} (UTC)` : ''}`;
 };
 
+const MX_FORMATTER = new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' });
+const USD_FORMATTER = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+
 const formatPriceLabels = (plan, rate) => {
   if (typeof plan?.priceMXN === 'number') {
     const usdValue = typeof rate === 'number' ? plan.priceMXN * rate : null;
@@ -353,6 +356,33 @@ const PLAN_ICON_SVGS = {
   gift: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4c-.8-1.4-2.4-2-3.8-1.4C6.7 3 6 4.2 6 5.5c0 .2 0 .3.1.5H5a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2v6a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3v-6a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-1c.1-.2.1-.3.1-.5 0-1.3-.7-2.5-2.2-3C14.4 2 12.8 2.6 12 4Zm2.3.9c.6.2.7.6.7.6 0 .3-.2.5-.4.5H12.7c.3-.6.6-1 .8-1.1.2-.2.4-.1.8 0ZM9 4.9c.4-.1.6-.2.8 0 .2.1.5.5.8 1.1H9.4c-.2 0-.4-.2-.4-.5 0 0 .1-.4.7-.6ZM5 9V8h6v2H5Zm8 9H9a1 1 0 0 1-1-1v-5h5v6Zm2 0v-6h5v5a1 1 0 0 1-1 1h-4ZM19 8v1h-6V8h6Z" fill="currentColor"></path></svg>',
   pass: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7.2 4.1 2.3-2.3a2 2 0 0 1 2.8 0l1.7 1.7 1.2-1.2a2 2 0 0 1 2.8 2.8l-1.2 1.2 1.7 1.7a2 2 0 0 1 0 2.8l-2.3 2.3-9-9Zm-4.2 6a2 2 0 0 1 2.8 0l7 7a2 2 0 0 1 0 2.8l-2.3 2.3a2 2 0 0 1-2.8 0l-7-7a2 2 0 0 1 0-2.8l2.3-2.3Z" fill="currentColor"></path></svg>'
 };
+
+const ROBUX_POLICIES = [
+  {
+    title: 'Métodos de pago disponibles',
+    description: 'Aceptamos PayPal, transferencia SPEI, depósitos OXXO y Litecoin. Confirma disponibilidad antes de enviar dinero.',
+    icon: 'wallet',
+    tone: 'mint'
+  },
+  {
+    title: 'Reembolsos = cortesía',
+    description: 'Solo evaluamos reembolso o reentrega si presentas grabación completa, Transaction ID y reclamas dentro de 48 horas.',
+    icon: 'shield-alert',
+    tone: 'violet'
+  },
+  {
+    title: 'Privacidad operativa',
+    description: 'No recabamos datos sensibles automáticamente. Si compartes información adicional en tu ticket, asumes su manejo y difusión.',
+    icon: 'lock',
+    tone: 'cyan'
+  },
+  {
+    title: 'Sin afiliación con Roblox',
+    description: 'Dedos.xyz no es socio ni representante oficial. Los nombres de marca solo identifican el producto que compras.',
+    icon: 'badge-alert',
+    tone: 'pink'
+  }
+];
 
 const DIGITAL_SERVICES = [
   {
@@ -439,6 +469,27 @@ const DIGITAL_SERVICES = [
   }
 ];
 
+const SERVICE_STEPS = [
+  {
+    title: 'Abre ticket y selecciona plan',
+    description: 'Entra a Discord, abre un ticket y define el servicio y duración. Nuestro staff confirma disponibilidad y tipo de cambio.',
+    icon: 'message-circle',
+    tone: 'mint'
+  },
+  {
+    title: 'Entrega evidencia y Transaction ID',
+    description: 'Comparte grabación en vivo, comprobante de pago y Transaction ID. Sin esos datos no hay soporte.',
+    icon: 'camera',
+    tone: 'violet'
+  },
+  {
+    title: 'Recibe credenciales y seguimiento',
+    description: 'Te entregamos la cuenta, key o activación. Seguimos tu caso hasta confirmar que todo funcione.',
+    icon: 'handshake',
+    tone: 'pink'
+  }
+];
+
 const DISCORD_OFFERS = [
   {
     title: 'Server Boost 1 mes',
@@ -477,6 +528,33 @@ const DECORATION_MATRIX = [
   { officialUSD: 8.49, ourUSD: 4.05 },
   { officialUSD: 9.99, ourUSD: 5 },
   { officialUSD: 11.99, ourUSD: 5.5 }
+];
+
+const DISCORD_POLICIES = [
+  {
+    title: 'Pagos aceptados',
+    description: 'PayPal, transferencia SPEI, depósitos OXXO y Litecoin. Confirma método antes de mandar comprobante.',
+    icon: 'wallet',
+    tone: 'mint'
+  },
+  {
+    title: 'Reembolsos como cortesía',
+    description: 'Solo aplican si cumples con la grabación requerida y reportas dentro de 48 horas desde la entrega.',
+    icon: 'alert-triangle',
+    tone: 'violet'
+  },
+  {
+    title: 'Privacidad del ticket',
+    description: 'No almacenamos datos sensibles por defecto. Si compartes información personal, hazlo bajo tu responsabilidad y de forma controlada.',
+    icon: 'lock-keyhole',
+    tone: 'cyan'
+  },
+  {
+    title: 'No afiliados a Discord',
+    description: 'No representamos a Discord ni a otras marcas. Los nombres se usan para identificar los productos que vendemos.',
+    icon: 'shield-off',
+    tone: 'pink'
+  }
 ];
 
 const ROBUX_PLANS = [
@@ -702,6 +780,198 @@ const renderDecorationMatrix = (rate) => {
   observeReveal();
 };
 
+const renderRobuxPolicies = () => {
+  const container = doc.querySelector('[data-robux-policies]');
+  if (!container) return;
+  container.innerHTML = '';
+  ROBUX_POLICIES.forEach((policy, index) => {
+    const node = createElement(`
+      <article class="card tone--${policy.tone ?? 'mint'}" data-animate="rise">
+        <div class="card__header">
+          <span class="card__icon" aria-hidden="true"><i data-lucide="${policy.icon}"></i></span>
+          <div>
+            <h3 class="card__title">${policy.title}</h3>
+          </div>
+        </div>
+        <p class="card__body">${policy.description}</p>
+      </article>
+    `);
+    node.style.setProperty('--reveal-delay', `${index * 0.08}s`);
+    container.appendChild(node);
+  });
+  applyIcons();
+  observeReveal();
+};
+
+const renderServiceSteps = () => {
+  const container = doc.querySelector('[data-service-steps]');
+  if (!container) return;
+  container.innerHTML = '';
+  SERVICE_STEPS.forEach((step, index) => {
+    const node = createElement(`
+      <article class="card card--step tone--${step.tone ?? 'mint'}" data-animate="rise">
+        <div class="card__header">
+          <span class="card__icon" aria-hidden="true"><i data-lucide="${step.icon}"></i></span>
+          <div>
+            <h3 class="card__title">${step.title}</h3>
+          </div>
+        </div>
+        <p class="card__body">${step.description}</p>
+      </article>
+    `);
+    node.style.setProperty('--reveal-delay', `${index * 0.08}s`);
+    container.appendChild(node);
+  });
+  applyIcons();
+  observeReveal();
+};
+
+const renderRobuxPage = async () => {
+  const planContainer = doc.querySelector('[data-robux-plans]');
+  const notice = doc.querySelector('[data-exchange-notice]');
+  let rateInfo = { rate: null, updatedAt: null };
+
+  try {
+    rateInfo = await fetchExchangeRate();
+  } catch (error) {
+    console.error('Exchange fetch failed', error);
+  }
+
+  renderDiscordOffers(rateInfo.rate);
+  renderDecorationMatrix(rateInfo.rate);
+
+  if (notice) {
+    notice.textContent = formatExchangeNotice(rateInfo.rate, rateInfo.updatedAt);
+  }
+
+  renderValueHighlights();
+  renderPurchaseSteps();
+  renderRobuxPolicies();
+  applyIcons();
+  observeReveal();
+};
+
+const renderDigitalServicesPage = async () => {
+  const servicesContainer = doc.querySelector('[data-digital-services]');
+  const notice = doc.querySelector('[data-exchange-notice]');
+  let rateInfo = { rate: null, updatedAt: null };
+
+  try {
+    rateInfo = await fetchExchangeRate();
+  } catch (error) {
+    console.error('Exchange fetch failed', error);
+  }
+
+  if (servicesContainer) {
+    servicesContainer.innerHTML = '';
+    DIGITAL_SERVICES.forEach((service, index) => {
+      const priceList = createPriceListMarkup(service.plans, rateInfo.rate);
+      const notes = createNotesList(service.notes);
+      const node = createElement(`
+        <article class="plan-card" data-animate="rise" data-tone="${service.tone ?? 'mint'}">
+          <header class="plan-card__header">
+            <div class="plan-card__icon" data-plan-icon><i data-lucide="${service.icon}"></i></div>
+            <div class="plan-card__headings">
+              <h3 class="plan-card__title">${service.title}</h3>
+              ${service.subtitle ? `<p class="plan-card__subtitle">${service.subtitle}</p>` : ''}
+            </div>
+          </header>
+          <p class="plan-card__description">${service.description}</p>
+          ${priceList}
+          ${notes}
+        </article>
+      `);
+      node.style.setProperty('--reveal-delay', `${index * 0.08}s`);
+      servicesContainer.appendChild(node);
+    });
+  }
+
+  if (notice) {
+    notice.textContent = formatExchangeNotice(rateInfo.rate, rateInfo.updatedAt);
+  }
+
+  renderServiceSteps();
+  applyIcons();
+  observeReveal();
+};
+
+const renderDiscordOffers = (rate) => {
+  const container = doc.querySelector('[data-discord-offers]');
+  if (!container) return;
+  container.innerHTML = '';
+  DISCORD_OFFERS.forEach((offer, index) => {
+    const priceList = createPriceListMarkup(offer.plans, rate);
+    const notes = createNotesList(offer.notes);
+    const node = createElement(`
+      <article class="plan-card" data-animate="rise" data-tone="${offer.tone ?? 'mint'}">
+        <header class="plan-card__header">
+          <div class="plan-card__icon" data-plan-icon><i data-lucide="${offer.icon}"></i></div>
+          <div class="plan-card__headings">
+            <h3 class="plan-card__title">${offer.title}</h3>
+            ${offer.subtitle ? `<p class="plan-card__subtitle">${offer.subtitle}</p>` : ''}
+          </div>
+        </header>
+        <p class="plan-card__description">${offer.description}</p>
+        ${priceList}
+        ${notes}
+      </article>
+    `);
+    node.style.setProperty('--reveal-delay', `${index * 0.08}s`);
+    container.appendChild(node);
+  });
+};
+
+const renderDecorationMatrix = (rate) => {
+  const container = doc.querySelector('[data-decoration-matrix]');
+  if (!container) return;
+  container.innerHTML = '';
+  DECORATION_MATRIX.forEach((tier, index) => {
+    const officialUsd = USD_FORMATTER.format(tier.officialUSD);
+    const ourUsd = USD_FORMATTER.format(tier.ourUSD);
+    const ourMx = typeof rate === 'number' && rate > 0 ? `≈ ${MX_FORMATTER.format(tier.ourUSD / rate)}` : 'Confirma MXN en ticket';
+    const row = createElement(`
+      <div class="matrix__row" data-animate="rise">
+        <div class="matrix__cell">
+          <span class="matrix__eyebrow">Precio oficial</span>
+          <strong>${officialUsd}</strong>
+          <span class="matrix__note">Referencia Discord</span>
+        </div>
+        <div class="matrix__cell matrix__cell--accent">
+          <span class="matrix__eyebrow">Dedos.xyz</span>
+          <strong>${ourUsd}</strong>
+          <span class="matrix__note">${ourMx}</span>
+        </div>
+      </div>
+    `);
+    row.style.setProperty('--reveal-delay', `${index * 0.06}s`);
+    container.appendChild(row);
+  });
+  observeReveal();
+};
+
+const renderDiscordPolicies = () => {
+  const container = doc.querySelector('[data-discord-policies]');
+  if (!container) return;
+  container.innerHTML = '';
+  DISCORD_POLICIES.forEach((policy, index) => {
+    const node = createElement(`
+      <article class="card tone--${policy.tone ?? 'mint'}" data-animate="rise">
+        <div class="card__header">
+          <span class="card__icon" aria-hidden="true"><i data-lucide="${policy.icon}"></i></span>
+          <div>
+            <h3 class="card__title">${policy.title}</h3>
+          </div>
+        </div>
+        <p class="card__body">${policy.description}</p>
+      </article>
+    `);
+    node.style.setProperty('--reveal-delay', `${index * 0.08}s`);
+    container.appendChild(node);
+  });
+  applyIcons();
+  observeReveal();
+};
+
 const renderDiscordServicesPage = async () => {
   const notice = doc.querySelector('[data-exchange-notice]');
   let rateInfo = { rate: null, updatedAt: null };
@@ -714,6 +984,7 @@ const renderDiscordServicesPage = async () => {
 
   renderDiscordOffers(rateInfo.rate);
   renderDecorationMatrix(rateInfo.rate);
+  renderDiscordPolicies();
 
   if (notice) {
     notice.textContent = formatExchangeNotice(rateInfo.rate, rateInfo.updatedAt);
