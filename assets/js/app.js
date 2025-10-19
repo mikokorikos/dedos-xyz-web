@@ -92,80 +92,121 @@
   const CATALOG = [
     {
       title: 'Robux',
-      copy: 'Carga segura con evidencia visual en vivo.',
+      copy: '1,000 Robux desde 125 MXN con seguimiento en vivo y evidencias grabadas.',
       badges: [
         { label: 'Gaming', icon: 'gamepad-2', tone: 'cyan' },
         { label: 'Best seller', icon: 'flame', tone: 'pink' }
       ],
-      cta: 'Consultar',
+      cta: 'Ver planes',
+      href: 'robux.html',
       icon: 'gamepad-2',
       tone: 'cyan'
     },
     {
       title: 'Discord Nitro',
-      copy: 'Planes mensual y anual con renovaciones garantizadas.',
+      copy: 'Nitro, boosts y decoraciones legales con precios en MXN y USD.',
       badges: [
         { label: 'Discord', icon: 'discord', tone: 'violet' },
         { label: 'Popular', icon: 'sparkles', tone: 'pink' }
       ],
-      cta: 'Consultar',
+      cta: 'Ver catálogo',
+      href: 'discord.html',
       icon: 'bolt',
       tone: 'violet'
     },
     {
       title: 'Decoraciones Discord',
-      copy: 'Banners, iconos y packs premium para tu comunidad.',
+      copy: 'Ahorra frente al precio oficial en banners y efectos premium.',
       badges: [
         { label: 'Estilo', icon: 'wand-2', tone: 'pink' },
         { label: 'Discord', icon: 'discord', tone: 'violet' }
       ],
-      cta: 'Consultar',
+      cta: 'Comparar precios',
+      href: 'discord.html#decoraciones',
       icon: 'palette',
       tone: 'pink'
     },
     {
-      title: 'Servicios',
-      copy: 'ChatGPT, Spotify, YouTube, Crunchyroll y más en un solo lugar.',
+      title: 'Servicios digitales',
+      copy: 'Spotify, YouTube, Crunchyroll, ChatGPT Plus y más con activación guiada.',
       badges: [
         { label: 'Digital', icon: 'grid', tone: 'mint' },
         { label: 'Oferta', icon: 'badge-percent', tone: 'pink' }
       ],
-      cta: 'Consultar',
+      cta: 'Ver servicios',
+      href: 'servicios.html',
       icon: 'grid',
       tone: 'mint'
     },
     {
-      title: 'VPNs',
-      copy: 'Proveedores verificados para proteger tu identidad.',
+      title: 'VPNs & seguridad',
+      copy: 'NordVPN y más proveedores premium con soporte humano.',
       badges: [{ label: 'Privacidad', icon: 'shield-check', tone: 'cyan' }],
       cta: 'Consultar',
+      href: 'servicios.html#vpn',
       icon: 'shield-check',
       tone: 'cyan'
     },
     {
-      title: 'Boosts',
-      copy: 'Sube tu servidor al instante con evidencia del proceso.',
+      title: 'Boosts de servidor',
+      copy: 'Sistema automatizado para subir de nivel tu comunidad en minutos.',
       badges: [
         { label: 'Discord', icon: 'discord', tone: 'violet' },
         { label: 'Rápido', icon: 'zap', tone: 'cyan' }
       ],
-      cta: 'Consultar',
+      cta: 'Ver paquetes',
+      href: 'discord.html',
       icon: 'rocket',
       tone: 'violet'
     }
   ];
 
   const SERVICES = [
-    { title: 'Middleman moderno', copy: 'Escrow transparente con verificación de ambas partes.', icon: 'handshake', tone: 'mint' },
-    { title: 'Soporte 24/7', copy: 'Staff rotativo y automatizaciones para atención inmediata.', icon: 'headphones', tone: 'cyan' },
-    { title: 'Entregas ágiles', copy: 'Promedio de minutos con seguimiento en vivo.', icon: 'gauge', tone: 'violet' }
+    {
+      title: 'Middleman moderno',
+      copy: 'Abrimos ticket, verificamos ambas partes y documentamos cada pago.',
+      icon: 'handshake',
+      tone: 'mint'
+    },
+    {
+      title: 'Soporte 24/7',
+      copy: 'Equipo rotativo más bots para que siempre tengas respuesta.',
+      icon: 'headphones',
+      tone: 'cyan'
+    },
+    {
+      title: 'Evidencia obligatoria',
+      copy: 'Grabaciones, Transaction ID y capturas para mantener todo claro.',
+      icon: 'badge-check',
+      tone: 'violet'
+    }
   ];
 
   const WHY = [
-    { title: 'Confianza real', copy: '+55K pedidos con calificación 4.9/5.', icon: 'shield-check', tone: 'mint' },
-    { title: 'Velocidad', copy: 'Procesos optimizados + automatización real.', icon: 'zap', tone: 'cyan' },
-    { title: 'Transparencia', copy: 'TOS claro y estados visibles en todo momento.', icon: 'badge-check', tone: 'violet' },
-    { title: 'Atención humana', copy: 'Soporte con criterio y acompañamiento 1:1.', icon: 'sparkles', tone: 'pink' }
+    {
+      title: 'Confianza real',
+      copy: '+55K pedidos completados con calificación 4.9/5.',
+      icon: 'shield-check',
+      tone: 'mint'
+    },
+    {
+      title: 'Precios claros',
+      copy: 'Mostramos MXN y USD usando tipo de cambio en vivo.',
+      icon: 'wallet',
+      tone: 'cyan'
+    },
+    {
+      title: 'Transparencia legal',
+      copy: 'Sin afiliación con las marcas; todo explicado en los TOS.',
+      icon: 'file-text',
+      tone: 'violet'
+    },
+    {
+      title: 'Atención humana',
+      copy: 'Acompañamiento 1:1 durante compra, entrega y soporte.',
+      icon: 'sparkles',
+      tone: 'pink'
+    }
   ];
 
   const FAQ = [
@@ -312,7 +353,10 @@
       ? `<div class="card__meta">${item.badges.map((badge) => createBadgeMarkup(badge)).join('')}</div>`
       : '';
     const footer = withCta && item.cta
-      ? `<div class="card__footer"><a class="btn btn--secondary" href="https://discord.gg/${body.dataset.discordInvite || 'dedos'}" data-discord-link>${item.cta}</a></div>`
+      ? `<div class="card__footer">${item.href
+          ? `<a class="btn btn--secondary" href="${item.href}">${item.cta}</a>`
+          : `<a class="btn btn--secondary" href="https://discord.gg/${body.dataset.discordInvite || 'dedos'}" data-discord-link>${item.cta}</a>`
+        }</div>`
       : '';
     const subtitle = item.subtitle ? `<p class="card__subtitle">${item.subtitle}</p>` : '';
     const copy = item.copy ? `<p class="card__body">${item.copy}</p>` : '';
@@ -714,38 +758,43 @@
 
   const renderPlanCard = (plan, priceLabels, index) => {
     const highlight = plan.highlight
-      ? `<span class="plan-card__badge" data-tone="${plan.highlight.tone}">${plan.highlight.label}</span>`
+      ? `<span class="catalog-card__badge" data-tone="${plan.highlight.tone}">${plan.highlight.label}</span>`
       : '';
     const extras = plan.extras?.length
-      ? `<section class="plan-card__section"><h4>Extras</h4><ul>${plan.extras.map((extra) => `<li>${extra}</li>`).join('')}</ul></section>`
+      ? `<section class="catalog-card__section"><h4>Extras incluidos</h4><ul class="catalog-card__bullets">${plan.extras
+          .map((extra) => `<li>${extra}</li>`)
+          .join('')}</ul></section>`
       : '';
     return createElement(`
-      <article class="plan-card" data-animate="rise" data-tone="${plan.tone}">
+      <article class="catalog-card" data-animate="rise" data-tone="${plan.tone}">
         ${highlight}
-        <header class="plan-card__header">
-          <span class="plan-card__icon" aria-hidden="true">${PLAN_ICON_SVGS[plan.icon] || ''}</span>
-          <div>
-            <h3 class="plan-card__title">${plan.title}</h3>
-            <p class="plan-card__subtitle">${plan.tagline}</p>
+        <header class="catalog-card__header">
+          <div class="catalog-card__identity">
+            <span class="catalog-card__icon" aria-hidden="true">${PLAN_ICON_SVGS[plan.icon] || ''}</span>
+            <div class="catalog-card__heading">
+              <h3 class="catalog-card__title">${plan.title}</h3>
+              <p class="catalog-card__subtitle">${plan.tagline}</p>
+            </div>
+          </div>
+          <div class="catalog-card__pricing">
+            <p class="catalog-card__eyebrow">${plan.amountLabel}</p>
+            <span class="catalog-card__price-mx">${priceLabels.mx}</span>
+            <span class="catalog-card__price-usd">${priceLabels.usd}</span>
           </div>
         </header>
-        <div class="plan-card__pricing">
-          <span class="plan-card__label">Total estimado</span>
-          <strong class="plan-card__price">${priceLabels.mx}</strong>
-          <span class="plan-card__meta">${priceLabels.usd}</span>
+        <div class="catalog-card__body">
+          <p class="catalog-card__description">${plan.description}</p>
+          <section class="catalog-card__section">
+            <h4>Entrega</h4>
+            <p>${plan.delivery}</p>
+          </section>
+          <section class="catalog-card__section">
+            <h4>Requisitos</h4>
+            <ul class="catalog-card__bullets">${plan.requirements.map((req) => `<li>${req}</li>`).join('')}</ul>
+          </section>
+          ${extras}
         </div>
-        <span class="plan-card__chip">${plan.amountLabel}</span>
-        <p class="plan-card__description">${plan.description}</p>
-        <section class="plan-card__section">
-          <h4>Entrega</h4>
-          <p>${plan.delivery}</p>
-        </section>
-        <section class="plan-card__section">
-          <h4>Requisitos</h4>
-          <ul>${plan.requirements.map((req) => `<li>${req}</li>`).join('')}</ul>
-        </section>
-        ${extras}
-        ${plan.cta ? `<a class="btn btn--primary plan-card__cta" href="${plan.cta.href}" target="_blank" rel="noopener" data-roblox-link>${plan.cta.label}</a>` : ''}
+        ${plan.cta ? `<a class="btn btn--primary catalog-card__cta" href="${plan.cta.href}" target="_blank" rel="noopener" data-roblox-link>${plan.cta.label}</a>` : ''}
       </article>
     `);
   };
