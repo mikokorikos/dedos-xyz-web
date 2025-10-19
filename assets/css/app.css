@@ -1076,62 +1076,73 @@ body.nav-open .mobile-drawer {
 
 .catalog-card {
   position: relative;
-  border-radius: clamp(1.6rem, 4vw, 2.4rem);
-  padding: clamp(1.8rem, 3.6vw, 2.6rem);
-  background: linear-gradient(180deg, rgba(12, 12, 28, 0.9), rgba(20, 20, 38, 0.72));
+  border-radius: clamp(1.8rem, 4.5vw, 2.8rem);
+  padding: clamp(2.1rem, 3.8vw, 2.9rem);
+  background: linear-gradient(165deg, rgba(10, 12, 24, 0.92) 0%, rgba(18, 18, 36, 0.88) 42%, rgba(28, 28, 54, 0.78) 100%);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(24px);
-  display: grid;
-  gap: clamp(1.1rem, 2.6vw, 1.8rem);
-  box-shadow: 0 36px 88px rgba(5, 5, 16, 0.52);
-  min-height: 460px;
+  backdrop-filter: blur(26px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.2rem, 2.8vw, 1.9rem);
+  box-shadow: 0 32px 90px rgba(4, 4, 16, 0.6);
+  min-height: 100%;
   overflow: hidden;
-  transition: transform 0.35s var(--transition-emphasized), border-color 0.3s ease, box-shadow 0.3s ease;
+  isolation: isolate;
+  transition: transform 0.4s var(--transition-emphasized), border-color 0.35s ease, box-shadow 0.35s ease;
+  --catalog-accent-rgb: 185 103 255;
+  --catalog-accent: rgb(var(--catalog-accent-rgb) / 0.45);
+  --catalog-accent-soft: rgb(var(--catalog-accent-rgb) / 0.2);
+  --catalog-border-active: rgb(var(--catalog-accent-rgb) / 0.42);
 }
 
 .catalog-card::before,
 .catalog-card::after {
   content: "";
   position: absolute;
-  inset: -35% -10% auto -30%;
-  height: 72%;
-  background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.16), transparent 68%);
-  filter: blur(10px);
-  opacity: 0.65;
+  inset: 0;
   pointer-events: none;
-  transition: opacity 0.35s ease;
+  opacity: 0.7;
+  transition: opacity 0.4s ease;
+}
+
+.catalog-card::before {
+  background: radial-gradient(circle at -15% -10%, rgba(255, 255, 255, 0.32) 0%, transparent 60%),
+    radial-gradient(circle at 120% -30%, rgba(255, 255, 255, 0.18) 0%, transparent 58%);
+  mix-blend-mode: screen;
+  z-index: -1;
 }
 
 .catalog-card::after {
-  inset: auto -45% -38% 15%;
-  height: 90%;
-  background: radial-gradient(circle at bottom right, var(--catalog-accent, rgba(185, 103, 255, 0.32)), transparent 72%);
+  background: radial-gradient(circle at 25% 20%, var(--catalog-accent-soft) 0%, transparent 58%),
+    radial-gradient(circle at 85% 85%, rgb(var(--catalog-accent-rgb) / 0.32) 0%, transparent 70%);
+  filter: blur(6px);
+  z-index: -2;
 }
 
 .catalog-card:hover {
-  transform: translateY(-8px);
-  border-color: rgba(255, 255, 255, 0.28);
-  box-shadow: 0 46px 102px rgba(5, 5, 16, 0.58);
+  transform: translateY(-10px) scale(1.01);
+  border-color: var(--catalog-border-active);
+  box-shadow: 0 46px 120px rgba(5, 5, 18, 0.68);
 }
 
 .catalog-card:hover::after {
-  opacity: 0.85;
+  opacity: 0.95;
 }
 
 .catalog-card[data-tone="pink"] {
-  --catalog-accent: rgba(255, 113, 206, 0.38);
+  --catalog-accent-rgb: 255 113 206;
 }
 
 .catalog-card[data-tone="violet"] {
-  --catalog-accent: rgba(185, 103, 255, 0.4);
+  --catalog-accent-rgb: 185 103 255;
 }
 
 .catalog-card[data-tone="cyan"] {
-  --catalog-accent: rgba(0, 229, 255, 0.42);
+  --catalog-accent-rgb: 0 229 255;
 }
 
 .catalog-card[data-tone="mint"] {
-  --catalog-accent: rgba(125, 249, 230, 0.36);
+  --catalog-accent-rgb: 125 249 230;
 }
 
 .catalog-card__badge {
@@ -1165,55 +1176,57 @@ body.nav-open .mobile-drawer {
 
 .catalog-card__identity {
   display: flex;
-  gap: 1rem;
+  gap: clamp(1rem, 3vw, 1.4rem);
   align-items: flex-start;
 }
 
 .catalog-card__icon {
   display: grid;
   place-items: center;
-  width: 3.75rem;
-  height: 3.75rem;
-  border-radius: 1.25rem;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.04));
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+  width: 4rem;
+  height: 4rem;
+  border-radius: 1.35rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.04));
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08), 0 18px 38px rgb(var(--catalog-accent-rgb) / 0.34);
   color: var(--color-text-primary);
 }
 
 .catalog-card[data-tone="pink"] .catalog-card__icon {
-  background: linear-gradient(135deg, rgba(255, 113, 206, 0.28), rgba(255, 113, 206, 0.08));
+  background: linear-gradient(145deg, rgb(255 113 206 / 0.28), rgb(255 113 206 / 0.08));
   color: #ffd9f2;
 }
 
 .catalog-card[data-tone="violet"] .catalog-card__icon {
-  background: linear-gradient(135deg, rgba(185, 103, 255, 0.28), rgba(185, 103, 255, 0.08));
+  background: linear-gradient(145deg, rgb(185 103 255 / 0.28), rgb(185 103 255 / 0.08));
   color: #efe1ff;
 }
 
 .catalog-card[data-tone="cyan"] .catalog-card__icon {
-  background: linear-gradient(135deg, rgba(0, 229, 255, 0.28), rgba(0, 229, 255, 0.08));
+  background: linear-gradient(145deg, rgb(0 229 255 / 0.28), rgb(0 229 255 / 0.08));
   color: #ddfbff;
 }
 
 .catalog-card[data-tone="mint"] .catalog-card__icon {
-  background: linear-gradient(135deg, rgba(125, 249, 230, 0.26), rgba(125, 249, 230, 0.08));
+  background: linear-gradient(145deg, rgb(125 249 230 / 0.26), rgb(125 249 230 / 0.08));
   color: #e6fffb;
 }
 
 .catalog-card__icon i {
-  font-size: 1.6rem;
+  width: 1.85rem;
+  height: 1.85rem;
 }
 
 .catalog-card__heading {
   display: grid;
-  gap: 0.35rem;
+  gap: 0.5rem;
 }
 
 .catalog-card__title {
   margin: 0;
-  font-size: clamp(1.4rem, 3vw, 1.7rem);
-  font-weight: 800;
+  font-size: clamp(1.45rem, 3.2vw, 1.85rem);
   color: var(--color-text-primary);
+  font-weight: 800;
+  letter-spacing: -0.015em;
 }
 
 .catalog-card__subtitle {
@@ -1228,54 +1241,62 @@ body.nav-open .mobile-drawer {
   align-items: flex-end;
   gap: 0.45rem;
   text-align: right;
+  background: linear-gradient(180deg, rgb(var(--catalog-accent-rgb) / 0.24), transparent 85%);
+  border-radius: 1.4rem;
+  padding: 0.65rem 1.1rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
 }
 
 .catalog-card__eyebrow {
-  font-size: 0.76rem;
-  letter-spacing: 0.16em;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(226, 232, 240, 0.72);
+  color: rgba(226, 232, 240, 0.68);
   margin: 0;
 }
 
 .catalog-card__price-mx {
-  font-size: clamp(2.1rem, 4.8vw, 3.1rem);
+  font-size: clamp(2.05rem, 4.2vw, 2.8rem);
   font-weight: 800;
   color: var(--color-text-primary);
+  font-variant-numeric: tabular-nums;
 }
 
 .catalog-card__price-usd {
-  font-size: 0.95rem;
-  color: var(--color-text-muted);
+  font-size: 0.92rem;
+  color: rgba(226, 232, 240, 0.72);
 }
 
 .catalog-card__body {
   display: grid;
   gap: clamp(1rem, 2.4vw, 1.45rem);
+  flex: 1;
 }
 
 .catalog-card__description {
   margin: 0;
-  color: var(--color-text-muted);
+  color: rgba(226, 232, 240, 0.78);
   line-height: 1.65;
   font-size: 1rem;
 }
 
 .catalog-card__section {
-  border-radius: var(--radius-md);
+  border-radius: 1.6rem;
   border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.05);
+  background: linear-gradient(180deg, rgba(24, 26, 46, 0.78), rgba(12, 13, 26, 0.6));
   padding: clamp(1rem, 2.4vw, 1.35rem);
   display: grid;
   gap: 0.65rem;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
 }
 
 .catalog-card__section h4 {
-  margin: 0;
-  font-size: 0.78rem;
-  letter-spacing: 0.16em;
+  margin: 0 0 0.2rem;
+  font-size: 0.92rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(226, 232, 240, 0.7);
+  color: var(--color-text-primary);
 }
 
 .catalog-card__section p {
@@ -1298,7 +1319,7 @@ body.nav-open .mobile-drawer {
   padding: 0;
   list-style: none;
   display: grid;
-  gap: 0.75rem;
+  gap: 0.85rem;
 }
 
 .catalog-card__price-row {
@@ -1306,27 +1327,33 @@ body.nav-open .mobile-drawer {
   justify-content: space-between;
   align-items: flex-start;
   gap: 1.1rem;
-  border-radius: var(--radius-md);
+  border-radius: 1.4rem;
   border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.05);
-  padding: 1rem 1.15rem;
-  transition: border-color 0.3s ease, transform 0.3s var(--transition-soft);
+  background: linear-gradient(165deg, rgb(28 30 58 / 0.8), rgb(15 16 32 / 0.65));
+  padding: 1.05rem 1.2rem;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05), 0 24px 40px rgb(6 6 18 / 0.45);
+  backdrop-filter: blur(16px);
+  transition: border-color 0.3s ease, transform 0.35s var(--transition-soft), box-shadow 0.35s ease;
 }
 
 .catalog-card__price-row:hover {
-  border-color: rgba(255, 255, 255, 0.24);
-  transform: translateY(-2px);
+  border-color: var(--catalog-border-active);
+  transform: translateY(-4px);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08), 0 32px 58px rgb(6 6 18 / 0.55);
 }
+
+
 
 .catalog-card__price-label {
   display: grid;
-  gap: 0.3rem;
+  gap: 0.28rem;
   color: var(--color-text-primary);
   font-weight: 600;
+  font-size: 0.95rem;
 }
 
 .catalog-card__price-note {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   color: var(--color-text-muted);
   font-weight: 500;
 }
@@ -1340,14 +1367,15 @@ body.nav-open .mobile-drawer {
 }
 
 .catalog-card__price-mx-value {
-  font-size: 1.05rem;
+  font-size: 1.12rem;
   font-weight: 700;
   color: var(--color-text-primary);
+  font-variant-numeric: tabular-nums;
 }
 
 .catalog-card__price-usd-value {
-  font-size: 0.92rem;
-  color: var(--color-text-muted);
+  font-size: 0.88rem;
+  color: rgba(226, 232, 240, 0.72);
 }
 
 .catalog-card__note-list {
@@ -1369,7 +1397,6 @@ body.nav-open .mobile-drawer {
 @media (max-width: 640px) {
   .catalog-card {
     min-height: auto;
-    grid-template-columns: 1fr;
   }
 
   .catalog-card__header {
