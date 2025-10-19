@@ -92,7 +92,7 @@
   const CATALOG = [
     {
       title: 'Robux',
-      copy: '1,000 Robux desde 125 MXN con seguimiento en vivo y evidencias grabadas.',
+      copy: '1,000 Robux desde 125 MXN con seguimiento en vivo, precios centrados y confirmación visual.',
       badges: [
         { label: 'Gaming', icon: 'gamepad-2', tone: 'cyan' },
         { label: 'Best seller', icon: 'flame', tone: 'pink' }
@@ -104,7 +104,7 @@
     },
     {
       title: 'Discord Nitro',
-      copy: 'Nitro, boosts y decoraciones legales con precios en MXN y USD.',
+      copy: 'Nitro, boosts y decoraciones premium con precios en MXN y USD.',
       badges: [
         { label: 'Discord', icon: 'discord', tone: 'violet' },
         { label: 'Popular', icon: 'sparkles', tone: 'pink' }
@@ -163,22 +163,22 @@
 
   const SERVICES = [
     {
-      title: 'Middleman moderno',
-      copy: 'Abrimos ticket, verificamos ambas partes y documentamos cada pago.',
-      icon: 'handshake',
+      title: 'Pagos flexibles',
+      copy: 'PayPal, transferencia MX, tarjetas digitales y Litecoin listos en tu ticket.',
+      icon: 'wallet',
       tone: 'mint'
     },
     {
-      title: 'Soporte 24/7',
-      copy: 'Equipo rotativo más bots para que siempre tengas respuesta.',
-      icon: 'headphones',
-      tone: 'cyan'
+      title: 'Respuesta inmediata',
+      copy: 'Equipo 24/7 con automatizaciones para resolver en minutos.',
+      icon: 'zap',
+      tone: 'violet'
     },
     {
-      title: 'Evidencia obligatoria',
-      copy: 'Grabaciones, Transaction ID y capturas para mantener todo claro.',
-      icon: 'badge-check',
-      tone: 'violet'
+      title: 'Experiencia premium',
+      copy: 'Cards glassmorphism, precios centrados y confirmación visual en cada paso.',
+      icon: 'sparkles',
+      tone: 'pink'
     }
   ];
 
@@ -196,9 +196,9 @@
       tone: 'cyan'
     },
     {
-      title: 'Transparencia legal',
-      copy: 'Sin afiliación con las marcas; todo explicado en los TOS.',
-      icon: 'file-text',
+      title: 'Pagos versátiles',
+      copy: 'PayPal, transferencia MX y Litecoin en un mismo panel.',
+      icon: 'credit-card',
       tone: 'violet'
     },
     {
@@ -212,8 +212,8 @@
   const FAQ = [
     { q: '¿Cómo compro?', a: 'Entra a Discord, abre un ticket y confirma el método de entrega. Nuestro equipo te guía paso a paso.' },
     { q: '¿Tiempos de entrega?', a: 'La mayoría de los pedidos se completan en minutos. Si se requiere verificación manual, te avisamos.' },
-    { q: '¿Reembolsos?', a: 'Dependen del estado del pedido y del producto adquirido. Todo está documentado en nuestros TOS.' },
-    { q: '¿Es seguro?', a: 'Middleman, comprobantes y verificación 4/4 en transacciones para total tranquilidad.' }
+    { q: '¿Reembolsos?', a: 'Analizamos cada caso en tu ticket y te guiamos con la mejor alternativa disponible.' },
+    { q: '¿Es seguro?', a: 'Seguimiento visual, staff verificado y confirmaciones en tiempo real para total tranquilidad.' }
   ];
 
   const createElement = (markup) => {
@@ -236,6 +236,236 @@
     if (win.lucide?.createIcons) {
       win.lucide.createIcons();
     }
+  };
+
+  const SHARED_REDIRECT_BENEFITS = [
+    {
+      icon: 'badge-percent',
+      title: 'Precios bajos',
+      copy: 'MXN y USD alineados al centro para comparar sin esfuerzo.'
+    },
+    {
+      icon: 'zap',
+      title: 'Respuesta rápida',
+      copy: 'Soporte humano 24/7 con resolución en minutos.'
+    },
+    {
+      icon: 'coins',
+      title: 'Litecoin',
+      copy: 'Pagos ágiles con comisiones mínimas y confirmación instantánea.'
+    },
+    {
+      icon: 'banknote',
+      title: 'Transferencia MX',
+      copy: 'SPEI y depósitos nacionales sin complicaciones.'
+    },
+    {
+      icon: 'credit-card',
+      title: 'PayPal',
+      copy: 'Protección y recibos automáticos en cada compra.'
+    }
+  ];
+
+  const REDIRECT_CONTENT = {
+    discord: {
+      type: 'discord',
+      eyebrow: 'Experiencia Dedos.xyz',
+      title: 'Listo para entrar a Discord',
+      message: 'Mientras abrimos el servidor, conoce los beneficios premium que te esperan en Dedos.xyz.',
+      countdownLabel: 'Abriendo Discord…',
+      icon: 'message-circle-heart',
+      continueLabel: 'Entrar ahora',
+      cancelLabel: 'Quedarme aquí',
+      benefits: SHARED_REDIRECT_BENEFITS
+    },
+    roblox: {
+      type: 'roblox',
+      eyebrow: 'Experiencia Dedos.xyz',
+      title: 'Tu salto a Roblox está casi listo',
+      message: 'Revisa nuestras ventajas premium antes de entrar al grupo oficial de Roblox.',
+      countdownLabel: 'Abriendo Roblox…',
+      icon: 'gamepad-2',
+      continueLabel: 'Ir a Roblox',
+      cancelLabel: 'Quedarme aquí',
+      benefits: SHARED_REDIRECT_BENEFITS
+    }
+  };
+
+  const DEFAULT_REDIRECT_DELAY = 3000;
+
+  let redirectOverlay;
+  const redirectState = {
+    timer: null,
+    interval: null,
+    seconds: 0,
+    config: null,
+    completed: false
+  };
+
+  const ensureRedirectOverlay = () => {
+    if (redirectOverlay) return redirectOverlay;
+    redirectOverlay = createElement(`
+      <div class="redirect-overlay" data-redirect-overlay hidden>
+        <article class="redirect-modal" role="dialog" aria-modal="true" aria-labelledby="redirect-modal-title">
+          <div class="redirect-modal__icon" data-redirect-icon></div>
+          <p class="redirect-modal__eyebrow" data-redirect-eyebrow>Experiencia Dedos.xyz</p>
+          <h2 class="redirect-modal__title" id="redirect-modal-title" data-redirect-title>Redirigiendo…</h2>
+          <p class="redirect-modal__message" data-redirect-message>Preparamos tu destino con beneficios exclusivos.</p>
+          <div class="redirect-modal__benefits" data-redirect-benefits></div>
+          <div class="redirect-modal__countdown">
+            <span class="redirect-modal__countdown-number" data-countdown>3</span>
+            <span class="redirect-modal__countdown-label" data-redirect-countdown-label>Redirigiendo…</span>
+          </div>
+          <div class="redirect-modal__actions">
+            <button class="btn btn--primary" type="button" data-redirect-continue>Ir ahora</button>
+            <button class="btn btn--ghost" type="button" data-redirect-cancel>Quedarme aquí</button>
+          </div>
+        </article>
+      </div>
+    `);
+    doc.body.appendChild(redirectOverlay);
+    applyIcons();
+    return redirectOverlay;
+  };
+
+  const updateRedirectOverlayContent = (config) => {
+    const overlay = ensureRedirectOverlay();
+    const eyebrow = overlay.querySelector('[data-redirect-eyebrow]');
+    const title = overlay.querySelector('[data-redirect-title]');
+    const message = overlay.querySelector('[data-redirect-message]');
+    const label = overlay.querySelector('[data-redirect-countdown-label]');
+    const iconHost = overlay.querySelector('[data-redirect-icon]');
+    const benefitsHost = overlay.querySelector('[data-redirect-benefits]');
+    const continueBtn = overlay.querySelector('[data-redirect-continue]');
+    const cancelBtn = overlay.querySelector('[data-redirect-cancel]');
+
+    if (eyebrow) eyebrow.textContent = config.eyebrow ?? 'Experiencia Dedos.xyz';
+    if (title) title.textContent = config.title ?? 'Listo para continuar';
+    if (message) message.textContent = config.message ?? '';
+    if (label) label.textContent = config.countdownLabel ?? 'Redirigiendo…';
+    if (iconHost) {
+      iconHost.innerHTML = `<i data-lucide="${config.icon ?? 'sparkles'}" aria-hidden="true"></i>`;
+    }
+    if (benefitsHost) {
+      benefitsHost.innerHTML = (config.benefits ?? []).map(
+        (benefit) => `
+          <div class="redirect-modal__benefit">
+            <span class="redirect-modal__benefit-icon" aria-hidden="true"><i data-lucide="${benefit.icon}"></i></span>
+            <div class="redirect-modal__benefit-copy">
+              <span class="redirect-modal__benefit-title">${benefit.title}</span>
+              <span class="redirect-modal__benefit-text">${benefit.copy}</span>
+            </div>
+          </div>
+        `
+      ).join('');
+    }
+    if (continueBtn) continueBtn.textContent = config.continueLabel ?? 'Continuar';
+    if (cancelBtn) cancelBtn.textContent = config.cancelLabel ?? 'Cancelar';
+    applyIcons();
+    return overlay;
+  };
+
+  const updateCountdownDisplays = (value) => {
+    const safeValue = Math.max(0, value);
+    doc.querySelectorAll('[data-countdown]').forEach((el) => {
+      el.textContent = String(safeValue);
+    });
+  };
+
+  const showRedirectOverlay = (config) => {
+    const overlay = updateRedirectOverlayContent(config);
+    overlay.removeAttribute('hidden');
+    requestAnimationFrame(() => {
+      overlay.dataset.open = 'true';
+      body.classList.add('is-redirecting');
+    });
+    win.setTimeout(() => {
+      overlay.querySelector('[data-redirect-continue]')?.focus({ preventScroll: true });
+    }, 60);
+  };
+
+  const hideRedirectOverlay = () => {
+    if (!redirectOverlay) return;
+    redirectOverlay.dataset.open = 'false';
+    body.classList.remove('is-redirecting');
+    const finalize = () => {
+      redirectOverlay?.setAttribute('hidden', '');
+    };
+    redirectOverlay.addEventListener('transitionend', finalize, { once: true });
+    win.setTimeout(() => {
+      if (redirectOverlay && !redirectOverlay.hasAttribute('hidden')) {
+        finalize();
+      }
+    }, 320);
+  };
+
+  const clearRedirectTimers = () => {
+    if (redirectState.timer) {
+      win.clearTimeout(redirectState.timer);
+      redirectState.timer = null;
+    }
+    if (redirectState.interval) {
+      win.clearInterval(redirectState.interval);
+      redirectState.interval = null;
+    }
+  };
+
+  const completePromoRedirect = () => {
+    const config = redirectState.config;
+    if (!config || redirectState.completed) return;
+    redirectState.completed = true;
+    clearRedirectTimers();
+    hideRedirectOverlay();
+    if (config.type === 'discord') {
+      openDiscordInvite(config.invite ?? body.dataset.discordInvite ?? 'dedos', config.timeoutMs);
+    } else if (config.type === 'roblox') {
+      openRobloxDestination(
+        config.url ?? body.dataset.robloxUrl ?? 'https://www.roblox.com/',
+        config.timeoutMs
+      );
+    }
+    redirectState.config = null;
+  };
+
+  const cancelPromoRedirect = () => {
+    clearRedirectTimers();
+    redirectState.config = null;
+    redirectState.completed = false;
+    hideRedirectOverlay();
+  };
+
+  const beginPromoRedirect = (input) => {
+    const base = REDIRECT_CONTENT[input.type] ?? REDIRECT_CONTENT.discord;
+    const delayMsRaw = typeof input.delayMs === 'number' ? input.delayMs : Number.NaN;
+    const delayMs = Number.isFinite(delayMsRaw) && delayMsRaw > 0 ? delayMsRaw : DEFAULT_REDIRECT_DELAY;
+    const config = {
+      ...base,
+      ...input,
+      type: input.type ?? base.type,
+      benefits: input.benefits ?? base.benefits,
+      delayMs
+    };
+
+    clearRedirectTimers();
+    redirectState.config = config;
+    redirectState.completed = false;
+    redirectState.seconds = Math.ceil(delayMs / 1000);
+
+    showRedirectOverlay(config);
+    updateCountdownDisplays(redirectState.seconds);
+
+    redirectState.interval = win.setInterval(() => {
+      redirectState.seconds = Math.max(0, redirectState.seconds - 1);
+      updateCountdownDisplays(redirectState.seconds);
+      if (redirectState.seconds <= 0) {
+        win.clearInterval(redirectState.interval);
+        redirectState.interval = null;
+      }
+    }, 1000);
+
+    redirectState.timer = win.setTimeout(() => {
+      completePromoRedirect();
+    }, delayMs);
   };
 
   let revealObserver;
@@ -599,17 +829,49 @@
 
   const setupLinkHandlers = () => {
     doc.addEventListener('click', (event) => {
+      const continueButton = event.target.closest('[data-redirect-continue]');
+      if (continueButton) {
+        event.preventDefault();
+        completePromoRedirect();
+        return;
+      }
+
+      const cancelButton = event.target.closest('[data-redirect-cancel]');
+      if (cancelButton) {
+        event.preventDefault();
+        cancelPromoRedirect();
+        return;
+      }
+
       const discordLink = event.target.closest('[data-discord-link]');
       if (discordLink) {
         event.preventDefault();
-        openDiscordInvite(body.dataset.discordInvite || 'dedos');
+        const href = discordLink.getAttribute('href');
+        const invite = href && href.trim() ? href : body.dataset.discordInvite || 'dedos';
+        beginPromoRedirect({
+          type: 'discord',
+          invite,
+          delayMs: DEFAULT_REDIRECT_DELAY
+        });
         return;
       }
 
       const robloxLink = event.target.closest('[data-roblox-link]');
       if (robloxLink) {
         event.preventDefault();
-        openRobloxDestination(robloxLink.getAttribute('href') || body.dataset.robloxUrl || 'https://www.roblox.com/');
+        const href = robloxLink.getAttribute('href');
+        beginPromoRedirect({
+          type: 'roblox',
+          url: href && href.trim() ? href : body.dataset.robloxUrl || 'https://www.roblox.com/',
+          delayMs: DEFAULT_REDIRECT_DELAY
+        });
+      }
+    });
+
+    doc.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && body.classList.contains('is-redirecting')) {
+        event.preventDefault();
+        cancelPromoRedirect();
       }
     });
   };
@@ -880,27 +1142,27 @@
     const target = body.dataset.redirectTarget;
     if (!target) return;
 
-    const countdownEl = doc.querySelector('[data-countdown]');
-    const fallbackMs = Number(body.dataset.redirectFallbackMs || '2400');
-    let seconds = Math.ceil(fallbackMs / 1000);
+    const fallbackAttr = Number(body.dataset.redirectDelayMs || body.dataset.redirectFallbackMs || DEFAULT_REDIRECT_DELAY);
+    const delayMs = Number.isFinite(fallbackAttr) && fallbackAttr > 0 ? fallbackAttr : DEFAULT_REDIRECT_DELAY;
+    const timeoutMs = Number.isFinite(fallbackAttr) && fallbackAttr > 0 ? fallbackAttr : undefined;
 
-    if (countdownEl) {
-      countdownEl.textContent = String(seconds);
-    }
+    updateCountdownDisplays(Math.ceil(delayMs / 1000));
 
     if (target === 'discord') {
-      openDiscordInvite(body.dataset.discordInvite || 'dedos', fallbackMs);
+      beginPromoRedirect({
+        type: 'discord',
+        invite: body.dataset.redirectInvite || body.dataset.discordInvite || 'dedos',
+        delayMs,
+        timeoutMs
+      });
     } else if (target === 'roblox') {
-      openRobloxDestination(body.dataset.redirectUrl || body.dataset.robloxUrl || 'https://www.roblox.com/', fallbackMs);
+      beginPromoRedirect({
+        type: 'roblox',
+        url: body.dataset.redirectUrl || body.dataset.robloxUrl || 'https://www.roblox.com/',
+        delayMs,
+        timeoutMs
+      });
     }
-
-    const interval = win.setInterval(() => {
-      seconds = Math.max(0, seconds - 1);
-      if (countdownEl) countdownEl.textContent = String(seconds);
-      if (seconds <= 0) {
-        win.clearInterval(interval);
-      }
-    }, 1000);
   };
 
   const setupBackdrop = () => {
