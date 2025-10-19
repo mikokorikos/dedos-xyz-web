@@ -92,7 +92,7 @@
   const CATALOG = [
     {
       title: 'Robux',
-      copy: '1,000 Robux desde 125 MXN con seguimiento en vivo y evidencias grabadas.',
+      copy: '1,000 Robux desde 125 MXN con seguimiento en vivo, precios centrados y confirmación visual.',
       badges: [
         { label: 'Gaming', icon: 'gamepad-2', tone: 'cyan' },
         { label: 'Best seller', icon: 'flame', tone: 'pink' }
@@ -104,7 +104,7 @@
     },
     {
       title: 'Discord Nitro',
-      copy: 'Nitro, boosts y decoraciones legales con precios en MXN y USD.',
+      copy: 'Nitro, boosts y decoraciones premium con precios en MXN y USD.',
       badges: [
         { label: 'Discord', icon: 'discord', tone: 'violet' },
         { label: 'Popular', icon: 'sparkles', tone: 'pink' }
@@ -163,22 +163,22 @@
 
   const SERVICES = [
     {
-      title: 'Middleman moderno',
-      copy: 'Abrimos ticket, verificamos ambas partes y documentamos cada pago.',
-      icon: 'handshake',
+      title: 'Pagos flexibles',
+      copy: 'PayPal, transferencia MX, tarjetas digitales y Litecoin listos en tu ticket.',
+      icon: 'wallet',
       tone: 'mint'
     },
     {
-      title: 'Soporte 24/7',
-      copy: 'Equipo rotativo más bots para que siempre tengas respuesta.',
-      icon: 'headphones',
-      tone: 'cyan'
+      title: 'Respuesta inmediata',
+      copy: 'Equipo 24/7 con automatizaciones para resolver en minutos.',
+      icon: 'zap',
+      tone: 'violet'
     },
     {
-      title: 'Evidencia obligatoria',
-      copy: 'Grabaciones, Transaction ID y capturas para mantener todo claro.',
-      icon: 'badge-check',
-      tone: 'violet'
+      title: 'Experiencia premium',
+      copy: 'Cards glassmorphism, precios centrados y confirmación visual en cada paso.',
+      icon: 'sparkles',
+      tone: 'pink'
     }
   ];
 
@@ -196,9 +196,9 @@
       tone: 'cyan'
     },
     {
-      title: 'Transparencia legal',
-      copy: 'Sin afiliación con las marcas; todo explicado en los TOS.',
-      icon: 'file-text',
+      title: 'Pagos versátiles',
+      copy: 'PayPal, transferencia MX y Litecoin en un mismo panel.',
+      icon: 'credit-card',
       tone: 'violet'
     },
     {
@@ -212,8 +212,8 @@
   const FAQ = [
     { q: '¿Cómo compro?', a: 'Entra a Discord, abre un ticket y confirma el método de entrega. Nuestro equipo te guía paso a paso.' },
     { q: '¿Tiempos de entrega?', a: 'La mayoría de los pedidos se completan en minutos. Si se requiere verificación manual, te avisamos.' },
-    { q: '¿Reembolsos?', a: 'Dependen del estado del pedido y del producto adquirido. Todo está documentado en nuestros TOS.' },
-    { q: '¿Es seguro?', a: 'Middleman, comprobantes y verificación 4/4 en transacciones para total tranquilidad.' }
+    { q: '¿Reembolsos?', a: 'Analizamos cada caso en tu ticket y te guiamos con la mejor alternativa disponible.' },
+    { q: '¿Es seguro?', a: 'Seguimiento visual, staff verificado y confirmaciones en tiempo real para total tranquilidad.' }
   ];
 
   const createElement = (markup) => {
