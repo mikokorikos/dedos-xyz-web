@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="assets/css/app.css" />
   <script defer src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body data-page="services" data-discord-invite="dedos" data-exchange-endpoint="https://open.er-api.com/v6/latest/MXN">
+<body data-page="services" data-discord-invite="dedos" data-exchange-rate="0.0585" data-exchange-updated="2024-05-14T00:00:00Z">
   <div class="backdrop" data-fx-backdrop>
     <canvas class="backdrop__canvas" data-fx-orbs aria-hidden="true"></canvas>
     <canvas class="backdrop__canvas" data-fx-stars aria-hidden="true"></canvas>
@@ -84,7 +84,7 @@
       </div>
     </section>
 
-    <section class="section">
+    <section class="section" id="vpn">
       <div class="shell">
         <div class="section__head" data-align="center" data-animate="fade">
           <div class="chip-stack" role="presentation">
@@ -95,14 +95,14 @@
           <h2 class="section__title">Catálogo de servicios</h2>
           <p class="section__lead">Consulta precios en MXN y equivalencia en USD calculada con el tipo de cambio del día. Cada plan requiere evidencia en video y Transaction ID.</p>
         </div>
-        <div class="grid-cards" data-digital-services></div>
+        <div class="plan-grid" data-digital-services></div>
         <div class="card card--notice" data-animate="fade">
           <div class="chip-stack" role="presentation">
             <span class="chip" data-tone="mint"><i data-lucide="refresh-cw" aria-hidden="true"></i> Tipo de cambio vivo</span>
             <span class="chip" data-tone="cyan"><i data-lucide="shield-check" aria-hidden="true"></i> Confirma en ticket</span>
           </div>
           <p class="card__body" data-exchange-notice>Obteniendo tipo de cambio…</p>
-          <p class="card__body">Verificamos MXN → USD con Open&nbsp;ER&nbsp;API. Los valores pueden variar ligeramente hasta que confirmes en tu ticket.</p>
+          <p class="card__body">Calculamos MXN ↔ USD con un tipo de cambio de referencia que mantenemos actualizado. Confirma el valor definitivo con el staff en tu ticket.</p>
         </div>
       </div>
     </section>
@@ -148,6 +148,6 @@
     </div>
   </footer>
 
-  <script type="module" src="assets/js/main.js"></script>
+  <script defer src="assets/js/main.js"></script>
 </body>
 </html>
