@@ -600,7 +600,7 @@ const DIGITAL_SERVICES = [
       { label: '6 meses', priceMXN: 339 },
       { label: '12 meses', priceMXN: 549 }
     ],
-    notes: ['Confirma si quieres cuenta nueva o tu usuario actual en el ticket.', 'Grabación obligatoria mostrando Transaction ID.']
+    notes: ['Confirma si quieres cuenta nueva o tu usuario actual en el ticket.', 'Compartimos confirmación visual del pago y la activación.']
   },
   {
     id: 'youtube-premium',
@@ -614,7 +614,7 @@ const DIGITAL_SERVICES = [
       { label: '3 meses', priceMXN: 169 },
       { label: '12 meses', priceMXN: 549 }
     ],
-    notes: ['Necesitamos tu Transaction ID y video del proceso para soporte futuro.', 'Método vía gift o tarjeta según stock disponible.']
+    notes: ['Registramos tu Transaction ID para futuras renovaciones.', 'Método vía gift o tarjeta según stock disponible.']
   },
   {
     id: 'crunchyroll-provided',
@@ -684,7 +684,7 @@ const DISCORD_OFFERS = [
     icon: 'bolt',
     tone: 'mint',
     plans: [{ label: '1 mes', priceMXN: 95 }],
-    notes: ['Confirma la región de tu cuenta para evitar rechazos.', 'Entregamos evidencia en video del canje o activación.']
+    notes: ['Confirma la región de tu cuenta para evitar rechazos.', 'Confirmamos el canje contigo en vivo y dejamos captura en el ticket.']
   },
   {
     title: 'Decoraciones de perfil',
