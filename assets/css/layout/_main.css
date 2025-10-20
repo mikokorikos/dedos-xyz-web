@@ -189,8 +189,8 @@ main {
 .backdrop__blob {
   position: absolute;
   border-radius: 999px;
-  filter: blur(90px);
-  opacity: 0.35;
+  filter: blur(120px);
+  opacity: 0.25;
   mix-blend-mode: screen;
 }
 
@@ -218,7 +218,7 @@ main {
   left: 22vmin;
   top: 36vmin;
   background: radial-gradient(closest-side, #34d399, transparent 70%);
-  opacity: 0.28;
+  opacity: 0.2;
   animation: pulse 9s ease-in-out infinite;
 }
 

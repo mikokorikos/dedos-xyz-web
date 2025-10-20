@@ -488,20 +488,20 @@
   position: relative;
   border-radius: clamp(1.8rem, 4.5vw, 2.8rem);
   padding: clamp(2.1rem, 3.8vw, 2.9rem);
-  background: linear-gradient(168deg, rgba(8, 10, 24, 0.94) 0%, rgba(14, 16, 36, 0.88) 45%, rgba(26, 28, 62, 0.78) 100%);
+  background: linear-gradient(168deg, rgba(12, 14, 28, 0.9) 0%, rgba(18, 20, 40, 0.85) 100%);
   border: 1px solid var(--color-border);
   backdrop-filter: blur(26px);
   display: flex;
   flex-direction: column;
   gap: clamp(1.2rem, 2.8vw, 1.9rem);
-  box-shadow: 0 36px 90px rgba(2, 4, 18, 0.6);
+  box-shadow: 0 24px 60px rgba(2, 3, 12, 0.4);
   min-height: 100%;
   overflow: hidden;
   isolation: isolate;
   transition: transform 0.4s var(--transition-emphasized), border-color 0.35s ease, box-shadow 0.35s ease;
   --catalog-accent-rgb: 185 103 255;
   --catalog-accent: rgb(var(--catalog-accent-rgb) / 0.45);
-  --catalog-accent-soft: rgb(var(--catalog-accent-rgb) / 0.2);
+  --catalog-accent-soft: rgb(var(--catalog-accent-rgb) / 0.15);
   --catalog-border-active: rgb(var(--catalog-accent-rgb) / 0.42);
 }
 
@@ -524,7 +524,7 @@
 
 .catalog-card::after {
   background: radial-gradient(circle at 25% 20%, var(--catalog-accent-soft) 0%, transparent 58%),
-    radial-gradient(circle at 85% 85%, rgb(var(--catalog-accent-rgb) / 0.32) 0%, transparent 70%);
+    radial-gradient(circle at 85% 85%, rgb(var(--catalog-accent-rgb) / 0.25) 0%, transparent 70%);
   filter: blur(6px);
   z-index: -2;
 }
@@ -532,7 +532,7 @@
 .catalog-card:hover {
   transform: translateY(-10px) scale(1.01);
   border-color: var(--catalog-border-active);
-  box-shadow: 0 46px 120px rgba(5, 5, 18, 0.68);
+  box-shadow: 0 30px 80px rgba(2, 3, 12, 0.5);
 }
 
 .catalog-card:hover::after {
@@ -666,7 +666,7 @@
   max-width: min(100%, 19rem);
   min-height: clamp(7rem, 18vw, 9.5rem);
   margin-inline-start: auto;
-  margin-inline-end: 0;
+  margin-inline-end: auto;
 }
 
 .catalog-card__eyebrow {
