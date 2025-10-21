@@ -1,0 +1,193 @@
+.blob {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(90px);
+  opacity: 0.35;
+  mix-blend-mode: screen;
+  animation: blobHue 26s ease-in-out infinite;
+}
+
+.blob--one {
+  width: 32rem;
+  height: 32rem;
+  top: -10rem;
+  left: -8rem;
+  background: radial-gradient(closest-side, rgba(0, 113, 227, 0.18), transparent 70%);
+  animation-duration: 28s;
+}
+
+.blob--two {
+  width: 36rem;
+  height: 36rem;
+  bottom: -12rem;
+  right: -10rem;
+  background: radial-gradient(closest-side, rgba(142, 130, 255, 0.18), transparent 70%);
+  animation-duration: 34s;
+  animation-delay: -6s;
+}
+
+.blob--three {
+  width: 26rem;
+  height: 26rem;
+  top: 40%;
+  left: 58%;
+  background: radial-gradient(closest-side, rgba(48, 176, 255, 0.18), transparent 70%);
+  animation-duration: 30s;
+  animation-delay: -3s;
+}
+
+#fx-stars {
+  position: fixed;
+  inset: 0;
+  z-index: -22;
+}
+
+[data-tilt] {
+  will-change: transform;
+  transform-style: preserve-3d;
+}
+
+[data-tilt] .card__inner > * {
+  transform: translateZ(12px);
+}
+
+[data-animate] {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition: opacity 0.7s var(--transition-soft), transform 0.7s var(--transition-soft);
+  transition-delay: var(--reveal-delay, 0s);
+}
+
+.reveal-ready [data-animate] {
+  opacity: 0;
+  transform: translateY(var(--reveal-translate, 24px)) scale(0.98);
+}
+
+.reveal-ready [data-animate="rise"] {
+  --reveal-translate: 28px;
+}
+
+.reveal-ready [data-animate="fade"] {
+  --reveal-translate: 18px;
+}
+
+.reveal-ready [data-animate="zoom"] {
+  transform: scale(0.96);
+}
+
+.reveal-ready .is-visible {
+  opacity: 1 !important;
+  transform: translateY(0) scale(1) !important;
+}
+
+
+@keyframes aurora {
+  0% {
+    transform: scale(1) rotate(0deg);
+    filter: blur(78px) hue-rotate(0deg);
+    opacity: 0.68;
+  }
+  50% {
+    transform: scale(1.08) rotate(3deg);
+    filter: blur(92px) hue-rotate(18deg);
+    opacity: 0.88;
+  }
+  100% {
+    transform: scale(1.02) rotate(-2deg);
+    filter: blur(82px) hue-rotate(-14deg);
+    opacity: 0.72;
+  }
+}
+
+@keyframes blobHue {
+  0% {
+    filter: blur(90px) hue-rotate(0deg);
+    opacity: 0.32;
+  }
+  50% {
+    filter: blur(102px) hue-rotate(22deg);
+    opacity: 0.46;
+  }
+  100% {
+    filter: blur(90px) hue-rotate(-10deg);
+    opacity: 0.34;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(2%, -2%, 0);
+  }
+}
+
+@keyframes orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.06);
+  }
+}
+
+@keyframes chipGlow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(125, 249, 230, 0.18);
+    transform: translateY(0);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(125, 249, 230, 0);
+    transform: translateY(-1px);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(125, 249, 230, 0);
+    transform: translateY(0);
+  }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  body::before,
+  .blob {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+  }
+
+  .doc-chip[data-animate="pulse"] {
+    animation: none !important;
+    box-shadow: none !important;
+  }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  [data-animate] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
