@@ -12,7 +12,7 @@
   height: 32rem;
   top: -10rem;
   left: -8rem;
-  background: radial-gradient(closest-side, rgba(255, 113, 206, 0.48), transparent 70%);
+  background: radial-gradient(closest-side, rgba(0, 113, 227, 0.18), transparent 70%);
   animation-duration: 28s;
 }
 
@@ -21,7 +21,7 @@
   height: 36rem;
   bottom: -12rem;
   right: -10rem;
-  background: radial-gradient(closest-side, rgba(0, 229, 255, 0.42), transparent 70%);
+  background: radial-gradient(closest-side, rgba(142, 130, 255, 0.18), transparent 70%);
   animation-duration: 34s;
   animation-delay: -6s;
 }
@@ -31,7 +31,7 @@
   height: 26rem;
   top: 40%;
   left: 58%;
-  background: radial-gradient(closest-side, rgba(185, 103, 255, 0.45), transparent 70%);
+  background: radial-gradient(closest-side, rgba(48, 176, 255, 0.18), transparent 70%);
   animation-duration: 30s;
   animation-delay: -3s;
 }

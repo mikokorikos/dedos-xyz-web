@@ -13,8 +13,7 @@ body {
   margin: 0;
   min-height: 100vh;
   font-family: var(--font-body);
-  background: radial-gradient(circle at 18% 12%, rgba(18, 36, 78, 0.32), transparent 58%),
-    radial-gradient(circle at 82% 0%, rgba(10, 54, 82, 0.28), transparent 52%), var(--color-bg-900);
+  background: var(--gradient-soft);
   color: var(--color-text-secondary);
   -webkit-font-smoothing: antialiased;
   position: relative;
@@ -22,48 +21,27 @@ body {
   scrollbar-gutter: stable both-edges;
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -30;
-  background: var(--gradient-soft);
-  filter: blur(100px);
-  opacity: 0.85;
-  animation: aurora 32s ease-in-out infinite alternate;
-  transform-origin: center;
-}
-
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -32;
-  background: radial-gradient(circle at top, rgba(4, 6, 24, 0.95), transparent 78%),
-    radial-gradient(circle at bottom, rgba(2, 4, 18, 0.92), transparent 65%);
-}
-
 body::-webkit-scrollbar {
   width: 0.55rem;
 }
 
 body::-webkit-scrollbar-track {
-  background: rgba(8, 8, 18, 0.7);
+  background: rgba(0, 0, 0, 0.04);
 }
 
 body::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, rgba(255, 113, 206, 0.45), rgba(0, 229, 255, 0.6));
+  background: linear-gradient(180deg, rgba(204, 210, 221, 0.9), rgba(173, 180, 191, 0.9));
   border-radius: 999px;
-  border: 2px solid rgba(4, 4, 12, 0.9);
+  border: 2px solid rgba(255, 255, 255, 0.65);
 }
 
 body::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, rgba(185, 103, 255, 0.58), rgba(0, 229, 255, 0.75));
+  background: linear-gradient(180deg, rgba(173, 180, 191, 0.95), rgba(140, 148, 160, 0.95));
 }
 
-@supports (scrollbar-color: rgba(255, 255, 255, 0.2) rgba(8, 8, 18, 0.85)) {
+@supports (scrollbar-color: rgba(173, 180, 191, 0.9) rgba(0, 0, 0, 0.04)) {
   body {
-    scrollbar-color: rgba(255, 255, 255, 0.28) rgba(8, 8, 18, 0.85);
+    scrollbar-color: rgba(173, 180, 191, 0.9) rgba(0, 0, 0, 0.04);
   }
 }
 
