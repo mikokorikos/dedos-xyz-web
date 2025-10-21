@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/app.css" />
-  <script defer src="https://unpkg.com/lucide@latest"></script>
+  <script defer src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
 <body data-page="discord-services" data-discord-invite="dedos" data-exchange-rate="0.0585" data-exchange-updated="2024-05-14T00:00:00Z">
   <div class="backdrop" data-fx-backdrop>
@@ -33,11 +33,12 @@
             <li><a class="site-nav__link" data-section-link="catalogo" href="index.html#catalogo">Catálogo</a></li>
             <li><a class="site-nav__link" data-section-link="por-que" href="index.html#por-que">¿Por qué?</a></li>
             <li><a class="site-nav__link" data-section-link="servicios" href="index.html#servicios">Servicios</a></li>
+            <li><a class="site-nav__link" data-section-link="beneficios" href="index.html#beneficios">Beneficios</a></li>
+            <li><a class="site-nav__link" data-section-link="pagos" href="index.html#pagos">Pagos</a></li>
             <li><a class="site-nav__link" data-section-link="faq" href="index.html#faq">FAQ</a></li>
             <li><a class="site-nav__link" href="robux.html">Planes Robux</a></li>
             <li><a class="site-nav__link" href="servicios.html">Servicios digitales</a></li>
             <li><a class="site-nav__link" href="discord.html">Paquetes Discord</a></li>
-            <li><a class="site-nav__link" href="tos.html">TOS</a></li>
             <li><a class="site-nav__link" href="roblox.html">Grupo de Roblox</a></li>
           </ul>
         </nav>
@@ -52,11 +53,12 @@
         <a class="mobile-drawer__link" data-section-link="catalogo" href="index.html#catalogo">Catálogo</a>
         <a class="mobile-drawer__link" data-section-link="por-que" href="index.html#por-que">¿Por qué?</a>
         <a class="mobile-drawer__link" data-section-link="servicios" href="index.html#servicios">Servicios</a>
+        <a class="mobile-drawer__link" data-section-link="beneficios" href="index.html#beneficios">Beneficios</a>
+        <a class="mobile-drawer__link" data-section-link="pagos" href="index.html#pagos">Pagos</a>
         <a class="mobile-drawer__link" data-section-link="faq" href="index.html#faq">FAQ</a>
         <a class="mobile-drawer__link" href="robux.html">Planes Robux</a>
         <a class="mobile-drawer__link" href="servicios.html">Servicios digitales</a>
         <a class="mobile-drawer__link" href="discord.html">Paquetes Discord</a>
-        <a class="mobile-drawer__link" href="tos.html">TOS</a>
         <a class="mobile-drawer__link" href="roblox.html">Grupo de Roblox</a>
         <a class="btn btn--primary" href="https://discord.gg/dedos" data-discord-link>Entrar a Discord →</a>
       </div>
@@ -67,14 +69,16 @@
     <section class="section">
       <div class="shell">
         <div class="callout" data-animate="rise">
+          <div class="benefit-strip" data-justify="start" aria-label="Beneficios Discord">
+            <div class="benefit-strip__item" data-tone="violet"><span class="benefit-strip__icon" aria-hidden="true"><i data-lucide="discord"></i></span><span class="benefit-strip__label">Discord Ready</span></div>
+            <div class="benefit-strip__item" data-tone="pink"><span class="benefit-strip__icon" aria-hidden="true"><i data-lucide="badge-percent"></i></span><span class="benefit-strip__label">Precios bajos</span></div>
+            <div class="benefit-strip__item" data-tone="mint"><span class="benefit-strip__icon" aria-hidden="true"><i data-lucide="sparkles"></i></span><span class="benefit-strip__label">Decoraciones premium</span></div>
+            <div class="benefit-strip__item" data-tone="amber"><span class="benefit-strip__icon" aria-hidden="true"><i data-lucide="banknote"></i></span><span class="benefit-strip__label">Transferencia MX</span></div>
+            <div class="benefit-strip__item" data-tone="cyan"><span class="benefit-strip__icon" aria-hidden="true"><i data-lucide="credit-card"></i></span><span class="benefit-strip__label">PayPal</span></div>
+          </div>
           <div>
-            <div class="chip-stack" role="presentation">
-              <span class="chip" data-tone="violet"><i data-lucide="discord" aria-hidden="true"></i> Discord Ready</span>
-              <span class="chip" data-tone="mint"><i data-lucide="sparkles" aria-hidden="true"></i> Entrega guiada</span>
-              <span class="chip" data-tone="cyan"><i data-lucide="shield-check" aria-hidden="true"></i> Evidencia obligatoria</span>
-            </div>
             <h1 class="callout__title">Paquetes Discord: boosts, Nitro y decoraciones</h1>
-            <p class="callout__body">Haz que tu servidor luzca profesional. Automatizamos la entrega de boosts, gestionamos Nitro y cuidamos cada decoración para que no pierdas tiempo en tickets eternos. Las decoraciones pertenecen a Discord; Dedos.xyz solo facilita la compra sin afiliación oficial.</p>
+            <p class="callout__body">Haz que tu servidor luzca profesional con entregas guiadas, precios centrados y seguimiento instantáneo. Coordinamos Nitro, boosts y decoraciones oficiales con métodos de pago flexibles y tiempos de respuesta ultrarrápidos.</p>
           </div>
           <div class="callout__actions">
             <a class="btn btn--primary" href="https://discord.gg/dedos" data-discord-link><i data-lucide="rocket" aria-hidden="true"></i> Abrir ticket</a>
@@ -87,13 +91,13 @@
     <section class="section">
       <div class="shell">
         <div class="section__head" data-align="center" data-animate="fade">
-          <div class="chip-stack" role="presentation">
-            <span class="chip" data-tone="violet"><i data-lucide="rocket" aria-hidden="true"></i> Boosts instantáneos</span>
-            <span class="chip" data-tone="mint"><i data-lucide="badge-check" aria-hidden="true"></i> Nitro verificado</span>
-            <span class="chip" data-tone="pink"><i data-lucide="palette" aria-hidden="true"></i> Decoraciones legales</span>
+          <div class="benefit-strip" aria-label="Ventajas principales" data-justify="center">
+            <div class="benefit-strip__item" data-tone="violet"><span class="benefit-strip__icon" aria-hidden="true"><i data-lucide="rocket"></i></span><span class="benefit-strip__label">Boosts instantáneos</span></div>
+            <div class="benefit-strip__item" data-tone="mint"><span class="benefit-strip__icon" aria-hidden="true"><i data-lucide="sparkles"></i></span><span class="benefit-strip__label">Nitro premium</span></div>
+            <div class="benefit-strip__item" data-tone="pink"><span class="benefit-strip__icon" aria-hidden="true"><i data-lucide="palette"></i></span><span class="benefit-strip__label">Decoraciones oficiales</span></div>
           </div>
           <h2 class="section__title">Ofertas principales</h2>
-          <p class="section__lead">Precios expresados en MXN y USD calculado al momento. Todas las compras incluyen soporte 1:1 y comprobantes.</p>
+          <p class="section__lead">Precios expresados en MXN y USD calculado al momento. Todas las compras incluyen soporte 1:1 y confirmación visual para que solo te preocupes por disfrutar tu servidor.</p>
         </div>
         <div class="plan-grid" data-discord-offers></div>
         <div class="card card--notice" data-animate="fade">
@@ -110,9 +114,9 @@
     <section class="section" id="decoraciones">
       <div class="shell">
         <div class="section__head" data-align="center" data-animate="fade">
-          <div class="chip-stack" role="presentation">
-            <span class="chip" data-tone="pink"><i data-lucide="sparkles" aria-hidden="true"></i> Perfil animado</span>
-            <span class="chip" data-tone="violet"><i data-lucide="scissors" aria-hidden="true"></i> Ahorro real</span>
+          <div class="benefit-strip" aria-label="Ventajas decoraciones" data-justify="center">
+            <div class="benefit-strip__item" data-tone="pink"><span class="benefit-strip__icon" aria-hidden="true"><i data-lucide="sparkles"></i></span><span class="benefit-strip__label">Perfil animado</span></div>
+            <div class="benefit-strip__item" data-tone="violet"><span class="benefit-strip__icon" aria-hidden="true"><i data-lucide="scissors"></i></span><span class="benefit-strip__label">Ahorro real</span></div>
           </div>
           <h2 class="section__title">Decoraciones legales, precio reducido</h2>
           <p class="section__lead">Comparativa directa contra el precio oficial de Discord. Nuestros valores en MXN se recalculan con el tipo de cambio del día.</p>
@@ -142,17 +146,6 @@
       </div>
     </section>
 
-    <section class="section section--compact">
-      <div class="shell">
-        <div class="consent-banner" data-animate="fade">
-          <div class="chip-stack" role="presentation">
-            <span class="chip" data-tone="pink"><i data-lucide="file-text" aria-hidden="true"></i> TOS Dedos.xyz</span>
-            <span class="chip" data-tone="violet"><i data-lucide="shield-off" aria-hidden="true"></i> No afiliados</span>
-          </div>
-          <p class="consent-banner__text">Al comprar aceptas las <a href="tos.html">condiciones de Dedos.xyz</a>. El equipo confirmará todo dentro del ticket.</p>
-        </div>
-      </div>
-    </section>
   </main>
 
   <footer class="page-footer">
