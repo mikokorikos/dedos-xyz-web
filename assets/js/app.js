@@ -176,7 +176,7 @@
     },
     {
       title: 'Experiencia premium',
-      copy: 'Cards glassmorphism, precios centrados y confirmación visual en cada paso.',
+      copy: 'Cards con precios centrados, recordatorios de promos y confirmación visual en cada paso.',
       icon: 'sparkles',
       tone: 'pink'
     }
