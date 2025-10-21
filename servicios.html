@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/app.css" />
-  <script defer src="https://unpkg.com/lucide@latest"></script>
+  <script defer src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
 <body data-page="services" data-discord-invite="dedos" data-exchange-rate="0.0585" data-exchange-updated="2024-05-14T00:00:00Z">
   <div class="backdrop" data-fx-backdrop>
@@ -33,12 +33,14 @@
             <li><a class="site-nav__link" data-section-link="catalogo" href="index.html#catalogo">Catálogo</a></li>
             <li><a class="site-nav__link" data-section-link="por-que" href="index.html#por-que">¿Por qué?</a></li>
             <li><a class="site-nav__link" data-section-link="servicios" href="index.html#servicios">Servicios</a></li>
+            <li><a class="site-nav__link" data-section-link="beneficios" href="index.html#beneficios">Beneficios</a></li>
+            <li><a class="site-nav__link" data-section-link="pagos" href="index.html#pagos">Pagos</a></li>
             <li><a class="site-nav__link" data-section-link="faq" href="index.html#faq">FAQ</a></li>
             <li><a class="site-nav__link" href="robux.html">Planes Robux</a></li>
             <li><a class="site-nav__link" href="servicios.html">Servicios digitales</a></li>
             <li><a class="site-nav__link" href="discord.html">Paquetes Discord</a></li>
-            <li><a class="site-nav__link" href="tos.html">TOS</a></li>
             <li><a class="site-nav__link" href="roblox.html">Grupo de Roblox</a></li>
+            <li><a class="site-nav__link" href="tos.html">Términos</a></li>
           </ul>
         </nav>
         <div class="site-header__actions">
@@ -52,12 +54,14 @@
         <a class="mobile-drawer__link" data-section-link="catalogo" href="index.html#catalogo">Catálogo</a>
         <a class="mobile-drawer__link" data-section-link="por-que" href="index.html#por-que">¿Por qué?</a>
         <a class="mobile-drawer__link" data-section-link="servicios" href="index.html#servicios">Servicios</a>
+        <a class="mobile-drawer__link" data-section-link="beneficios" href="index.html#beneficios">Beneficios</a>
+        <a class="mobile-drawer__link" data-section-link="pagos" href="index.html#pagos">Pagos</a>
         <a class="mobile-drawer__link" data-section-link="faq" href="index.html#faq">FAQ</a>
         <a class="mobile-drawer__link" href="robux.html">Planes Robux</a>
         <a class="mobile-drawer__link" href="servicios.html">Servicios digitales</a>
         <a class="mobile-drawer__link" href="discord.html">Paquetes Discord</a>
-        <a class="mobile-drawer__link" href="tos.html">TOS</a>
         <a class="mobile-drawer__link" href="roblox.html">Grupo de Roblox</a>
+        <a class="mobile-drawer__link" href="tos.html">Términos</a>
         <a class="btn btn--primary" href="https://discord.gg/dedos" data-discord-link>Entrar a Discord →</a>
       </div>
     </nav>
@@ -67,18 +71,20 @@
     <section class="section">
       <div class="shell">
         <div class="callout" data-animate="rise">
+          <div class="benefit-strip" data-justify="start" aria-label="Beneficios de servicios">
+            <div class="benefit-strip__item" data-tone="pink"><span class="benefit-strip__icon" aria-hidden="true"><i data-lucide="badge-percent"></i></span><span class="benefit-strip__label">Precios bajos</span></div>
+            <div class="benefit-strip__item" data-tone="violet"><span class="benefit-strip__icon" aria-hidden="true"><i data-lucide="zap"></i></span><span class="benefit-strip__label">Activación veloz</span></div>
+            <div class="benefit-strip__item" data-tone="mint"><span class="benefit-strip__icon" aria-hidden="true"><i data-lucide="coins"></i></span><span class="benefit-strip__label">Litecoin</span></div>
+            <div class="benefit-strip__item" data-tone="amber"><span class="benefit-strip__icon" aria-hidden="true"><i data-lucide="banknote"></i></span><span class="benefit-strip__label">Transferencia MX</span></div>
+            <div class="benefit-strip__item" data-tone="cyan"><span class="benefit-strip__icon" aria-hidden="true"><i data-lucide="credit-card"></i></span><span class="benefit-strip__label">PayPal</span></div>
+          </div>
           <div>
-            <div class="chip-stack" role="presentation">
-              <span class="chip" data-tone="mint"><i data-lucide="grid" aria-hidden="true"></i> Servicios digitales</span>
-              <span class="chip" data-tone="pink"><i data-lucide="badge-percent" aria-hidden="true"></i> MXN &amp; USD</span>
-              <span class="chip" data-tone="cyan"><i data-lucide="shield" aria-hidden="true"></i> Sin afiliación oficial</span>
-            </div>
             <h1 class="callout__title">Suscripciones premium al precio justo</h1>
-            <p class="callout__body">Spotify, YouTube, Crunchyroll, ChatGPT Plus y VPNs. Todo se gestiona vía ticket, con pagos manuales (PayPal, SPEI, depósitos OXXO o Litecoin) y soporte humano. Reembolsos solo como cortesía, nunca obligación, y no recabamos datos personales: si compartes información extra es bajo tu responsabilidad.</p>
+            <p class="callout__body">Spotify, YouTube, Crunchyroll, ChatGPT Plus y VPNs con soporte humano que responde en minutos. Todas las cards muestran MXN y USD en equilibrio para que compares sin esfuerzo, mientras nuestro equipo coordina la activación y los métodos de pago que prefieras.</p>
           </div>
           <div class="callout__actions">
             <a class="btn btn--primary" href="https://discord.gg/dedos" data-discord-link><i data-lucide="message-circle" aria-hidden="true"></i> Abrir ticket</a>
-            <a class="btn btn--ghost" href="tos.html"><i data-lucide="file-text" aria-hidden="true"></i> Leer TOS</a>
+            <a class="btn btn--ghost" href="discord.html"><i data-lucide="help-circle" aria-hidden="true"></i> ¿Necesitas ayuda?</a>
           </div>
         </div>
       </div>
@@ -87,13 +93,13 @@
     <section class="section" id="vpn">
       <div class="shell">
         <div class="section__head" data-align="center" data-animate="fade">
-          <div class="chip-stack" role="presentation">
-            <span class="chip" data-tone="violet"><i data-lucide="wallet" aria-hidden="true"></i> Pago manual</span>
-            <span class="chip" data-tone="mint"><i data-lucide="badge-check" aria-hidden="true"></i> Evidencia en ticket</span>
-            <span class="chip" data-tone="pink"><i data-lucide="clock" aria-hidden="true"></i> MXN ↔ USD vivo</span>
+          <div class="benefit-strip" aria-label="Ventajas del catálogo" data-justify="center">
+            <div class="benefit-strip__item" data-tone="violet"><span class="benefit-strip__icon" aria-hidden="true"><i data-lucide="wallet"></i></span><span class="benefit-strip__label">Pagos flexibles</span></div>
+            <div class="benefit-strip__item" data-tone="mint"><span class="benefit-strip__icon" aria-hidden="true"><i data-lucide="sparkles"></i></span><span class="benefit-strip__label">Activación guiada</span></div>
+            <div class="benefit-strip__item" data-tone="pink"><span class="benefit-strip__icon" aria-hidden="true"><i data-lucide="clock"></i></span><span class="benefit-strip__label">MXN ↔ USD vivo</span></div>
           </div>
           <h2 class="section__title">Catálogo de servicios</h2>
-          <p class="section__lead">Consulta precios en MXN y equivalencia en USD calculada con el tipo de cambio del día. Cada plan requiere evidencia en video y Transaction ID.</p>
+          <p class="section__lead">Consulta precios en MXN y equivalencia en USD calculada con el tipo de cambio del día. Nuestro equipo confirma todo en vivo mientras disfrutas de una experiencia premium.</p>
         </div>
         <div class="plan-grid" data-digital-services></div>
         <div class="card card--notice" data-animate="fade">
@@ -111,9 +117,9 @@
       <div class="shell">
         <div class="callout" data-animate="rise">
           <div>
-            <span class="tag" data-tone="cyan"><i data-lucide="shield-off" aria-hidden="true"></i> No afiliados</span>
-            <h2 class="callout__title">Marcas independientes</h2>
-            <p class="callout__body">Dedos.xyz no es distribuidor autorizado de Spotify, YouTube, Crunchyroll, OpenAI, Roblox ni ninguna otra marca mencionada. Los nombres se usan solo para describir el servicio y todos los pagos se gestionan de forma informal.</p>
+            <span class="tag" data-tone="violet"><i data-lucide="sparkles" aria-hidden="true"></i> Experiencia premium</span>
+            <h2 class="callout__title">Tu hub de suscripciones confiables</h2>
+            <p class="callout__body">Centraliza Spotify, YouTube, Crunchyroll, ChatGPT y más en un mismo panel. Ajustamos cada activación a tu necesidad, con soporte humano, cards simétricas y recordatorios automáticos para que no pierdas ninguna renovación.</p>
           </div>
           <div class="callout__actions">
             <a class="btn btn--primary" href="https://discord.gg/dedos" data-discord-link>Hablar con el staff</a>
@@ -123,17 +129,6 @@
       </div>
     </section>
 
-    <section class="section section--compact">
-      <div class="shell">
-        <div class="consent-banner" data-animate="fade">
-          <div class="chip-stack" role="presentation">
-            <span class="chip" data-tone="pink"><i data-lucide="file-text" aria-hidden="true"></i> TOS Dedos.xyz</span>
-            <span class="chip" data-tone="violet"><i data-lucide="handshake" aria-hidden="true"></i> Compra informal</span>
-          </div>
-          <p class="consent-banner__text">Al comprar aceptas las <a href="tos.html">condiciones de Dedos.xyz</a>. Si tienes dudas revísalas antes de pagar.</p>
-        </div>
-      </div>
-    </section>
   </main>
 
   <footer class="page-footer">
