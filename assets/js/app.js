@@ -739,92 +739,25 @@
 
   const ensureBrowserEnvironment = () => typeof win !== 'undefined' && typeof doc !== 'undefined';
 
-  const openWithFallback = ({ appUrl, webUrl, timeoutMs = 1200 }) => {
+  const openWithFallback = ({ webUrl }) => {
     if (!ensureBrowserEnvironment()) return;
 
-    let cancelled = false;
-    const start = Date.now();
-
-    const cancelFallback = () => {
-      if (cancelled) return;
-      cancelled = true;
-      win.clearTimeout(timer);
-      doc.removeEventListener('visibilitychange', onVisibilityChange);
-      win.removeEventListener('pagehide', cancelFallback);
-    };
-
-    const onVisibilityChange = () => {
-      if (doc.visibilityState === 'hidden') {
-        cancelFallback();
-      }
-    };
-
-    const timer = win.setTimeout(() => {
-      if (cancelled) return;
-      if (Date.now() - start < timeoutMs + 80) {
-        cancelFallback();
-        win.location.href = webUrl;
-      }
-    }, timeoutMs);
-
-    doc.addEventListener('visibilitychange', onVisibilityChange);
-    win.addEventListener('pagehide', cancelFallback);
-
-    try {
-      const ua = navigator.userAgent;
-      const isIOS = /iPhone|iPad|iPod/i.test(ua);
-      if (isIOS) {
-        const iframe = doc.createElement('iframe');
-        iframe.style.display = 'none';
-        iframe.src = appUrl;
-        doc.body.appendChild(iframe);
-        win.setTimeout(() => iframe.remove(), timeoutMs + 220);
-      } else {
-        win.location.href = appUrl;
-      }
-    } catch (error) {
-      cancelFallback();
+    const opened = win.open(webUrl, '_blank', 'noopener,noreferrer');
+    if (!opened) {
       win.location.href = webUrl;
     }
   };
 
-  const openDiscordInvite = (invite, timeoutMs) => {
+  const openDiscordInvite = (invite) => {
     if (!ensureBrowserEnvironment()) return;
     const code = invite.replace(/^https?:\/\/(?:www\.)?discord\.gg\//i, '').trim();
-    const ua = navigator.userAgent;
-    const isAndroid = /Android/i.test(ua);
     const webUrl = `https://discord.gg/${code}`;
-
-    if (isAndroid) {
-      const intent = `intent://discord.com/invite/${code}#Intent;package=com.discord;scheme=https;end;`;
-      openWithFallback({ appUrl: intent, webUrl, timeoutMs: timeoutMs ?? 900 });
-      return;
-    }
-
-    const appUrl = `discord://-/invite/${code}`;
-    const mobile = /Android|iPhone|iPad|iPod/i.test(ua);
-    openWithFallback({ appUrl, webUrl, timeoutMs: timeoutMs ?? (mobile ? 900 : 1400) });
+    openWithFallback({ webUrl });
   };
 
-  const openRobloxDestination = (url, timeoutMs) => {
+  const openRobloxDestination = (url) => {
     if (!ensureBrowserEnvironment()) return;
-    const ua = navigator.userAgent;
-    const isAndroid = /Android/i.test(ua);
-    const isMobile = /Android|iPhone|iPad|iPod/i.test(ua);
-
-    if (isAndroid) {
-      const fallback = encodeURIComponent(url);
-      const intent = `intent://roblox.com/#Intent;scheme=roblox;package=com.roblox.client;S.browser_fallback_url=${fallback};end;`;
-      openWithFallback({ appUrl: intent, webUrl: url, timeoutMs: timeoutMs ?? 900 });
-      return;
-    }
-
-    if (isMobile) {
-      openWithFallback({ appUrl: 'roblox://navigation/app', webUrl: url, timeoutMs: timeoutMs ?? 900 });
-      return;
-    }
-
-    openWithFallback({ appUrl: 'roblox-player://', webUrl: url, timeoutMs: timeoutMs ?? 1500 });
+    openWithFallback({ webUrl: url });
   };
 
   const setupLinkHandlers = () => {
