@@ -176,10 +176,13 @@ main {
 .backdrop__veil {
   position: fixed;
   inset: -15vmax;
-  background: radial-gradient(50vmax 50vmax at 20% 10%, rgba(255, 255, 255, 0.6), transparent 65%),
-    radial-gradient(40vmax 40vmax at 80% 20%, rgba(255, 255, 255, 0.4), transparent 60%);
-  filter: blur(60px);
-  opacity: 0.4;
+  background:
+    radial-gradient(52vmax 52vmax at 18% 12%, rgba(0, 113, 227, 0.12), transparent 68%),
+    radial-gradient(48vmax 48vmax at 82% 8%, rgba(142, 130, 255, 0.12), transparent 65%),
+    radial-gradient(44vmax 44vmax at 48% 85%, rgba(78, 208, 169, 0.1), transparent 70%),
+    radial-gradient(60vmax 60vmax at 50% 50%, rgba(255, 255, 255, 0.55), transparent 75%);
+  filter: blur(70px);
+  opacity: 0.48;
 }
 
 .backdrop__blob {

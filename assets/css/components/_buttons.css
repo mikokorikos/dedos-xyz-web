@@ -174,83 +174,83 @@
 .benefit-strip__icon {
   display: grid;
   place-items: center;
-  width: 1.9rem;
-  height: 1.9rem;
+  width: 2.1rem;
+  height: 2.1rem;
   border-radius: 0.9rem;
-  background: rgba(0, 0, 0, 0.05);
-  color: #0071e3;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(245, 246, 250, 0.82));
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  color: currentColor;
+  box-shadow: 0 14px 26px rgba(31, 41, 55, 0.12);
 }
 
 .benefit-strip__icon i {
-  width: 1.15rem;
-  height: 1.15rem;
+  width: 1.2rem;
+  height: 1.2rem;
 }
 
 .benefit-strip__item[data-tone="pink"] {
-  color: #ffd9f2;
-}
-
-.benefit-strip__item[data-tone="violet"] {
-  color: #efe1ff;
-}
-
-.benefit-strip__item[data-tone="cyan"] {
-  color: #ddfbff;
-}
-
-.benefit-strip__item[data-tone="pink"] {
-  background: rgba(255, 109, 149, 0.16);
-  border-color: rgba(255, 109, 149, 0.32);
+  background: rgba(255, 109, 149, 0.18);
+  border-color: rgba(255, 109, 149, 0.34);
   color: #c41d61;
-}
-
-.benefit-strip__item[data-tone="violet"] {
-  background: rgba(142, 130, 255, 0.16);
-  border-color: rgba(142, 130, 255, 0.32);
-  color: #4232b8;
-}
-
-.benefit-strip__item[data-tone="cyan"] {
-  background: rgba(48, 176, 255, 0.16);
-  border-color: rgba(48, 176, 255, 0.32);
-  color: #0f66a8;
-}
-
-.benefit-strip__item[data-tone="mint"] {
-  background: rgba(78, 208, 169, 0.16);
-  border-color: rgba(78, 208, 169, 0.32);
-  color: #1e7a5b;
-}
-
-.benefit-strip__item[data-tone="amber"] {
-  background: rgba(255, 196, 120, 0.18);
-  border-color: rgba(255, 196, 120, 0.32);
-  color: #9f5a1d;
 }
 
 .benefit-strip__item[data-tone="pink"] .benefit-strip__icon {
-  background: rgba(255, 109, 149, 0.22);
-  color: #c41d61;
+  border-color: rgba(255, 109, 149, 0.28);
+  background:
+    radial-gradient(circle at 30% 25%, rgba(255, 109, 149, 0.2), transparent 65%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(255, 246, 249, 0.85));
 }
 
-.benefit-strip__item[data-tone="violet"] .benefit-strip__icon {
-  background: rgba(142, 130, 255, 0.22);
+.benefit-strip__item[data-tone="violet"] {
+  background: rgba(142, 130, 255, 0.18);
+  border-color: rgba(142, 130, 255, 0.34);
   color: #4232b8;
 }
 
-.benefit-strip__item[data-tone="cyan"] .benefit-strip__icon {
-  background: rgba(48, 176, 255, 0.22);
+.benefit-strip__item[data-tone="violet"] .benefit-strip__icon {
+  border-color: rgba(142, 130, 255, 0.28);
+  background:
+    radial-gradient(circle at 30% 25%, rgba(142, 130, 255, 0.2), transparent 65%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(246, 244, 255, 0.85));
+}
+
+.benefit-strip__item[data-tone="cyan"] {
+  background: rgba(48, 176, 255, 0.18);
+  border-color: rgba(48, 176, 255, 0.34);
   color: #0f66a8;
 }
 
-.benefit-strip__item[data-tone="mint"] .benefit-strip__icon {
-  background: rgba(78, 208, 169, 0.22);
+.benefit-strip__item[data-tone="cyan"] .benefit-strip__icon {
+  border-color: rgba(48, 176, 255, 0.28);
+  background:
+    radial-gradient(circle at 30% 25%, rgba(48, 176, 255, 0.2), transparent 65%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(238, 246, 255, 0.85));
+}
+
+.benefit-strip__item[data-tone="mint"] {
+  background: rgba(78, 208, 169, 0.18);
+  border-color: rgba(78, 208, 169, 0.34);
   color: #1e7a5b;
 }
 
+.benefit-strip__item[data-tone="mint"] .benefit-strip__icon {
+  border-color: rgba(78, 208, 169, 0.28);
+  background:
+    radial-gradient(circle at 30% 25%, rgba(78, 208, 169, 0.2), transparent 65%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(240, 255, 247, 0.85));
+}
+
+.benefit-strip__item[data-tone="amber"] {
+  background: rgba(255, 193, 94, 0.18);
+  border-color: rgba(255, 193, 94, 0.34);
+  color: #9a6200;
+}
+
 .benefit-strip__item[data-tone="amber"] .benefit-strip__icon {
-  background: rgba(255, 196, 120, 0.22);
-  color: #9f5a1d;
+  border-color: rgba(255, 193, 94, 0.28);
+  background:
+    radial-gradient(circle at 30% 25%, rgba(255, 193, 94, 0.2), transparent 65%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(255, 248, 233, 0.85));
 }
 
 .benefit-strip__label {
