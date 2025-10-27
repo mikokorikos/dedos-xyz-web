@@ -4,6 +4,63 @@
   const doc = document;
   const body = doc.body;
   const win = window;
+  const root = doc.documentElement;
+
+  const THEME_STORAGE_KEY = 'dedos-theme';
+
+  const getStoredTheme = () => {
+    try {
+      const value = win.localStorage.getItem(THEME_STORAGE_KEY);
+      return value === 'dark' || value === 'light' ? value : null;
+    } catch (error) {
+      return null;
+    }
+  };
+
+  const storeTheme = (value) => {
+    try {
+      win.localStorage.setItem(THEME_STORAGE_KEY, value);
+    } catch (error) {
+      // Ignore storage failures (private mode, etc.)
+    }
+  };
+
+  const applyTheme = (theme, { persist = false } = {}) => {
+    const normalized = theme === 'dark' ? 'dark' : 'light';
+    root.dataset.theme = normalized;
+    if (persist) {
+      storeTheme(normalized);
+    }
+    const toggle = doc.querySelector('[data-theme-toggle]');
+    if (toggle) {
+      toggle.setAttribute('aria-pressed', normalized === 'dark' ? 'true' : 'false');
+      toggle.setAttribute(
+        'aria-label',
+        normalized === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'
+      );
+    }
+  };
+
+  const setupThemeToggle = () => {
+    const toggle = doc.querySelector('[data-theme-toggle]');
+    if (!toggle) return;
+
+    const media = win.matchMedia('(prefers-color-scheme: dark)');
+    const stored = getStoredTheme();
+    const initial = stored || root.dataset.theme || (media.matches ? 'dark' : 'light');
+    applyTheme(initial, { persist: false });
+
+    toggle.addEventListener('click', () => {
+      const current = root.dataset.theme === 'dark' ? 'dark' : 'light';
+      const next = current === 'dark' ? 'light' : 'dark';
+      applyTheme(next, { persist: true });
+    });
+
+    media.addEventListener('change', (event) => {
+      if (getStoredTheme()) return;
+      applyTheme(event.matches ? 'dark' : 'light');
+    });
+  };
 
   const HERO_STATS = [
     {
@@ -417,7 +474,7 @@
     clearRedirectTimers();
     hideRedirectOverlay();
     if (config.type === 'discord') {
-      openDiscordInvite(config.invite ?? body.dataset.discordInvite ?? 'dedos', config.timeoutMs);
+      openDiscordInvite(config.invite ?? body.dataset.discordInvite ?? 'dedosxyz', config.timeoutMs);
     } else if (config.type === 'roblox') {
       openRobloxDestination(
         config.url ?? body.dataset.robloxUrl ?? 'https://www.roblox.com/',
@@ -585,7 +642,7 @@
     const footer = withCta && item.cta
       ? `<div class="card__footer">${item.href
           ? `<a class="btn btn--secondary" href="${item.href}">${item.cta}</a>`
-          : `<a class="btn btn--secondary" href="https://discord.gg/${body.dataset.discordInvite || 'dedos'}" data-discord-link>${item.cta}</a>`
+          : `<a class="btn btn--secondary" href="discord.html" target="_blank" rel="noopener noreferrer" data-discord-link>${item.cta}</a>`
         }</div>`
       : '';
     const subtitle = item.subtitle ? `<p class="card__subtitle">${item.subtitle}</p>` : '';
@@ -760,6 +817,15 @@
     openWithFallback({ webUrl: url });
   };
 
+  const openTransitionPage = (target) => {
+    if (!ensureBrowserEnvironment()) return;
+    const page = target === 'roblox' ? 'roblox.html' : 'discord.html';
+    const opened = win.open(page, '_blank', 'noopener,noreferrer');
+    if (!opened) {
+      win.location.href = page;
+    }
+  };
+
   const setupLinkHandlers = () => {
     doc.addEventListener('click', (event) => {
       const continueButton = event.target.closest('[data-redirect-continue]');
@@ -778,9 +844,15 @@
 
       const discordLink = event.target.closest('[data-discord-link]');
       if (discordLink) {
+        const page = body.dataset.page;
+        if (page !== 'discord-services' && page !== 'roblox') {
+          event.preventDefault();
+          openTransitionPage('discord');
+          return;
+        }
         event.preventDefault();
         const href = discordLink.getAttribute('href');
-        const invite = href && href.trim() ? href : body.dataset.discordInvite || 'dedos';
+        const invite = href && href.trim() ? href : body.dataset.discordInvite || 'https://discord.gg/dedosxyz';
         beginPromoRedirect({
           type: 'discord',
           invite,
@@ -791,6 +863,12 @@
 
       const robloxLink = event.target.closest('[data-roblox-link]');
       if (robloxLink) {
+        const page = body.dataset.page;
+        if (page !== 'roblox') {
+          event.preventDefault();
+          openTransitionPage('roblox');
+          return;
+        }
         event.preventDefault();
         const href = robloxLink.getAttribute('href');
         beginPromoRedirect({
@@ -878,7 +956,7 @@
       ],
       delivery: 'Liberamos el pago y recibes los Robux en cuanto Roblox procesa la venta tras el periodo inicial.',
       extras: ['Seguimiento en vivo en tu ticket.', 'Comisiones mínimas.'],
-      cta: { label: 'Ir al grupo de Roblox', href: body.dataset.robloxUrl || 'https://www.roblox.com/' }
+      cta: { label: 'Ir al grupo de Roblox', href: 'roblox.html' }
     },
     {
       id: 'gift',
@@ -989,7 +1067,7 @@
           </section>
           ${extras}
         </div>
-        ${plan.cta ? `<a class="btn btn--primary catalog-card__cta" href="${plan.cta.href}" target="_blank" rel="noopener" data-roblox-link>${plan.cta.label}</a>` : ''}
+        ${plan.cta ? `<a class="btn btn--primary catalog-card__cta" href="${plan.cta.href}" target="_blank" rel="noopener noreferrer" data-roblox-link>${plan.cta.label}</a>` : ''}
       </article>
     `);
   };
@@ -1084,7 +1162,7 @@
     if (target === 'discord') {
       beginPromoRedirect({
         type: 'discord',
-        invite: body.dataset.redirectInvite || body.dataset.discordInvite || 'dedos',
+        invite: body.dataset.redirectInvite || body.dataset.discordInvite || 'dedosxyz',
         delayMs,
         timeoutMs
       });
@@ -1196,6 +1274,7 @@
   };
 
   const init = () => {
+    setupThemeToggle();
     setupReveal();
     setupCurrentYear();
     setupHeaderShadow();

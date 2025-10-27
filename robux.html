@@ -7,11 +7,25 @@
   <meta name="description" content="Elige recarga por grupo, regalo o gamepass. Acompañamiento 1:1 en Discord y seguimiento en vivo para cada compra." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <meta name="theme-color" content="#0b0b15" />
+  <script>
+    (function () {
+      try {
+        var storageKey = 'dedos-theme';
+        var stored = localStorage.getItem(storageKey);
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme = stored === 'dark' || stored === 'light' ? stored : prefersDark ? 'dark' : 'light';
+        document.documentElement.dataset.theme = theme;
+      } catch (error) {
+        document.documentElement.dataset.theme = 'light';
+      }
+    })();
+  </script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/app.css" />
   <script defer src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
-<body data-page="robux" data-discord-invite="dedos" data-roblox-url="https://www.roblox.com/es/communities/12082479/unnamed#!/about" data-exchange-rate="0.0585" data-exchange-updated="2024-05-14T00:00:00Z">
+<body data-page="robux" data-discord-invite="dedosxyz" data-roblox-url="https://www.roblox.com/es/communities/12082479/unnamed#!/about" data-exchange-rate="0.0585" data-exchange-updated="2024-05-14T00:00:00Z">
   <div class="backdrop" data-fx-backdrop>
     <canvas class="backdrop__canvas" data-fx-orbs aria-hidden="true"></canvas>
     <canvas class="backdrop__canvas" data-fx-stars aria-hidden="true"></canvas>
@@ -43,7 +57,12 @@
           </ul>
         </nav>
         <div class="site-header__actions">
-          <a class="btn btn--primary hide-on-mobile" href="https://discord.gg/dedos" data-discord-link>Entrar a Discord</a>
+          <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false">
+            <span class="theme-toggle__sr">Cambiar a modo oscuro</span>
+            <i class="theme-toggle__icon theme-toggle__icon--sun" data-lucide="sun" aria-hidden="true"></i>
+            <i class="theme-toggle__icon theme-toggle__icon--moon" data-lucide="moon" aria-hidden="true"></i>
+          </button>
+          <a class="btn btn--primary hide-on-mobile" href="discord.html" target="_blank" rel="noopener noreferrer" data-discord-link>Entrar a Discord</a>
           <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="mobile-nav" aria-label="Abrir menú">☰</button>
         </div>
       </div>
@@ -60,7 +79,7 @@
         <a class="mobile-drawer__link" href="discord.html">Paquetes Discord</a>
         <a class="mobile-drawer__link" href="roblox.html">Grupo de Roblox</a>
         <a class="mobile-drawer__link" href="tos.html">Términos</a>
-        <a class="btn btn--primary" href="https://discord.gg/dedos" data-discord-link>Entrar a Discord →</a>
+        <a class="btn btn--primary" href="discord.html" target="_blank" rel="noopener noreferrer" data-discord-link>Entrar a Discord →</a>
       </div>
     </nav>
   </header>
@@ -81,7 +100,7 @@
             <p class="callout__body">Compra <strong>1,000 Robux</strong> desde 125&nbsp;MXN con conversión equilibrada a USD dentro de la misma card. Nuestro staff acompaña el proceso en vivo, confirma el tipo de cambio y entrega la recarga en minutos.</p>
           </div>
           <div class="callout__actions">
-            <a class="btn btn--primary" href="https://discord.gg/dedos" data-discord-link><i data-lucide="ticket" aria-hidden="true"></i> Abrir ticket</a>
+            <a class="btn btn--primary" href="discord.html" target="_blank" rel="noopener noreferrer" data-discord-link><i data-lucide="ticket" aria-hidden="true"></i> Abrir ticket</a>
             <a class="btn btn--ghost" href="discord.html"><i data-lucide="help-circle" aria-hidden="true"></i> ¿Problemas para unirte?</a>
           </div>
         </div>
@@ -120,7 +139,7 @@
           </div>
           <p class="card__body">1) Únete al Discord de Dedos.xyz y abre un ticket en la categoría de Robux. 2) Comparte tu método preferido y el enlace necesario (grupo, juego o gamepass). 3) Recibe confirmación del monto final y seguimiento hasta que los Robux estén en tu cuenta.</p>
           <div class="callout__actions">
-            <a class="btn btn--primary" href="https://discord.gg/dedos" data-discord-link>Abrir ticket</a>
+            <a class="btn btn--primary" href="discord.html" target="_blank" rel="noopener noreferrer" data-discord-link>Abrir ticket</a>
             <a class="btn btn--ghost" href="discord.html"><i data-lucide="help-circle" aria-hidden="true"></i> ¿Problemas en Discord?</a>
           </div>
         </article>
@@ -136,8 +155,8 @@
             <p class="callout__body">Ingresa al servidor, selecciona la categoría de Robux y comparte los datos de tu pedido. Nuestro staff confirmará el precio, te indicará los métodos de pago disponibles y te acompañará hasta la entrega.</p>
           </div>
           <div class="callout__actions">
-            <a class="btn btn--primary" href="https://discord.gg/dedos" data-discord-link>Entrar a Discord</a>
-            <a class="btn btn--secondary" href="https://www.roblox.com/es/communities/12082479/unnamed#!/about" data-roblox-link>Ir al grupo oficial</a>
+            <a class="btn btn--primary" href="discord.html" target="_blank" rel="noopener noreferrer" data-discord-link>Entrar a Discord</a>
+            <a class="btn btn--secondary" href="roblox.html" target="_blank" rel="noopener noreferrer" data-roblox-link>Ir al grupo oficial</a>
           </div>
         </div>
       </div>
@@ -145,13 +164,42 @@
 
   </main>
 
-  <footer class="page-footer">
+  <footer class="site-footer">
     <div class="shell">
-      <div class="page-footer__inner">
-        <div>© <span data-current-year></span> Dedos Store. Todos los derechos reservados.</div>
-        <div class="page-footer__links">
+      <div class="site-footer__grid">
+        <div class="site-footer__brand">
+          <a class="site-footer__logo" href="index.html">
+            <span class="site-brand__pulse" aria-hidden="true"></span>
+            <span>Dedos <span class="text-soft">Store</span></span>
+          </a>
+          <p class="site-footer__description">Recargas Robux, Discord y servicios digitales con soporte humano y comprobantes en vivo.</p>
+        </div>
+        <div>
+          <h3 class="site-footer__title">Navegación</h3>
+          <ul class="site-footer__list">
+            <li><a class="site-footer__link" href="index.html#catalogo">Catálogo</a></li>
+            <li><a class="site-footer__link" href="index.html#por-que">¿Por qué Dedos?</a></li>
+            <li><a class="site-footer__link" href="robux.html">Planes Robux</a></li>
+            <li><a class="site-footer__link" href="servicios.html">Servicios digitales</a></li>
+            <li><a class="site-footer__link" href="tos.html">Términos de servicio</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="site-footer__title">Soporte</h3>
+          <ul class="site-footer__list">
+            <li><a class="site-footer__link" href="discord.html" target="_blank" rel="noopener noreferrer" data-discord-link>Unirte a Discord</a></li>
+            <li><a class="site-footer__link" href="roblox.html" target="_blank" rel="noopener noreferrer" data-roblox-link>Grupo de Roblox</a></li>
+            <li><a class="site-footer__link" href="mailto:soporte@dedos.xyz">soporte@dedos.xyz</a></li>
+            <li><a class="site-footer__link" href="discord.html#ayuda-discord">Ayuda con invitaciones</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="site-footer__bottom">
+        <span>© <span data-current-year></span> Dedos.xyz. Todos los derechos reservados.</span>
+        <div class="site-footer__bottom-links">
           <a href="tos.html">Términos</a>
-          <a href="https://discord.gg/dedos" data-discord-link>Discord</a>
+          <a href="discord.html" target="_blank" rel="noopener noreferrer" data-discord-link>Servidor de Discord</a>
+          <a href="roblox.html" target="_blank" rel="noopener noreferrer" data-roblox-link>Grupo oficial</a>
         </div>
       </div>
     </div>
