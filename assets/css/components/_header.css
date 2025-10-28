@@ -11,7 +11,7 @@
 
 .site-header--solid {
   background: rgb(var(--surface-rgb) / 0.92);
-  box-shadow: 0 12px 32px rgba(17, 24, 39, 0.12);
+  box-shadow: var(--shadow-md);
   border-bottom-color: var(--color-border);
 }
 
@@ -56,7 +56,7 @@
   content: "";
   position: absolute;
   inset: -40%;
-  background: conic-gradient(from 90deg, transparent 0 120deg, rgba(255, 255, 255, 0.6) 150deg 210deg, transparent 240deg 360deg);
+  background: var(--header-toggle-glint);
   animation: spin 9s linear infinite;
 }
 
@@ -109,9 +109,9 @@
 
 .site-nav__link:focus-visible {
   text-decoration: none;
-  outline-color: rgba(0, 113, 227, 0.4);
+  outline-color: var(--focus-outline-soft);
   outline-offset: 6px;
-  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.18);
+  box-shadow: 0 0 0 3px var(--focus-ring-ambient);
 }
 
 .site-header__actions {
@@ -156,7 +156,7 @@
   border-radius: var(--radius-md);
   border: 1px solid var(--color-border);
   background: rgb(var(--surface-rgb) / 0.95);
-  box-shadow: 0 24px 40px rgba(17, 24, 39, 0.12);
+  box-shadow: var(--shadow-lg);
   overflow: hidden;
 }
 
