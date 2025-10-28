@@ -232,17 +232,98 @@
   const doc = document;
   const win = window;
   const body = doc.body;
+  const root = doc.documentElement;
   const page = body.dataset.page || 'home';
-  const discordInvite = body.dataset.discordInvite || 'dedos';
+  const THEME_STORAGE_KEY = 'dedos-theme';
+
+  const getStoredTheme = () => {
+    try {
+      const value = win.localStorage.getItem(THEME_STORAGE_KEY);
+      return value === 'dark' || value === 'light' ? value : null;
+    } catch (error) {
+      return null;
+    }
+  };
+
+  const storeTheme = (value) => {
+    try {
+      win.localStorage.setItem(THEME_STORAGE_KEY, value);
+    } catch (error) {
+      // ignore storage issues
+    }
+  };
+
+  const applyTheme = (theme, { persist = false } = {}) => {
+    const normalized = theme === 'dark' ? 'dark' : 'light';
+    root.dataset.theme = normalized;
+    if (persist) {
+      storeTheme(normalized);
+    }
+    const toggle = doc.querySelector('[data-theme-toggle]');
+    if (toggle) {
+      toggle.setAttribute('aria-pressed', normalized === 'dark' ? 'true' : 'false');
+      toggle.setAttribute(
+        'aria-label',
+        normalized === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'
+      );
+    }
+  };
+
+  const setupThemeToggle = () => {
+    const toggle = doc.querySelector('[data-theme-toggle]');
+    if (!toggle) return;
+
+    const media = win.matchMedia('(prefers-color-scheme: dark)');
+    const stored = getStoredTheme();
+    const initial = stored || root.dataset.theme || (media.matches ? 'dark' : 'light');
+    applyTheme(initial, { persist: false });
+
+    toggle.addEventListener('click', () => {
+      const current = root.dataset.theme === 'dark' ? 'dark' : 'light';
+      applyTheme(current === 'dark' ? 'light' : 'dark', { persist: true });
+    });
+
+    media.addEventListener('change', (event) => {
+      if (getStoredTheme()) return;
+      applyTheme(event.matches ? 'dark' : 'light');
+    });
+  };
+
+  const discordInvite = body.dataset.discordInvite || 'dedosxyz';
   const robloxUrl = body.dataset.robloxUrl || 'https://www.roblox.com/es/communities/12082479/unnamed#!/about';
 
+  const DISCORD_ICON_PATH =
+    'M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.309 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z';
+
   const createElement = (markup) => {
-  const template = doc.createElement('template');
-  template.innerHTML = markup.trim();
-  return template.content.firstElementChild;
-};
+    const template = doc.createElement('template');
+    template.innerHTML = markup.trim();
+    return template.content.firstElementChild;
+  };
+
+  const ensureBrandIcons = () => {
+    const nodes = doc.querySelectorAll('i[data-lucide="discord"]');
+    nodes.forEach((node) => {
+      const svg = doc.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('viewBox', '0 0 24 24');
+      svg.setAttribute('width', '24');
+      svg.setAttribute('height', '24');
+      svg.setAttribute('focusable', 'false');
+      svg.setAttribute('aria-hidden', node.getAttribute('aria-hidden') ?? 'true');
+      const existingClass = node.getAttribute('class');
+      const classValue = existingClass ? `${existingClass} lucide lucide-discord` : 'lucide lucide-discord';
+      svg.setAttribute('class', classValue);
+      const path = doc.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('fill', 'currentColor');
+      path.setAttribute('stroke', 'none');
+      path.setAttribute('d', DISCORD_ICON_PATH);
+      svg.appendChild(path);
+      node.replaceWith(svg);
+    });
+  };
 
   const applyIcons = () => {
+    ensureBrandIcons();
     if (win.lucide?.createIcons) {
       win.lucide.createIcons();
     }
@@ -427,7 +508,7 @@
     clearRedirectTimers();
     hideRedirectOverlay();
     if (config.type === 'discord') {
-      openDiscordInvite(config.invite ?? body.dataset.discordInvite ?? 'dedos', config.timeoutMs);
+      openDiscordInvite(config.invite ?? body.dataset.discordInvite ?? 'dedosxyz', config.timeoutMs);
     } else if (config.type === 'roblox') {
       openRobloxDestination(
         config.url ?? body.dataset.robloxUrl ?? 'https://www.roblox.com/',
@@ -632,6 +713,15 @@ const openRobloxDestination = (url) => {
   openWithFallback({ webUrl: url });
 };
 
+const openTransitionPage = (target) => {
+  if (!ensureBrowserEnvironment()) return;
+  const pageTarget = target === 'roblox' ? 'roblox.html' : 'discord.html';
+  const opened = win.open(pageTarget, '_blank', 'noopener,noreferrer');
+  if (!opened) {
+    win.location.href = pageTarget;
+  }
+};
+
   const setupLinkHandlers = () => {
     doc.addEventListener('click', (event) => {
       const continueButton = event.target.closest('[data-redirect-continue]');
@@ -650,6 +740,11 @@ const openRobloxDestination = (url) => {
 
       const discordLink = event.target.closest('[data-discord-link]');
       if (discordLink) {
+        if (page !== 'discord-services' && page !== 'roblox') {
+          event.preventDefault();
+          openTransitionPage('discord');
+          return;
+        }
         event.preventDefault();
         const href = discordLink.getAttribute('href');
         const invite = href && href.trim() ? href : discordInvite;
@@ -663,6 +758,11 @@ const openRobloxDestination = (url) => {
 
       const robloxLink = event.target.closest('[data-roblox-link]');
       if (robloxLink) {
+        if (page !== 'roblox') {
+          event.preventDefault();
+          openTransitionPage('roblox');
+          return;
+        }
         event.preventDefault();
         const href = robloxLink.getAttribute('href');
         beginPromoRedirect({
@@ -1203,6 +1303,7 @@ const setupBackdrop = () => {
 };
 
 const init = () => {
+  setupThemeToggle();
   setupReveal();
   setupCurrentYear();
   setupHeaderShadow();

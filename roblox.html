@@ -5,13 +5,48 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Abrir Roblox — Dedos.xyz</title>
   <meta name="description" content="Te llevamos a nuestro grupo o experiencia en Roblox. Si la app no abre, continúa en el navegador." />
+  <!-- 🧭 Open Graph + Twitter Meta Tags (Full Compatibility) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Dedos.xyz — Grupo Roblox" />
+  <meta property="og:title" content="Únete al grupo Dedos en Roblox" />
+  <meta property="og:description" content="Únete al grupo oficial y recuerda: 2 semanas necesarias para recibir pagos seguros de la tienda." />
+  <meta property="og:url" content="https://dedos.xyz/roblox" />
+
+  <!-- Imagen principal (requerida por Discord/Facebook/WhatsApp) -->
+  <meta property="og:image" content="https://i.ibb.co/BVxYLN2Q/dedosxyz.png" />
+  <meta property="og:image:secure_url" content="https://i.ibb.co/BVxYLN2Q/dedosxyz.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="512" />
+  <meta property="og:image:height" content="512" />
+
+  <!-- Metadatos de Twitter (Discord también los usa parcialmente) -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Únete al grupo Dedos en Roblox" />
+  <meta name="twitter:description" content="Únete al grupo oficial y recuerda: 2 semanas necesarias para recibir pagos seguros de la tienda." />
+  <meta name="twitter:image" content="https://i.ibb.co/BVxYLN2Q/dedosxyz.png" />
+  <meta name="twitter:site" content="@dedosxyz" />
+  <meta name="twitter:creator" content="@dedosxyz" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <meta name="theme-color" content="#0b0b15" />
+  <script>
+    (function () {
+      try {
+        var storageKey = 'dedos-theme';
+        var stored = localStorage.getItem(storageKey);
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme = stored === 'dark' || stored === 'light' ? stored : prefersDark ? 'dark' : 'light';
+        document.documentElement.dataset.theme = theme;
+      } catch (error) {
+        document.documentElement.dataset.theme = 'light';
+      }
+    })();
+  </script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/app.css" />
   <script defer src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
-<body data-page="roblox" data-discord-invite="dedos" data-redirect-target="roblox" data-redirect-fallback-ms="2600" data-redirect-url="https://www.roblox.com/es/communities/12082479/unnamed#!/about">
+<body data-page="roblox" data-discord-invite="dedosxyz" data-redirect-target="roblox" data-redirect-fallback-ms="2600" data-redirect-url="https://www.roblox.com/es/communities/12082479/unnamed#!/about">
   <div class="backdrop" data-fx-backdrop>
     <canvas class="backdrop__canvas" data-fx-orbs aria-hidden="true"></canvas>
     <canvas class="backdrop__canvas" data-fx-stars aria-hidden="true"></canvas>
@@ -44,7 +79,12 @@
           </ul>
         </nav>
         <div class="site-header__actions">
-          <a class="btn btn--primary hide-on-mobile" href="https://discord.gg/dedos" data-discord-link>Entrar a Discord</a>
+          <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false">
+            <span class="theme-toggle__sr">Cambiar a modo oscuro</span>
+            <i class="theme-toggle__icon theme-toggle__icon--sun" data-lucide="sun" aria-hidden="true"></i>
+            <i class="theme-toggle__icon theme-toggle__icon--moon" data-lucide="moon" aria-hidden="true"></i>
+          </button>
+          <a class="btn btn--primary hide-on-mobile" href="https://discord.gg/dedosxyz" target="_blank" rel="noopener noreferrer" data-discord-link>Entrar a Discord</a>
           <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="mobile-nav" aria-label="Abrir menú">☰</button>
         </div>
       </div>
@@ -62,7 +102,7 @@
         <a class="mobile-drawer__link" href="discord.html">Paquetes Discord</a>
         <a class="mobile-drawer__link" href="roblox.html">Grupo de Roblox</a>
         <a class="mobile-drawer__link" href="tos.html">Términos</a>
-        <a class="btn btn--primary" href="https://discord.gg/dedos" data-discord-link>Entrar a Discord →</a>
+        <a class="btn btn--primary" href="https://discord.gg/dedosxyz" target="_blank" rel="noopener noreferrer" data-discord-link>Entrar a Discord →</a>
       </div>
     </nav>
   </header>
@@ -88,7 +128,7 @@
             </ul>
           </div>
           <div class="callout__actions">
-            <a class="btn btn--primary" href="https://www.roblox.com/es/communities/12082479/unnamed#!/about" data-roblox-link><i data-lucide="gamepad-2" aria-hidden="true"></i> Abrir Roblox</a>
+            <a class="btn btn--primary" href="https://www.roblox.com/es/communities/12082479/unnamed#!/about" target="_blank" rel="noopener noreferrer" data-roblox-link><i data-lucide="gamepad-2" aria-hidden="true"></i> Abrir Roblox</a>
             <a class="btn btn--ghost" href="index.html#catalogo"><i data-lucide="grid-3x3" aria-hidden="true"></i> Ver catálogo</a>
           </div>
         </div>
@@ -96,13 +136,42 @@
     </section>
   </main>
 
-  <footer class="page-footer">
+  <footer class="site-footer">
     <div class="shell">
-      <div class="page-footer__inner">
-        <div>© <span data-current-year></span> Dedos Store. Todos los derechos reservados.</div>
-        <div class="page-footer__links">
+      <div class="site-footer__grid">
+        <div class="site-footer__brand">
+          <a class="site-footer__logo" href="index.html">
+            <span class="site-brand__pulse" aria-hidden="true"></span>
+            <span>Dedos <span class="text-soft">Store</span></span>
+          </a>
+          <p class="site-footer__description">Transiciones seguras para llevarte a Roblox, Discord y servicios premium sin cerrar tu navegación.</p>
+        </div>
+        <div>
+          <h3 class="site-footer__title">Navegación</h3>
+          <ul class="site-footer__list">
+            <li><a class="site-footer__link" href="index.html#catalogo">Catálogo</a></li>
+            <li><a class="site-footer__link" href="index.html#por-que">¿Por qué Dedos?</a></li>
+            <li><a class="site-footer__link" href="robux.html">Planes Robux</a></li>
+            <li><a class="site-footer__link" href="servicios.html">Servicios digitales</a></li>
+            <li><a class="site-footer__link" href="tos.html">Términos de servicio</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="site-footer__title">Soporte</h3>
+          <ul class="site-footer__list">
+            <li><a class="site-footer__link" href="https://discord.gg/dedosxyz" target="_blank" rel="noopener noreferrer" data-discord-link>Unirte a Discord</a></li>
+            <li><a class="site-footer__link" href="roblox.html" target="_blank" rel="noopener noreferrer" data-roblox-link>Grupo de Roblox</a></li>
+            <li><a class="site-footer__link" href="mailto:soporte@dedos.xyz">soporte@dedos.xyz</a></li>
+            <li><a class="site-footer__link" href="discord.html#ayuda-discord">Ayuda con invitaciones</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="site-footer__bottom">
+        <span>© <span data-current-year></span> Dedos.xyz. Todos los derechos reservados.</span>
+        <div class="site-footer__bottom-links">
           <a href="tos.html">Términos</a>
-          <a href="https://discord.gg/dedos" data-discord-link>Discord</a>
+          <a href="https://discord.gg/dedosxyz" target="_blank" rel="noopener noreferrer" data-discord-link>Servidor de Discord</a>
+          <a href="roblox.html" target="_blank" rel="noopener noreferrer" data-roblox-link>Grupo oficial</a>
         </div>
       </div>
     </div>
