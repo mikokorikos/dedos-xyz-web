@@ -5,25 +5,71 @@
   --color-surface: #ffffff;
   --color-surface-strong: #f2f2f7;
   --color-surface-soft: rgba(255, 255, 255, 0.75);
+  --surface-rgb: 255 255 255;
+  --surface-strong-rgb: 243 244 248;
   --color-border: rgba(0, 0, 0, 0.08);
   --color-border-strong: rgba(0, 0, 0, 0.12);
   --color-border-soft: rgba(0, 0, 0, 0.06);
+  --color-border-highlight: rgba(255, 255, 255, 0.28);
+  --color-border-highlight-strong: rgba(255, 255, 255, 0.45);
   --color-text-primary: #1d1d1f;
   --color-text-secondary: rgba(29, 29, 31, 0.85);
   --color-text-muted: rgba(60, 60, 67, 0.75);
   --color-text-subtle: rgba(99, 99, 102, 0.7);
-  --color-focus: #0071e3;
-  --accent-pink: #ff6d95;
-  --accent-violet: #8e82ff;
-  --accent-cyan: #30b0ff;
-  --accent-mint: #4ed0a9;
+  --color-text-inverse: #ffffff;
+  --color-focus: #0a84ff;
+  --color-primary-rgb: 0 113 227;
+  --focus-outline-soft: rgba(0, 113, 227, 0.4);
+  --focus-ring-ambient: rgba(0, 113, 227, 0.18);
+  --body-overlay-before:
+    radial-gradient(48rem 48rem at 12% 10%, rgba(0, 113, 227, 0.12), transparent 68%),
+    radial-gradient(36rem 36rem at 78% 8%, rgba(142, 130, 255, 0.1), transparent 65%),
+    radial-gradient(40rem 40rem at 30% 85%, rgba(78, 208, 169, 0.1), transparent 70%);
+  --body-overlay-after:
+    linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(229, 232, 238, 0.45) 55%, rgba(245, 245, 247, 0.8) 100%),
+    radial-gradient(28rem 28rem at 85% 92%, rgba(0, 113, 227, 0.08), transparent 75%);
+  --eyebrow-bg: rgba(10, 132, 255, 0.12);
+  --eyebrow-border: rgba(0, 113, 227, 0.22);
+  --eyebrow-text: #0071e3;
+  --neutral-overlay: rgba(17, 24, 39, 0.08);
+  --neutral-overlay-strong: rgba(17, 24, 39, 0.14);
+  --surface-icon-muted: rgba(0, 0, 0, 0.05);
+  --surface-icon-muted-strong: rgba(0, 0, 0, 0.06);
+  --surface-glass-highlight: rgba(0, 0, 0, 0.04);
+  --surface-glass-faint: rgba(0, 0, 0, 0.02);
+  --surface-glass-gradient: linear-gradient(120deg, rgba(0, 0, 0, 0.04), transparent 65%);
+  --surface-hero-aurora: linear-gradient(160deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0));
+  --surface-hero-pane: linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(245, 246, 250, 0.82));
+  --shadow-hero-pane: 0 14px 26px rgba(31, 41, 55, 0.14);
+  --shadow-catalog-section: 0 12px 28px rgba(17, 24, 39, 0.08);
+  --shadow-doc-badge-icon: 0 12px 26px rgba(17, 24, 39, 0.08);
+  --drop-shadow-icon: 0 4px 10px rgba(15, 23, 42, 0.18);
+  --scrollbar-track: rgba(0, 0, 0, 0.04);
+  --scrollbar-thumb: linear-gradient(180deg, rgba(204, 210, 221, 0.9), rgba(173, 180, 191, 0.9));
+  --scrollbar-thumb-hover: linear-gradient(180deg, rgba(173, 180, 191, 0.95), rgba(140, 148, 160, 0.95));
+  --scrollbar-thumb-border: rgba(255, 255, 255, 0.65);
+  --scrollbar-color-thumb: rgba(173, 180, 191, 0.9);
   --gradient-accent: linear-gradient(135deg, #0a84ff 0%, #0071e3 55%, #30b0ff 100%);
-  --gradient-sheen: linear-gradient(120deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0));
   --gradient-soft: linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(245, 245, 247, 0.95));
+  --gradient-sheen: linear-gradient(120deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0));
+  --header-toggle-glint: conic-gradient(
+    from 90deg,
+    transparent 0 120deg,
+    rgba(255, 255, 255, 0.6) 150deg 210deg,
+    transparent 240deg 360deg
+  );
   --shadow-lg: 0 32px 60px rgba(17, 24, 39, 0.12);
   --shadow-md: 0 18px 40px rgba(17, 24, 39, 0.1);
   --shadow-sm: 0 12px 24px rgba(17, 24, 39, 0.08);
   --shadow-inset: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+  --shadow-button-primary: 0 16px 32px rgba(0, 113, 227, 0.24);
+  --shadow-button-primary-strong: 0 20px 40px rgba(0, 113, 227, 0.3);
+  --shadow-button-secondary: 0 10px 20px rgba(17, 24, 39, 0.08);
+  --shadow-chip: inset 0 1px 1px rgba(255, 255, 255, 0.6), 0 10px 18px rgba(17, 24, 39, 0.12);
+  --shadow-chip-hover: inset 0 1px 1px rgba(255, 255, 255, 0.7), 0 12px 22px rgba(17, 24, 39, 0.18);
+  --shadow-glass: 0 20px 35px rgba(17, 24, 39, 0.08);
+  --shadow-glass-strong: 0 26px 46px rgba(17, 24, 39, 0.12);
+  --chip-glow-ring: rgba(125, 249, 230, 0.18);
   --radius-sm: 0.9rem;
   --radius-md: 1.5rem;
   --radius-lg: 2rem;
@@ -42,4 +88,196 @@
   --space-10: clamp(4rem, 10vw, 6.75rem);
   --transition-emphasized: cubic-bezier(0.16, 1, 0.3, 1);
   --transition-soft: cubic-bezier(0.25, 1, 0.5, 1);
+
+  /* Accent tokens */
+  --color-accent-pink-rgb: 255 109 149;
+  --color-accent-pink-text: #c41d61;
+  --color-accent-pink-surface-soft: rgba(255, 109, 149, 0.12);
+  --color-accent-pink-surface: rgba(255, 109, 149, 0.18);
+  --color-accent-pink-surface-strong: rgba(255, 109, 149, 0.26);
+  --color-accent-pink-border: rgba(255, 109, 149, 0.34);
+  --color-accent-pink-border-strong: rgba(255, 109, 149, 0.42);
+  --color-accent-pink-shadow: rgba(255, 109, 149, 0.22);
+
+  --color-accent-violet-rgb: 142 130 255;
+  --color-accent-violet-text: #4232b8;
+  --color-accent-violet-surface-soft: rgba(142, 130, 255, 0.12);
+  --color-accent-violet-surface: rgba(142, 130, 255, 0.18);
+  --color-accent-violet-surface-strong: rgba(142, 130, 255, 0.26);
+  --color-accent-violet-border: rgba(142, 130, 255, 0.32);
+  --color-accent-violet-border-strong: rgba(142, 130, 255, 0.4);
+  --color-accent-violet-shadow: rgba(142, 130, 255, 0.2);
+
+  --color-accent-cyan-rgb: 48 176 255;
+  --color-accent-cyan-text: #0f66a8;
+  --color-accent-cyan-surface-soft: rgba(48, 176, 255, 0.12);
+  --color-accent-cyan-surface: rgba(48, 176, 255, 0.18);
+  --color-accent-cyan-surface-strong: rgba(48, 176, 255, 0.26);
+  --color-accent-cyan-border: rgba(48, 176, 255, 0.32);
+  --color-accent-cyan-border-strong: rgba(48, 176, 255, 0.4);
+  --color-accent-cyan-shadow: rgba(48, 176, 255, 0.2);
+
+  --color-accent-mint-rgb: 78 208 169;
+  --color-accent-mint-text: #1e7a5b;
+  --color-accent-mint-surface-soft: rgba(78, 208, 169, 0.12);
+  --color-accent-mint-surface: rgba(78, 208, 169, 0.18);
+  --color-accent-mint-surface-strong: rgba(78, 208, 169, 0.26);
+  --color-accent-mint-border: rgba(78, 208, 169, 0.32);
+  --color-accent-mint-border-strong: rgba(78, 208, 169, 0.4);
+  --color-accent-mint-shadow: rgba(78, 208, 169, 0.18);
+
+  --color-accent-amber-rgb: 255 193 94;
+  --color-accent-amber-text: #9a6200;
+  --color-accent-amber-surface-soft: rgba(255, 193, 94, 0.12);
+  --color-accent-amber-surface: rgba(255, 193, 94, 0.18);
+  --color-accent-amber-surface-strong: rgba(255, 193, 94, 0.26);
+  --color-accent-amber-border: rgba(255, 193, 94, 0.32);
+  --color-accent-amber-border-strong: rgba(255, 193, 94, 0.4);
+  --color-accent-amber-shadow: rgba(255, 193, 94, 0.22);
+
+  --color-semantic-info-text: #0a3b7c;
+  --color-semantic-info-surface-soft: rgba(0, 113, 227, 0.12);
+  --color-semantic-info-surface: rgba(0, 113, 227, 0.18);
+  --color-semantic-info-surface-strong: rgba(0, 113, 227, 0.26);
+  --color-semantic-info-border: rgba(0, 113, 227, 0.28);
+  --color-semantic-info-border-strong: rgba(0, 113, 227, 0.4);
+  --color-semantic-info-shadow: rgba(0, 113, 227, 0.24);
+
+  --color-semantic-warning-text: #7a1130;
+  --color-semantic-warning-surface-soft: var(--color-accent-pink-surface-soft);
+  --color-semantic-warning-surface: var(--color-accent-pink-surface);
+  --color-semantic-warning-surface-strong: var(--color-accent-pink-surface-strong);
+  --color-semantic-warning-border: var(--color-accent-pink-border);
+  --color-semantic-warning-border-strong: var(--color-accent-pink-border-strong);
+  --color-semantic-warning-shadow: var(--color-accent-pink-shadow);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --color-bg-900: #050714;
+  --color-bg-800: #0b1020;
+  --color-surface: #111628;
+  --color-surface-strong: #161d30;
+  --color-surface-soft: rgba(18, 24, 39, 0.82);
+  --surface-rgb: 18 24 39;
+  --surface-strong-rgb: 25 33 52;
+  --color-border: rgba(123, 135, 164, 0.22);
+  --color-border-strong: rgba(123, 135, 164, 0.32);
+  --color-border-soft: rgba(123, 135, 164, 0.16);
+  --color-border-highlight: rgba(148, 163, 196, 0.28);
+  --color-border-highlight-strong: rgba(195, 208, 236, 0.45);
+  --color-text-primary: #f4f7ff;
+  --color-text-secondary: rgba(228, 235, 255, 0.88);
+  --color-text-muted: rgba(186, 197, 226, 0.82);
+  --color-text-subtle: rgba(153, 166, 197, 0.72);
+  --color-text-inverse: #050714;
+  --color-focus: #38bdf8;
+  --color-primary-rgb: 37 99 235;
+  --focus-outline-soft: rgba(56, 189, 248, 0.6);
+  --focus-ring-ambient: rgba(37, 99, 235, 0.24);
+  --body-overlay-before:
+    radial-gradient(44rem 44rem at 12% 18%, rgba(37, 99, 235, 0.28), transparent 70%),
+    radial-gradient(40rem 40rem at 80% 12%, rgba(79, 70, 229, 0.28), transparent 70%),
+    radial-gradient(36rem 36rem at 28% 82%, rgba(14, 165, 233, 0.24), transparent 70%);
+  --body-overlay-after:
+    linear-gradient(180deg, rgba(6, 8, 20, 0) 0%, rgba(6, 10, 26, 0.65) 55%, rgba(5, 7, 20, 0.95) 100%),
+    radial-gradient(32rem 32rem at 85% 90%, rgba(56, 189, 248, 0.18), transparent 78%);
+  --eyebrow-bg: rgba(37, 99, 235, 0.22);
+  --eyebrow-border: rgba(56, 189, 248, 0.35);
+  --eyebrow-text: #93c5fd;
+  --neutral-overlay: rgba(96, 110, 143, 0.22);
+  --neutral-overlay-strong: rgba(96, 110, 143, 0.34);
+  --surface-icon-muted: rgba(255, 255, 255, 0.08);
+  --surface-icon-muted-strong: rgba(255, 255, 255, 0.12);
+  --surface-glass-highlight: rgba(255, 255, 255, 0.07);
+  --surface-glass-faint: rgba(255, 255, 255, 0.04);
+  --surface-glass-gradient: linear-gradient(120deg, rgba(255, 255, 255, 0.08), transparent 65%);
+  --surface-hero-aurora: linear-gradient(160deg, rgba(255, 255, 255, 0.04), rgba(8, 11, 24, 0));
+  --surface-hero-pane: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(8, 11, 24, 0.72));
+  --shadow-hero-pane: 0 18px 32px rgba(3, 7, 18, 0.55);
+  --shadow-catalog-section: 0 16px 32px rgba(3, 7, 18, 0.55);
+  --shadow-doc-badge-icon: 0 16px 34px rgba(3, 7, 18, 0.52);
+  --drop-shadow-icon: 0 4px 12px rgba(3, 7, 18, 0.55);
+  --scrollbar-track: rgba(15, 23, 42, 0.45);
+  --scrollbar-thumb: linear-gradient(180deg, rgba(71, 85, 105, 0.7), rgba(51, 65, 85, 0.7));
+  --scrollbar-thumb-hover: linear-gradient(180deg, rgba(100, 116, 139, 0.75), rgba(71, 85, 105, 0.75));
+  --scrollbar-thumb-border: rgba(8, 11, 24, 0.85);
+  --scrollbar-color-thumb: rgba(100, 116, 139, 0.72);
+  --gradient-accent: linear-gradient(135deg, #2563eb 0%, #4f46e5 55%, #22d3ee 100%);
+  --gradient-soft: linear-gradient(180deg, rgba(5, 7, 20, 0.95), rgba(10, 14, 27, 0.96));
+  --gradient-sheen: linear-gradient(120deg, rgba(82, 115, 255, 0.38), rgba(82, 115, 255, 0));
+  --header-toggle-glint: conic-gradient(
+    from 90deg,
+    transparent 0 120deg,
+    rgba(148, 163, 196, 0.45) 150deg 210deg,
+    transparent 240deg 360deg
+  );
+  --shadow-lg: 0 36px 60px rgba(3, 7, 18, 0.6);
+  --shadow-md: 0 20px 42px rgba(3, 7, 18, 0.5);
+  --shadow-sm: 0 12px 28px rgba(3, 7, 18, 0.45);
+  --shadow-inset: inset 0 0 0 1px rgba(82, 97, 134, 0.22);
+  --shadow-button-primary: 0 16px 32px rgba(37, 99, 235, 0.24);
+  --shadow-button-primary-strong: 0 20px 40px rgba(37, 99, 235, 0.3);
+  --shadow-button-secondary: 0 10px 20px rgba(3, 7, 18, 0.4);
+  --shadow-chip: inset 0 1px 1px rgba(255, 255, 255, 0.08), 0 10px 18px rgba(3, 7, 18, 0.45);
+  --shadow-chip-hover: inset 0 1px 1px rgba(255, 255, 255, 0.12), 0 14px 26px rgba(3, 7, 18, 0.5);
+  --shadow-glass: 0 20px 35px rgba(3, 7, 18, 0.55);
+  --shadow-glass-strong: 0 26px 46px rgba(3, 7, 18, 0.6);
+  --chip-glow-ring: rgba(125, 249, 230, 0.25);
+
+  --color-accent-pink-text: #ffb8d0;
+  --color-accent-pink-surface-soft: rgba(255, 109, 149, 0.12);
+  --color-accent-pink-surface: rgba(255, 109, 149, 0.2);
+  --color-accent-pink-surface-strong: rgba(255, 109, 149, 0.3);
+  --color-accent-pink-border: rgba(255, 109, 149, 0.38);
+  --color-accent-pink-border-strong: rgba(255, 109, 149, 0.52);
+  --color-accent-pink-shadow: rgba(255, 109, 149, 0.3);
+
+  --color-accent-violet-text: #efe9ff;
+  --color-accent-violet-surface-soft: rgba(142, 130, 255, 0.12);
+  --color-accent-violet-surface: rgba(142, 130, 255, 0.22);
+  --color-accent-violet-surface-strong: rgba(142, 130, 255, 0.32);
+  --color-accent-violet-border: rgba(142, 130, 255, 0.38);
+  --color-accent-violet-border-strong: rgba(142, 130, 255, 0.52);
+  --color-accent-violet-shadow: rgba(142, 130, 255, 0.28);
+
+  --color-accent-cyan-text: #e2f7ff;
+  --color-accent-cyan-surface-soft: rgba(48, 176, 255, 0.12);
+  --color-accent-cyan-surface: rgba(48, 176, 255, 0.2);
+  --color-accent-cyan-surface-strong: rgba(48, 176, 255, 0.3);
+  --color-accent-cyan-border: rgba(48, 176, 255, 0.38);
+  --color-accent-cyan-border-strong: rgba(48, 176, 255, 0.52);
+  --color-accent-cyan-shadow: rgba(48, 176, 255, 0.28);
+
+  --color-accent-mint-text: #e7fff7;
+  --color-accent-mint-surface-soft: rgba(78, 208, 169, 0.12);
+  --color-accent-mint-surface: rgba(78, 208, 169, 0.2);
+  --color-accent-mint-surface-strong: rgba(78, 208, 169, 0.28);
+  --color-accent-mint-border: rgba(78, 208, 169, 0.36);
+  --color-accent-mint-border-strong: rgba(78, 208, 169, 0.5);
+  --color-accent-mint-shadow: rgba(78, 208, 169, 0.28);
+
+  --color-accent-amber-text: #fff2d5;
+  --color-accent-amber-surface-soft: rgba(255, 193, 94, 0.12);
+  --color-accent-amber-surface: rgba(255, 193, 94, 0.2);
+  --color-accent-amber-surface-strong: rgba(255, 193, 94, 0.28);
+  --color-accent-amber-border: rgba(255, 193, 94, 0.36);
+  --color-accent-amber-border-strong: rgba(255, 193, 94, 0.5);
+  --color-accent-amber-shadow: rgba(255, 193, 94, 0.28);
+
+  --color-semantic-info-text: #e1f0ff;
+  --color-semantic-info-surface-soft: rgba(37, 99, 235, 0.14);
+  --color-semantic-info-surface: rgba(37, 99, 235, 0.22);
+  --color-semantic-info-surface-strong: rgba(37, 99, 235, 0.32);
+  --color-semantic-info-border: rgba(56, 189, 248, 0.42);
+  --color-semantic-info-border-strong: rgba(56, 189, 248, 0.55);
+  --color-semantic-info-shadow: rgba(37, 99, 235, 0.34);
+
+  --color-semantic-warning-text: #ffe9f2;
+  --color-semantic-warning-surface-soft: rgba(255, 109, 149, 0.14);
+  --color-semantic-warning-surface: rgba(255, 109, 149, 0.22);
+  --color-semantic-warning-surface-strong: rgba(255, 109, 149, 0.32);
+  --color-semantic-warning-border: rgba(255, 109, 149, 0.42);
+  --color-semantic-warning-border-strong: rgba(255, 109, 149, 0.55);
+  --color-semantic-warning-shadow: rgba(255, 109, 149, 0.32);
 }

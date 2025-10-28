@@ -232,8 +232,64 @@
   const doc = document;
   const win = window;
   const body = doc.body;
+  const root = doc.documentElement;
   const page = body.dataset.page || 'home';
-  const discordInvite = body.dataset.discordInvite || 'dedos';
+  const THEME_STORAGE_KEY = 'dedos-theme';
+
+  const getStoredTheme = () => {
+    try {
+      const value = win.localStorage.getItem(THEME_STORAGE_KEY);
+      return value === 'dark' || value === 'light' ? value : null;
+    } catch (error) {
+      return null;
+    }
+  };
+
+  const storeTheme = (value) => {
+    try {
+      win.localStorage.setItem(THEME_STORAGE_KEY, value);
+    } catch (error) {
+      // ignore storage issues
+    }
+  };
+
+  const applyTheme = (theme, { persist = false } = {}) => {
+    const normalized = theme === 'dark' ? 'dark' : 'light';
+    root.dataset.theme = normalized;
+    if (persist) {
+      storeTheme(normalized);
+    }
+    const toggle = doc.querySelector('[data-theme-toggle]');
+    if (toggle) {
+      toggle.setAttribute('aria-pressed', normalized === 'dark' ? 'true' : 'false');
+      toggle.setAttribute(
+        'aria-label',
+        normalized === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'
+      );
+    }
+  };
+
+  const setupThemeToggle = () => {
+    const toggle = doc.querySelector('[data-theme-toggle]');
+    if (!toggle) return;
+
+    const media = win.matchMedia('(prefers-color-scheme: dark)');
+    const stored = getStoredTheme();
+    const initial = stored || root.dataset.theme || (media.matches ? 'dark' : 'light');
+    applyTheme(initial, { persist: false });
+
+    toggle.addEventListener('click', () => {
+      const current = root.dataset.theme === 'dark' ? 'dark' : 'light';
+      applyTheme(current === 'dark' ? 'light' : 'dark', { persist: true });
+    });
+
+    media.addEventListener('change', (event) => {
+      if (getStoredTheme()) return;
+      applyTheme(event.matches ? 'dark' : 'light');
+    });
+  };
+
+  const discordInvite = body.dataset.discordInvite || 'dedosxyz';
   const robloxUrl = body.dataset.robloxUrl || 'https://www.roblox.com/es/communities/12082479/unnamed#!/about';
 
   const createElement = (markup) => {
@@ -427,7 +483,7 @@
     clearRedirectTimers();
     hideRedirectOverlay();
     if (config.type === 'discord') {
-      openDiscordInvite(config.invite ?? body.dataset.discordInvite ?? 'dedos', config.timeoutMs);
+      openDiscordInvite(config.invite ?? body.dataset.discordInvite ?? 'dedosxyz', config.timeoutMs);
     } else if (config.type === 'roblox') {
       openRobloxDestination(
         config.url ?? body.dataset.robloxUrl ?? 'https://www.roblox.com/',
@@ -632,6 +688,15 @@ const openRobloxDestination = (url) => {
   openWithFallback({ webUrl: url });
 };
 
+const openTransitionPage = (target) => {
+  if (!ensureBrowserEnvironment()) return;
+  const pageTarget = target === 'roblox' ? 'roblox.html' : 'discord.html';
+  const opened = win.open(pageTarget, '_blank', 'noopener,noreferrer');
+  if (!opened) {
+    win.location.href = pageTarget;
+  }
+};
+
   const setupLinkHandlers = () => {
     doc.addEventListener('click', (event) => {
       const continueButton = event.target.closest('[data-redirect-continue]');
@@ -650,6 +715,11 @@ const openRobloxDestination = (url) => {
 
       const discordLink = event.target.closest('[data-discord-link]');
       if (discordLink) {
+        if (page !== 'discord-services' && page !== 'roblox') {
+          event.preventDefault();
+          openTransitionPage('discord');
+          return;
+        }
         event.preventDefault();
         const href = discordLink.getAttribute('href');
         const invite = href && href.trim() ? href : discordInvite;
@@ -663,6 +733,11 @@ const openRobloxDestination = (url) => {
 
       const robloxLink = event.target.closest('[data-roblox-link]');
       if (robloxLink) {
+        if (page !== 'roblox') {
+          event.preventDefault();
+          openTransitionPage('roblox');
+          return;
+        }
         event.preventDefault();
         const href = robloxLink.getAttribute('href');
         beginPromoRedirect({
@@ -1203,6 +1278,7 @@ const setupBackdrop = () => {
 };
 
 const init = () => {
+  setupThemeToggle();
   setupReveal();
   setupCurrentYear();
   setupHeaderShadow();
